@@ -943,6 +943,44 @@ static struct BurnRomInfo KungfumRomDesc[] = {
 STD_ROM_PICK(Kungfum)
 STD_ROM_FN(Kungfum)
 
+//Irem Arcade Hits
+static struct BurnRomInfo KungfumoRomDesc[] = {
+	{ "a-4e-c.bin",           0x04000, 0xb6e2d083, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "a-4d-c.bin",           0x04000, 0x7532918e, BRF_ESS | BRF_PRG }, //  1
+
+	{ "a-3e-.bin",            0x02000, 0x58e87ab0, BRF_ESS | BRF_PRG }, //  2	M6803 Program Code
+	{ "a-3f-.bin",            0x02000, 0xc81e31ea, BRF_ESS | BRF_PRG }, //  3
+	{ "a-3h-.bin",            0x02000, 0xd99fb995, BRF_ESS | BRF_PRG }, //  4
+
+	{ "g-4c-a.bin",           0x02000, 0x6b2cc9c8, BRF_GRA },	    //  5	Characters
+	{ "g-4d-a.bin",           0x02000, 0xc648f558, BRF_GRA },	    //  6
+	{ "g-4e-a.bin",           0x02000, 0xfbe9276e, BRF_GRA },	    //  7
+
+	{ "b-4k-.bin",            0x02000, 0x16fb5150, BRF_GRA },	    //  8	Sprites
+	{ "b-4f-.bin",            0x02000, 0x67745a33, BRF_GRA },	    //  9
+	{ "b-4l-.bin",            0x02000, 0xbd1c2261, BRF_GRA },	    //  10
+	{ "b-4h-.bin",            0x02000, 0x8ac5ed3a, BRF_GRA },	    //  11
+	{ "b-3n-.bin",            0x02000, 0x28a213aa, BRF_GRA },	    //  12
+	{ "b-4n-.bin",            0x02000, 0xd5228df3, BRF_GRA },	    //  13
+	{ "b-4m-.bin",            0x02000, 0xb16de4f2, BRF_GRA },	    //  14
+	{ "b-3m-.bin",            0x02000, 0xeba0d66b, BRF_GRA },	    //  15
+	{ "b-4c-.bin",            0x02000, 0x01298885, BRF_GRA },	    //  16
+	{ "b-4e-.bin",            0x02000, 0xc77b87d4, BRF_GRA },	    //  17
+	{ "b-4d-.bin",            0x02000, 0x6a70615f, BRF_GRA },	    //  18
+	{ "b-4a-.bin",            0x02000, 0x6189d626, BRF_GRA },	    //  19
+
+	{ "g-1j-.bin",            0x00100, 0x668e6bca, BRF_GRA },	    //  20	PROM (Tile Palette Red Component)
+	{ "b-1m-.bin",            0x00100, 0x76c05a9c, BRF_GRA },	    //  21	PROM (Sprite Palette Red Component)
+	{ "g-1f-.bin",            0x00100, 0x964b6495, BRF_GRA },	    //  22	PROM (Tile Palette Green Component)
+	{ "b-1n-.bin",            0x00100, 0x23f06b99, BRF_GRA },	    //  23	PROM (Sprite Palette Green Component)
+	{ "g-1h-.bin",            0x00100, 0x550563e1, BRF_GRA },	    //  24	PROM (Tile Palette Blue Component)
+	{ "b-1l-.bin",            0x00100, 0x35e45021, BRF_GRA },	    //  25	PROM (Sprite Palette Blue Component)
+	{ "b-5f-.bin",            0x00020, 0x7a601c3d, BRF_GRA },	    //  26	PROM (Sprite Height)
+};
+
+STD_ROM_PICK(Kungfumo)
+STD_ROM_FN(Kungfumo)
+
 static struct BurnRomInfo KungfumdRomDesc[] = {
 	{ "snx_a-4e-d",           0x04000, 0xfc330a46, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
 	{ "snx_a-4d-d",           0x04000, 0x1b2fd32f, BRF_ESS | BRF_PRG }, //  1
@@ -4803,6 +4841,18 @@ struct BurnDriver BurnDrvKungfum = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumRomInfo, KungfumRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
+	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
+	NULL, 0x200, 256, 246, 4, 3
+};
+
+//Irem Arcade Hits
+
+struct BurnDriver BurnDrvKungfumo = {
+	"kungfumo", "kungfum", NULL, NULL, "1984",
+	"Kung-Fu Master (World, Irem Arcade Hits Version)\0", NULL, "Irem", "Irem M62",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	NULL, KungfumoRomInfo, KungfumoRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
 };
