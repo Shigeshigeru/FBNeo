@@ -723,6 +723,52 @@ struct BurnDriver BurnDrvCommandoj = {
 	224, 256, 3, 4
 };
 
+// Senjou no Ookami (Capcom Arcade Stadium Version)
+
+static struct BurnRomInfo commandojcasRomDesc[] = {
+	{ "so04cas.9m",					0x8000, 0x24ad096d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code (Encrypted)	//CAS
+	{ "so03cas.8m",					0x4000, 0xd141d1fa, 1 | BRF_PRG | BRF_ESS }, //  1	//CAS
+
+	{ "so02.9f",					0x4000, 0xca20aca5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "vt01.5d",					0x4000, 0x505726e0, 3 | BRF_GRA },           //  3 Characters
+
+	{ "vt11.5a",					0x4000, 0x7b2e1b48, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "vt12.6a",					0x4000, 0x81b417d3, 4 | BRF_GRA },           //  5
+	{ "vt13.7a",					0x4000, 0x5612dbd2, 4 | BRF_GRA },           //  6
+	{ "vt14.8a",					0x4000, 0x2b2dee36, 4 | BRF_GRA },           //  7
+	{ "vt15.9a",					0x4000, 0xde70babf, 4 | BRF_GRA },           //  8
+	{ "vt16.10a",					0x4000, 0x14178237, 4 | BRF_GRA },           //  9
+
+	{ "vt05.7e",					0x4000, 0x79f16e3d, 5 | BRF_GRA },           // 10 Sprites
+	{ "vt06.8e",					0x4000, 0x26fee521, 5 | BRF_GRA },           // 11
+	{ "vt07.9e",					0x4000, 0xca88bdfd, 5 | BRF_GRA },           // 12
+	{ "vt08.7h",					0x4000, 0x2019c883, 5 | BRF_GRA },           // 13
+	{ "vt09.8h",					0x4000, 0x98703982, 5 | BRF_GRA },           // 14
+	{ "vt10.9h",					0x4000, 0xf069d2f8, 5 | BRF_GRA },           // 15
+
+	{ "vtb1.1d",					0x0100, 0x3aba15a1, 6 | BRF_GRA },           // 16 Color PROMs
+	{ "vtb2.2d",					0x0100, 0x88865754, 6 | BRF_GRA },           // 17
+	{ "vtb3.3d",					0x0100, 0x4c14c3f6, 6 | BRF_GRA },           // 18
+
+	{ "vtb4cas.1h",					0x0100, 0x2419a95a, 0 | BRF_OPT },           // 19 Misc. PROMs
+	{ "vtb5.6l",					0x0100, 0x712ac508, 0 | BRF_OPT },           // 20
+	{ "vtb6.6e",					0x0100, 0x0eaf5158, 0 | BRF_OPT },           // 21
+};
+
+STD_ROM_PICK(commandojcas)
+STD_ROM_FN(commandojcas)
+
+struct BurnDriver BurnDrvCommandojcas = {
+	"commandojcas", "commando", NULL, NULL, "1985",
+	"Senjou no Ookami (Capcom Arcade Stadium Version)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, commandojcasRomInfo, commandojcasRomName, NULL, NULL, NULL, NULL, CommandoInputInfo, CommandoDIPInfo,
+	CommandoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
 
 // Commando (bootleg set 1)
 
