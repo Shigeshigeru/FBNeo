@@ -32435,7 +32435,7 @@ struct BurnDriver BurnDrvnes_atlantisnonazojz = {
 	"nes_atlantisnonazo", "nes_atlantisnonazojz", NULL, NULL, "2016",
 	"Atlantis no Nazo (Hack, Zone Select)\0", NULL, "Shigeru", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_atlantisnonazojzRomInfo, nes_atlantisnonazojzRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
