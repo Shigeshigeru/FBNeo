@@ -57,7 +57,7 @@ static UINT32 NESMode = 0;
 #define USE_ZAPPER      0x0400 // Zapper Gun device
 #define MAPPER_NOCLEAR  0x0800 // preserve mapper regs on soft-reset
 #define IS_PAL          0x1000 // PAL-mode (not fully supported)
-#define IS_FDS          0x2000 // Famicom Disk System
+#define IS_FDS          0x2000 // Famicom Disk System (FDS files will not have CRCs other than those on the master disk)
 #define SHOW_OVERSCAN   0x4000 // - for debugging -
 #define ALT_TIMING      0x8000 // for games that use "BIT PPUSTATUS; BIT PPUSTATUS; BPL -"
 							   // Assimilate, Star Wars, full_palette.nes, etc.
