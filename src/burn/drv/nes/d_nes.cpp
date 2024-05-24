@@ -32424,6 +32424,9 @@ struct BurnDriver BurnDrvnes_atlantisnonazoj = {
 
 // Atlantis no Nazo (Hack, Zone Select)
 // Shigeru's ips 2016
+// Download
+// https://note.com/api/v2/attachments/download/2f8d207b8dc640f39db49a88fe929b54
+
 static struct BurnRomInfo nes_atlantisnonazojzRomDesc[] = {
 	{ "Atlantis no Nazo (Zone Select).nes",          49168, 0xaf9dc5f7, BRF_ESS | BRF_PRG },
 };
@@ -32432,7 +32435,7 @@ STD_ROM_PICK(nes_atlantisnonazojz)
 STD_ROM_FN(nes_atlantisnonazojz)
 
 struct BurnDriver BurnDrvnes_atlantisnonazojz = {
-	"nes_atlantisnonazo", "nes_atlantisnonazojz", NULL, NULL, "2016",
+	"nes_atlantisnonazojz", "nes_atlantisnonazo", NULL, NULL, "2016",
 	"Atlantis no Nazo (Hack, Zone Select)\0", NULL, "Shigeru", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
