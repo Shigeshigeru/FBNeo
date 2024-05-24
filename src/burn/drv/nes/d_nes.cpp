@@ -11757,7 +11757,7 @@ struct BurnDriver BurnDrvfds_akitsunofusnoka = {
 
 // Akumajou Dracula (Japan)
 static struct BurnRomInfo fds_akumajoudraculajRomDesc[] = {
-	{ "Akumajou Dracula (Japan).fds",          131016, 0xffed3158, BRF_ESS | BRF_PRG },
+	{ "Akumajou Dracula (Japan).fds",          131016, 0x4f72ee2a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_akumajoudraculaj, fds_akumajoudraculaj, fds_fdsbios)
