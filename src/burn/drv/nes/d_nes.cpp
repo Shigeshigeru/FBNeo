@@ -32422,6 +32422,25 @@ struct BurnDriver BurnDrvnes_atlantisnonazoj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Atlantis no Nazo (Hack, Zone Select)
+// Shigeru's ips 2016
+static struct BurnRomInfo nes_atlantisnonazojzRomDesc[] = {
+	{ "Atlantis no Nazo (Zone Select).nes",          49168, 0xaf9dc5f7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_atlantisnonazojz)
+STD_ROM_FN(nes_atlantisnonazojz)
+
+struct BurnDriver BurnDrvnes_atlantisnonazojz = {
+	"nes_atlantisnonazoj", "nes_atlantisnonazojz", NULL, NULL, "2016",
+	"Atlantis no Nazo (Hack, Zone Select)\0", NULL, "Shigeru", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_atlantisnonazojzRomInfo, nes_atlantisnonazojzRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Atlantis no Nazo (Hack, English)
 static struct BurnRomInfo nes_atlantisnonazoRomDesc[] = {
 	{ "Atlantis no Nazo (T-Eng).nes",          49168, 0x6a5ee2fc, BRF_ESS | BRF_PRG },
