@@ -13525,7 +13525,7 @@ struct BurnDriver BurnDrvfds_konekmon = {
 
 // Link no Bouken - The Legend of Zelda 2 (Japan)
 static struct BurnRomInfo fds_linknoboujRomDesc[] = {
-	{ "Link no Bouken - The Legend of Zelda 2 (Japan).fds",          131016, 0xa118214f, BRF_ESS | BRF_PRG },
+	{ "Link no Bouken - The Legend of Zelda 2 (Japan).fds",          131016, 0xb9b3e6b4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_linknobouj, fds_linknobouj, fds_fdsbios)
@@ -14759,7 +14759,7 @@ struct BurnDriver BurnDrvfds_zanac = {
 
 // Zelda no Densetsu - The Hyrule Fantasy (Japan)
 static struct BurnRomInfo fds_zeldanodenjRomDesc[] = {
-	{ "Zelda no Densetsu - The Hyrule Fantasy (Japan).fds",          131016, 0x3fbdddcd, BRF_ESS | BRF_PRG },
+	{ "Zelda no Densetsu - The Hyrule Fantasy (Japan).fds",          131016, 0x9e8ba7dc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_zeldanodenj, fds_zeldanodenj, fds_fdsbios)
