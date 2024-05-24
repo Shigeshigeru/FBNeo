@@ -32432,7 +32432,7 @@ STD_ROM_PICK(nes_atlantisnonazojz)
 STD_ROM_FN(nes_atlantisnonazojz)
 
 struct BurnDriver BurnDrvnes_atlantisnonazojz = {
-	"nes_atlantisnonazoj", "nes_atlantisnonazojz", NULL, NULL, "2016",
+	"nes_atlantisnonazo", "nes_atlantisnonazojz", NULL, NULL, "2016",
 	"Atlantis no Nazo (Hack, Zone Select)\0", NULL, "Shigeru", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
