@@ -630,6 +630,37 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
+// RetroBit Generation IV Version
+static struct BurnRomInfo DrvjoRomDesc[] = {
+	{ "vg_a-8h-d.ic55",   0x08000, 0xba848713, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "vg_a-8l-d.ic57",   0x10000, 0x3b12b1d8, BRF_ESS | BRF_PRG },	//  1
+	
+	{ "vg_a-5j-d.ic37",   0x10000, 0x10582b2d, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	
+	{ "613.ic34",         0x20000, 0xee7a6c2f, BRF_GRA },			//  3	Characters
+	{ "614.ic35",         0x20000, 0x6422e8ba, BRF_GRA },			//  4
+				
+	{ "616.ic62",         0x20000, 0xfbe9552d, BRF_GRA },			//  5   Sprites
+	{ "615.ic61",         0x20000, 0xae09d5c0, BRF_GRA },			//  6
+	{ "618.ic64",         0x20000, 0xafb77461, BRF_GRA },			//  7
+	{ "617.ic63",         0x20000, 0x5065cd35, BRF_GRA },			//  8
+				
+	{ "619.ic2",          0x20000, 0x9e2f8759, BRF_GRA },			//  9	Background
+	{ "612.ic4",          0x20000, 0x85057c81, BRF_GRA },			// 10
+	
+	{ "vg_a-4d-d.ic26",    0x10000, 0x9b85101d, BRF_SND },			// 11	Samples
+	
+//	{ "vg_b-8r.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
+//	{ "vg_b-4m.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
+//	{ "vg_b-1b.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+//	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
+};
+
+STD_ROM_PICK(Drvjo)
+STD_ROM_FN(Drvjo)
+
+
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "g07_c03.bin",   0x08000, 0x9dcca081, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
 	{ "j07_c04.bin",   0x10000, 0xe0159105, BRF_ESS | BRF_PRG },	//  1
@@ -667,6 +698,44 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 STD_ROM_PICK(Drvb)
 STD_ROM_FN(Drvb)
 
+//bootleg, Irem Arcade Hits Version
+static struct BurnRomInfo Drvb2RomDesc[] = {
+	{ "g07_c03.bin",   0x08000, 0x9dcca081, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "j07_c04.bin",   0x10000, 0xe0159105, BRF_ESS | BRF_PRG },	//  1
+	
+	{ "g05_c02.bin",   0x10000, 0x10582b2d, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	
+	{ "f05_c08.bin",   0x10000, 0x01579d20, BRF_GRA },				//  3	Characters
+	{ "h05_c09.bin",   0x10000, 0x4f5872f0, BRF_GRA },				//  4
+	
+	{ "n07_c12.bin",   0x10000, 0x10af8eb2, BRF_GRA },				//  5	Sprites
+	{ "k07_c10.bin",   0x10000, 0x9576f304, BRF_GRA },				//  6
+	{ "o07_c13.bin",   0x10000, 0xb1d9d4dc, BRF_GRA },				//  7
+	{ "l07_c11.bin",   0x10000, 0x4598be4a, BRF_GRA },				//  8
+	{ "t07_c16.bin",   0x10000, 0xf5425e42, BRF_GRA },				//  9
+	{ "p07_c14.bin",   0x10000, 0xcb50a17c, BRF_GRA },				// 10
+	{ "v07_c17.bin",   0x10000, 0x959ba3c7, BRF_GRA },				// 11
+	{ "s07_c15.bin",   0x10000, 0x7f2e91c5, BRF_GRA },				// 12
+	
+	{ "d01_c05.bin",   0x10000, 0x81b1ee5c, BRF_GRA },				// 13	Background
+	{ "e01_c06.bin",   0x10000, 0xd0d33673, BRF_GRA },				// 14
+	{ "f01_c07.bin",   0x10000, 0xaae81695, BRF_GRA },				// 15
+	
+	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },				// 16	Samples
+	
+//	{ "p09_16l8.bin",  0x00117, 0xdf368a7a, BRF_GRA },				// 17	PALs
+//	{ "m05_16l8.bin",  0x00117, 0xdbca4204, BRF_GRA },				// 18
+//	{ "b01_16l8.bin",  0x00104, 0x1beae498, BRF_GRA },				// 19
+	
+	{ "a07_129.bin",   0x00100, 0xc324835e, BRF_OPT },				// 20	Video Timing PROM
+	{ "t10_129a.bin",  0x00100, 0x1513df33, BRF_OPT },				// 21
+	{ "u10_129b.bin",  0x00100, 0x06661d00, BRF_OPT },				// 22
+	{ "v10_129c.bin",  0x00100, 0x3f186bc8, BRF_OPT },				// 23
+};
+
+STD_ROM_PICK(Drvb2)
+STD_ROM_FN(Drvb2)
+
 static struct BurnRomInfo VigilantaRomDesc[] = {
 	{ "vg_a-8h-a.ic55",   0x08000, 0x97df1454, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
 	{ "vg_a-8l-a.ic57",   0x10000, 0x690d812f, BRF_ESS | BRF_PRG },	//  1
@@ -692,6 +761,7 @@ static struct BurnRomInfo VigilantaRomDesc[] = {
 	
 	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
+
 
 STD_ROM_PICK(Vigilanta)
 STD_ROM_FN(Vigilanta)
@@ -2453,12 +2523,34 @@ struct BurnDriver BurnDrvVigilantd = {
 	NULL, 544, 256, 256, 4, 3
 };
 
+// RetroBit Generation IV Version
+struct BurnDriver BurnDrvVigilantdrb = {
+	"vigilantdrb", "vigilant", NULL, NULL, "1988",
+	"Vigilante (Japan, Rev D, RetroBit Generation IV Version)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
+	NULL, DrvjoRomInfo, DrvjoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 544, 256, 256, 4, 3
+};
+
 struct BurnDriver BurnDrvVigilantbl = {
 	"vigilantbl", "vigilant", NULL, NULL, "1988",
 	"Vigilante (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 544, 256, 256, 4, 3
+};
+
+//Irem Arcade Hits Version
+struct BurnDriver BurnDrvVigilantbl2 = {
+	"vigilantbl2", "vigilant", NULL, NULL, "1988",
+	"Vigilante (Irem Arcade Hits Version,bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
+	NULL, Drvb2RomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };
