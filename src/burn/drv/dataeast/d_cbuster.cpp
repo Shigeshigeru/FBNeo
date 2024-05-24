@@ -786,6 +786,49 @@ struct BurnDriver BurnDrvCbusterj = {
 	256, 240, 4, 3
 };
 
+// Crude Buster (Japan, RetroBit Generation III Version)
+
+static struct BurnRomInfo cbusterjrbRomDesc[] = {
+	{ "fr01-1.7l",		0x20000, 0xaf3c014f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fr00-1.4l",		0x20000, 0xf666ad52, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fr03.9l",		0x20000, 0x02c06118, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "fr02.6l",		0x20000, 0xb6c34332, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "fu11-.19h",		0x10000, 0x65f20f10, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
+
+	{ "mab-00.4c",		0x80000, 0x660eaabd, 3 | BRF_GRA },           //  5 Characters and Foreground Tiles
+	{ "fr05-1.6c",		0x10000, 0x8134d412, 3 | BRF_GRA },           //  6 RetroBit Generation III(US)
+	{ "fr06-1.7c",		0x10000, 0x2f914a45, 3 | BRF_GRA },           //  7
+
+	{ "mab-01.19a",		0x80000, 0x1080d619, 4 | BRF_GRA },           //  8 Background Tiles
+
+	{ "mab-02.10a",		0x80000, 0x58b7231d, 5 | BRF_GRA },           //  9 Sprites
+	{ "mab-03.11a",		0x80000, 0x76053b9d, 5 | BRF_GRA },           // 10
+	{ "fr07.4a",		0x10000, 0x52c85318, 5 | BRF_GRA },           // 11
+	{ "fr08.5a",		0x10000, 0xea25fbac, 5 | BRF_GRA },           // 12
+	{ "fr09.7a",		0x10000, 0xf8363424, 5 | BRF_GRA },           // 13
+	{ "fr10.8a",		0x10000, 0x241d5760, 5 | BRF_GRA },           // 14
+
+	{ "fu12-.16k",		0x20000, 0x2d1d65f2, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
+
+	{ "fu13-.21e",		0x20000, 0xb8525622, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
+
+	{ "mb7114h.18e",	0x00100, 0x3645b70f, 8 | BRF_OPT },           // 17 Unused PROMs
+};
+
+STD_ROM_PICK(cbusterjrb)
+STD_ROM_FN(cbusterjrb)
+
+struct BurnDriver BurnDrvCbusterjrb = {
+	"cbusterjrb", "cbuster", NULL, NULL, "1990",
+	"Crude Buster (Japan, RetroBit Generation III Version)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, cbusterjrbRomInfo, cbusterjrbRomName, NULL, NULL, NULL, NULL, CbusterInputInfo, CbusterDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 240, 4, 3
+};
+
 
 // Two Crude (US FT revision 1)
 
