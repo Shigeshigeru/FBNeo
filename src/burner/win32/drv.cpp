@@ -73,7 +73,6 @@ static int DoLibInit()					// Do Init of Burn library driver
 	RomDataInit();
 
 	if (DrvBzipOpen()) {
-		RomDataExit();
 		return 1;
 	}
 
