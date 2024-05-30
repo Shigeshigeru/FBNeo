@@ -28084,7 +28084,7 @@ static struct BurnRomInfo s1945panfdRomDesc[] = {
 STDROMPICKEXT(s1945panfd, s1945panfd, neogeo)
 STD_ROM_FN(s1945panfd)
 
-struct BurnDriver BurnDrvs1945pan = {
+struct BurnDriver BurnDrvs1945panfd = {
 	"s1945panfd", "s1945p" , "neogeo", NULL, "1999",
 	"Strikers 1945 Plus (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Psikyo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
@@ -28117,7 +28117,7 @@ static struct BurnRomInfo preis2anfdRomDesc[] = {
 STDROMPICKEXT(preis2anfd, preis2anfd, neogeo)
 STD_ROM_FN(preis2anfd)
 
-struct BurnDriver BurnDrvphi2anfd = {
+struct BurnDriver BurnDrvpreis2anfd = {
 	"preis2anfd" , "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
