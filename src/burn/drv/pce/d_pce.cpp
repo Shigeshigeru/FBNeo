@@ -5382,10 +5382,10 @@ struct BurnDriver BurnDrvpce_salamand = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
-// Salamander (PC-Engine Mini Ed.)
+// Salamander (CG Mini Near Arcade Ed.)
 
 static struct BurnRomInfo pce_salamandminiRomDesc[] = {
-	{ "Salamander (PCE Mini).pce", 0x100000, 0x83b0c3a4, BRF_PRG | BRF_ESS },
+	{ "Salamander (CG Mini Near Arcade).pce", 0x100000, 0x83b0c3a4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_salamandmini)
@@ -5393,7 +5393,7 @@ STD_ROM_FN(pce_salamandmini)
 
 struct BurnDriver BurnDrvpce_salamandmini = {
 	"pce_salamandmini", "pce_salamand", NULL, NULL, "2020",
-	"Salamander (PC-Engine Mini Ed.)\0", NULL, "Konami", "PC Engine",
+	"Salamander (CG Mini Near Arcade Ed.)\0", NULL, "Konami", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT | GBF_VERSHOOT, 0,
 	PceGetZipName, pce_salamandminiRomInfo, pce_salamandminiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
