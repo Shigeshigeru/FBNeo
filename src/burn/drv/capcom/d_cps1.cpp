@@ -16861,6 +16861,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2v004"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0042"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0043"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2gm"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dongb"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acc"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acca"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -23263,7 +23264,7 @@ struct BurnDriver BurnDrvCpsNemoja = {
 
 struct BurnDriver BurnDrvCpsPang3 = {
 	"pang3", NULL, NULL, NULL, "1995",
-	"Pang! 3 (Euro 950601)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (Europe 950601)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3RomInfo, Pang3RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
@@ -23273,7 +23274,7 @@ struct BurnDriver BurnDrvCpsPang3 = {
 
 struct BurnDriver BurnDrvCpsPang3r1 = {
 	"pang3r1", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (Euro  950511)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (Europe 950511)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3r1RomInfo, Pang3r1RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
@@ -23283,7 +23284,7 @@ struct BurnDriver BurnDrvCpsPang3r1 = {
 
 struct BurnDriver BurnDrvCpsPang3r1a = {
 	"pang3r1a", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (Euro 950511, alt)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (Europe 950511, alt)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3r1aRomInfo, Pang3r1aRomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
@@ -24623,7 +24624,7 @@ struct BurnDriver BurnDrvCpsSf2cejab2 = {
 
 struct BurnDriver BurnDrvCpsSf2ceupl = {
 	"sf2ceupl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II': Champion Edition (UPL bootleg)\0", NULL, "bootleg (UPL)", "CPS1",
+	"Street Fighter II': Champion Edition (Japan 920322, UPL bootleg?)\0", NULL, "bootleg (UPL?)", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuplRomInfo, Sf2ceuplRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -26181,6 +26182,46 @@ struct BurnDriver BurnDrvCpsSf2mix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Street Fighter II' - Champion Edition Golden Magic Hack
+// Files date: 2020-Oct-13
+
+static struct BurnRomInfo Sf2gmRomDesc[] = {
+	{ "sf2gm.23",		0x080000, 0x9028b8b7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2gm.22",		0x080000, 0xd275da79, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2gm.21",		0x080000, 0x2f8a194f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92_01.bin",		0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",		0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",		0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",		0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",		0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",		0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",		0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",		0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",		0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",		0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",		0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",		0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.bin",		0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.bin",		0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.bin",		0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sf2gm)
+STD_ROM_FN(Sf2gm)
+
+struct BurnDriver BurnDrvCpsSf2gm = {
+	"sf2gm", "sf2ce", NULL, NULL, "2020",
+	"Street Fighter II' - Champion Edition (Golden Magic, Hack)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2gmRomInfo, Sf2gmRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 
 // Senjo no Ookami II (T-Chi)
 
@@ -26887,13 +26928,13 @@ struct BurnDriver BurnDrvCpsCaptre = {
 
 // Captain Commando (God of War, Hack)
 // Modified by Jinggai
-// GOTVG 20230309
+// GOTVG 20240622
 
 static struct BurnRomInfo captcmzsRomDesc[] = {
-	{ "cczs_23d.8f",	0x080000, 0x71d5611d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_22d.7f",	0x080000, 0xe46fc899, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_24d.9e",	0x100000, 0xf3ee95be, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cczs_28d.9f",	0x100000, 0x996e7663, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_23d.8f",	0x080000, 0x28c002cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_22d.7f",	0x080000, 0xa018f93a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_24d.9e",	0x100000, 0x5fd8c35e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_28d.9f",	0x100000, 0x32d38c83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -26909,7 +26950,7 @@ static INT32 CaptcommInit()
 }
 
 struct BurnDriver BurnDrvCpsCaptcmzs = {
-	"captcmzs", "captcomm", NULL, NULL, "2023",
+	"captcmzs", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (God of War, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -26948,13 +26989,13 @@ struct BurnDriver BurnDrvCpsCaptcmjy = {
 
 // Captain Commando (Incubus, Hack)
 // Modified by Jinggai
-// GOTVG 20230930
+// GOTVG 20240622
 
 static struct BurnRomInfo captcmmyRomDesc[] = {
-	{ "ccmy_23d.8f",	0x080000, 0xfde1676b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_22d.7f",	0x080000, 0xe610b61c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_24d.9e",	0x100000, 0x73a2c165, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ccmy_28d.9f",	0x100000, 0x87ebfc35, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_23d.8f",	0x080000, 0x90526683, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_22d.7f",	0x080000, 0xc9aab482, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_24d.9e",	0x100000, 0xc44af9c3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_28d.9f",	0x100000, 0x607db958, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -26963,7 +27004,7 @@ STD_ROM_PICK(captcmmy)
 STD_ROM_FN(captcmmy)
 
 struct BurnDriver BurnDrvCpsCaptcmmy = {
-	"captcmmy", "captcomm", NULL, NULL, "2023",
+	"captcmmy", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (Incubus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -27110,13 +27151,13 @@ struct BurnDriver BurnDrvCpsCaptcmsc = {
 
 // Captain Commando (CR7 Elite, Hack)
 // Modified by Jinggai
-// GOTVG 20230924
+// GOTVG 20240520
 
 static struct BurnRomInfo captcmcrRomDesc[] = {
-	{ "cccr_23d.8f",	0x080000, 0x20659d63, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_22d.7f",	0x080000, 0x40cafb24, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_24d.9e",	0x100000, 0x236ab891, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cccr_28d.9f",	0x100000, 0x3cf7dcc7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_23d.8f",	0x080000, 0xdffb6a54, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_22d.7f",	0x080000, 0xafb2e2ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_24d.9e",	0x100000, 0xd5615e42, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_28d.9f",	0x100000, 0x52d54c2e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27125,7 +27166,7 @@ STD_ROM_PICK(captcmcr)
 STD_ROM_FN(captcmcr)
 
 struct BurnDriver BurnDrvCpsCaptcmcr = {
-	"captcmcr", "captcomm", NULL, NULL, "2023",
+	"captcmcr", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (CR7 Elite, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
