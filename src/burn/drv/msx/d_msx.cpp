@@ -17508,6 +17508,25 @@ struct BurnDriver BurnDrvMSX_salamand = {
 	272, 228, 4, 3
 };
 
+// SalaGra (Salamander + Gradius2, hack)
+
+static struct BurnRomInfo MSX_salagraRomDesc[] = {
+	{ "SalaGra.rom",	0x40000, 0x507180cf, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_salagra, MSX_salagra, msx_msx)
+STD_ROM_FN(MSX_salagra)
+
+struct BurnDriver BurnDrvMSX_salagra = {
+	"msx_salagra", "msx_salamand" , "msx_msx", NULL, "1995",
+	"SalaGra (Salamander + Gradius2, hack)\0", NULL, "Konami", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_salagraRomInfo, MSX_salagraRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 
 // Salamander - Operation X (Korea) (Unl)
 
