@@ -5401,6 +5401,25 @@ struct BurnDriver BurnDrvpce_salamandmini = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// Salamander (CG Mini Near Arcade Ed. Actual Version, Hack)
+
+static struct BurnRomInfo pce_salamandminiactRomDesc[] = {
+	{ "Salamander (CG Mini Near Arcade Actual Version).pce", 0x100000, 0x276ffa91, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_salamandminiact)
+STD_ROM_FN(pce_salamandminiact)
+
+struct BurnDriver BurnDrvpce_salamandminiact = {
+	"pce_salamandminiact", "pce_salamand", NULL, NULL, "2024",
+	"Salamander (CG Mini Near Arcade Ed. Actual Version, Hack)\0", NULL, "Konami", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT | GBF_VERSHOOT, 0,
+	PceGetZipName, pce_salamandminiactRomInfo, pce_salamandminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
 // Sekigahara (Japan)
 
 static struct BurnRomInfo pce_sekigahaRomDesc[] = {
