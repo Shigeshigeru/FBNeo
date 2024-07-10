@@ -1920,7 +1920,7 @@ STD_ROM_FN(pce_fantzoneminiact)
 
 struct BurnDriver BurnDrvpce_fantzoneminiact = {
 	"pce_fantzoneminiact", "pce_fantzone", NULL, NULL, "2024",
-	"Fantasy Zone (PC-Engine Mini Ed. Actual Fix)\0", NULL, "NEC", "PC Engine",
+	"Fantasy Zone (PC-Engine Mini Ed. Actual Fix, Hack)\0", NULL, "NEC", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
 	PceGetZipName, pce_fantzoneminiactRomInfo, pce_fantzoneminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -2454,7 +2454,7 @@ STD_ROM_FN(pce_gradiusminiact)
 
 struct BurnDriver BurnDrvpce_gradiusminiact = {
 	"pce_gradiusminiact", "pce_gradius", NULL, NULL, "2024",
-	"Gradius (PC-Engine Mini Ed. Acutual Fix,)\0", NULL, "Konami", "PC Engine",
+	"Gradius (PC-Engine Mini Ed. Acutual Fix, Hack)\0", NULL, "Konami", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
 	PceGetZipName, pce_gradiusminiactRomInfo, pce_gradiusminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
