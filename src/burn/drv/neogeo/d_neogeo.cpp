@@ -28853,8 +28853,11 @@ static struct BurnRomInfo mslug4hdRomDesc[] = {
 
 	{ "263-m1d.m1",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "263-v1d.v1",    0x800000, 0xfd6b982e, 5 | BRF_SND },           //  10 Sound data
-	{ "263-v2d.v2",    0x800000, 0x20125227, 5 | BRF_SND },           //  11
+	{ "263-v1d.v1",    0x400000, 0x8cb5a9ef, 5 | BRF_SND },           //  10 Sound data
+	{ "263-v2d.v2",    0x400000, 0x94217b1e, 5 | BRF_SND },           //  11
+	{ "263-v3d.v3",    0x400000, 0x7616fcec, 5 | BRF_SND },           //  12
+	{ "263-v4d.v4",    0x400000, 0x7b0b92a1, 5 | BRF_SND },           //  13
+
 };
 
 STDROMPICKEXT(mslug4hd, mslug4hd, neogeo)
