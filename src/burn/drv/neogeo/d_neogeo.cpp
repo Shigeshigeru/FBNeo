@@ -19526,7 +19526,7 @@ struct BurnDriver BurnDrvMslug4unity = {
 	MSLUG4_DECRYPTED_Z80									\
 	MSLUG4_DECRYPTED_SND
 
-// Metal Slug 4 (Fully Decrypted)
+// Metal Slug 4 (NGM-2630, Fully Decrypted)
 
 static struct BurnRomInfo mslug4fdRomDesc[] = {
 	{ "263-p1.p1",		0x100000, 0x27e4def3, 1 | BRF_ESS | BRF_PRG },
@@ -19540,7 +19540,7 @@ STD_ROM_FN(mslug4fd)
 
 struct BurnDriver BurnDrvMslug4fd = {
 	"mslug4fd", "mslug4", "neogeo", NULL, "2002",
-	"Metal Slug 4 (Fully Decrypted)\0", NULL, "Mega / Noise Factory / Playmore", "Neo Geo MVS",
+	"Metal Slug 4 (MVSFully Decrypted)\0", NULL, "Mega / Noise Factory / Playmore", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4fdRomInfo, mslug4fdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -28755,7 +28755,7 @@ struct BurnDriver BurnDrvkof2k3ms = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2003 (AES, Fully Decrypted Version)
+// The King of Fighters 2003 (NGH-2710, Fully Decrypted)
 
 static struct BurnRomInfo kf2k3hdfRomDesc[] = {
 	{ "271-p1hd.p1",  0x400000, 0x3eb63d66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -28793,7 +28793,7 @@ static INT32 kof2003fdInit()
 
 struct BurnDriver BurnDrvkf2k3hdf = {
 	"kf2k3hdf", "kof2003", "neogeo", NULL, "2003",
-	"The King of Fighters 2003 (AES, Fully Decrypted Version)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters 2003 (NGH-2710, Fully Decrypted)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k3hdfRomInfo, kf2k3hdfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -28801,8 +28801,7 @@ struct BurnDriver BurnDrvkf2k3hdf = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2003 (MVS, Fully Decrypted Version)
-
+// The King of Fighters 2003 (NGM-2710, Export, Fully Decrypted)
 static struct BurnRomInfo kf2k3mdfRomDesc[] = {
 	{ "271-p1d.p1",   0x400000, 0x08689be0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "271-p2d.p2",   0x400000, 0x61cf0139, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -28829,10 +28828,44 @@ STD_ROM_FN(kf2k3mdf)
 
 struct BurnDriver BurnDrvkf2k3mdf = {
 	"kf2k3mdf", "kof2003", "neogeo", NULL, "2003",
-	"The King of Fighters 2003 (MVS, Fully Decrypted Version)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters 2003 (NGM-2710, Export, Fully Decrypted)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k3mdfRomInfo, kf2k3mdfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof2003fdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 4 (NGH-2630, Fully Decrypted)
+
+static struct BurnRomInfo mslug4hdRomDesc[] = {
+	{ "263-ph1d.p1",   0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-ph2d.sp2",  0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "263-s1d.s1",    0x080000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "263-c1d.c1",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  3 Sprite data
+	{ "263-c2d.c2",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  4
+	{ "263-c3d.c3",    0x800000, 0x61af560c, 3 | BRF_GRA },           //  5
+	{ "263-c4d.c4",    0x800000, 0xf2c544fd, 3 | BRF_GRA },           //  6
+	{ "263-c5d.c5",    0x800000, 0x84c66c44, 3 | BRF_GRA },           //  7
+	{ "263-c6d.c6",    0x800000, 0x5ed018ab, 3 | BRF_GRA },           //  8
+
+	{ "263-m1d.m1",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "263-v1d.v1",    0x800000, 0xfd6b982e, 5 | BRF_SND },           //  10 Sound data
+	{ "263-v2d.v2",    0x800000, 0x20125227, 5 | BRF_SND },           //  11
+};
+
+STDROMPICKEXT(mslug4hd, mslug4hd, neogeo)
+STD_ROM_FN(mslug4hd)
+
+struct BurnDriver BurnDrvMslug4hd = {
+	"mslug4hd", "mslug4", "neogeo", NULL, "2002",
+	"Metal Slug 4 (NGH-2630, Fully Decrypted)\0", NULL, "Mega / Noise Factory / Playmore", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4hdRomInfo, mslug4hdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
