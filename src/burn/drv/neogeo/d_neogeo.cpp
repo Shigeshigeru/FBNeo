@@ -28842,7 +28842,7 @@ static struct BurnRomInfo mslug4hdRomDesc[] = {
 	{ "263-ph1d.p1",   0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-ph2d.sp2",  0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-s1d.s1",    0x080000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "263-s1d.s1",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "263-c1d.c1",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  3 Sprite data
 	{ "263-c2d.c2",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  4
