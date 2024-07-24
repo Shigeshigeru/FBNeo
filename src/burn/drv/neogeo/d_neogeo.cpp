@@ -28871,3 +28871,4 @@ struct BurnDriver BurnDrvMslug4hd = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
