@@ -11833,9 +11833,9 @@ struct BurnDriver BurnDrvfds_akitsunofusnoka = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Akumajou Dracula (Japan)
+// Akumajou Dracula (Japan)(v1.20)
 static struct BurnRomInfo fds_akumajoudraculajRomDesc[] = {
-	{ "Akumajou Dracula (Japan).fds",          131000, 0x4f72ee2a, BRF_ESS | BRF_PRG },
+	{ "Akumajou Dracula (Japan)(v1.20).fds",          131000, 0x4f72ee2a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_akumajoudraculaj, fds_akumajoudraculaj, fds_fdsbios)
@@ -11843,7 +11843,7 @@ STD_ROM_FN(fds_akumajoudraculaj)
 
 struct BurnDriver BurnDrvfds_akumajoudraculaj = {
 	"fds_akumajoudraculaj", "fds_akumajoudracula", "fds_fdsbios", NULL, "1986",
-	"Akumajou Dracula (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Akumajou Dracula (Japan)(v1.20)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_akumajoudraculajRomInfo, fds_akumajoudraculajRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -13619,9 +13619,9 @@ struct BurnDriver BurnDrvfds_konekmon = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Link no Bouken - The Legend of Zelda 2 (Japan)
+// Link no Bouken - The Legend of Zelda 2 (Japan)(v1.10)
 static struct BurnRomInfo fds_linknoboujRomDesc[] = {
-	{ "Link no Bouken - The Legend of Zelda 2 (Japan).fds",          131000, 0xb9b3e6b4, BRF_ESS | BRF_PRG },
+	{ "Link no Bouken - The Legend of Zelda 2 (Japan)(v1.10).fds",          131000, 0xb9b3e6b4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_linknobouj, fds_linknobouj, fds_fdsbios)
@@ -13629,7 +13629,7 @@ STD_ROM_FN(fds_linknobouj)
 
 struct BurnDriver BurnDrvfds_linknobouj = {
 	"fds_linknobouj", "fds_linknobou", "fds_fdsbios", NULL, "1987",
-	"Link no Bouken - The Legend of Zelda 2 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Link no Bouken - The Legend of Zelda 2 (Japan)(v1.10)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, fds_linknoboujRomInfo, fds_linknoboujRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -14876,9 +14876,9 @@ struct BurnDriver BurnDrvfds_zanac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Zelda no Densetsu - The Hyrule Fantasy (Japan)
+// Zelda no Densetsu - The Hyrule Fantasy (Japan)(v1.10)
 static struct BurnRomInfo fds_zeldanodenjRomDesc[] = {
-	{ "Zelda no Densetsu - The Hyrule Fantasy (Japan).fds",          131000, 0x9e8ba7dc, BRF_ESS | BRF_PRG },
+	{ "Zelda no Densetsu - The Hyrule Fantasy (Japan)(v1.10).fds",          131000, 0x9e8ba7dc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_zeldanodenj, fds_zeldanodenj, fds_fdsbios)
@@ -14886,7 +14886,7 @@ STD_ROM_FN(fds_zeldanodenj)
 
 struct BurnDriver BurnDrvfds_zeldanodenj = {
 	"fds_zeldanodenj", "fds_zeldanoden", "fds_fdsbios", NULL, "1986",
-	"Zelda no Densetsu - The Hyrule Fantasy (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Zelda no Densetsu - The Hyrule Fantasy (Japan)(v1.10)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, fds_zeldanodenjRomInfo, fds_zeldanodenjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -32992,7 +32992,7 @@ struct BurnDriver BurnDrvnes_atlantisnonazoj = {
 	"Atlantis no Nazo (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_atlantisnonazojRomInfo, nes_atlantisnonazojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_atlantisnonazojRomInfo, nes_atlantisnonazojRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -33014,7 +33014,7 @@ struct BurnDriver BurnDrvnes_atlantisnonazojz = {
 	"Atlantis no Nazo (Hack, Zone Select)\0", NULL, "Shigeru", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_atlantisnonazojzRomInfo, nes_atlantisnonazojzRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_atlantisnonazojzRomInfo, nes_atlantisnonazojzRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -33032,7 +33032,7 @@ struct BurnDriver BurnDrvnes_atlantisnonazo = {
 	"Atlantis no Nazo (Hack, English)\0", NULL, "pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_atlantisnonazoRomInfo, nes_atlantisnonazoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_atlantisnonazoRomInfo, nes_atlantisnonazoRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -37822,7 +37822,7 @@ struct BurnDriver BurnDrvnes_doraemon = {
 	"Doraemon (Japan, Rev A)\0", NULL, "Hudson Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_doraemonRomInfo, nes_doraemonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_doraemonRomInfo, nes_doraemonRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -45296,7 +45296,7 @@ struct BurnDriver BurnDrvnes_kamenriderclub = {
 	"Kamen Rider Club (Japan)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_kamenriderclubRomInfo, nes_kamenriderclubRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_kamenriderclubRomInfo, nes_kamenriderclubRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -56360,7 +56360,7 @@ struct BurnDriver BurnDrvnes_takesnosenfuu = {
 
 // Takeshi no Chousenjou (Japan)
 static struct BurnRomInfo nes_takesschajRomDesc[] = {
-	{ "Takeshi's Challenge (Japan).nes",          131088, 0xe810b35c, BRF_ESS | BRF_PRG },
+	{ "Takeshi no Chousenjou (Japan).nes",          131088, 0xe810b35c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_takesschaj)
@@ -56371,7 +56371,7 @@ struct BurnDriver BurnDrvnes_takesschaj = {
 	"Takeshi no Chousenjou (Japan)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
-	NESGetZipName, nes_takesschajRomInfo, nes_takesschajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_takesschajRomInfo, nes_takesschajRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
