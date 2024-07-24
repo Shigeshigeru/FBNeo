@@ -28082,6 +28082,7 @@ struct BurnDriver BurnDrvYoyoshkn = {
 	0x1000,	304, 224, 4, 3
 };
 
+
 // Soldier Girl Amazon (HB, IQ_132 port)
 
 static struct BurnRomInfo amazoneoRomDesc[] = {
