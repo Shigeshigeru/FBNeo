@@ -13765,9 +13765,9 @@ struct BurnDriver BurnDrvfds_meikyjiidab = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Metroid (Japan)
+// Metroid (Japan)(v1.30)
 static struct BurnRomInfo fds_metroidjRomDesc[] = {
-	{ "Metroid (Japan).fds",          131000, 0x5e4f013d, BRF_ESS | BRF_PRG },
+	{ "Metroid (Japan)(v1.30).fds",          131000, 0x5e4f013d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_metroidj, fds_metroidj, fds_fdsbios)
@@ -13775,7 +13775,7 @@ STD_ROM_FN(fds_metroidj)
 
 struct BurnDriver BurnDrvfds_metroidj = {
 	"fds_metroidj", "fds_metroid", "fds_fdsbios", NULL, "1986",
-	"Metroid (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Metroid (Japan)(v1.30)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, fds_metroidjRomInfo, fds_metroidjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
