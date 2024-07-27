@@ -28901,3 +28901,97 @@ struct BurnDriver BurnDrvMslug4hd = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// SNK vs. Capcom - SVC Chaos (Code Mystics Version)
+/* Encrypted Set */ /* This set is unknown */
+// The S1 data in c7,c8 have the same CRC 0xad184232 as the original, but the CRC of the s2.bin is 0xaf105364
+// The data in c7,c8 do not match the original CRC
+
+static struct BurnRomInfo svccmRomDesc[] = {
+	{ "269-p1.p1",    0x400000, 0x38e2005e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "269-p2.p2",    0x400000, 0x6d13797c, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "269-c1cm.c1",  0x800000, 0xed134176, 3 | BRF_GRA },           //  2 Sprite data
+	{ "269-c2cm.c2",  0x800000, 0x8b5fd526, 3 | BRF_GRA },           //  3
+	{ "269-c3cm.c3",  0x800000, 0xaac66319, 3 | BRF_GRA },           //  4
+	{ "269-c4cm.c4",  0x800000, 0x859dfd89, 3 | BRF_GRA },           //  5
+	{ "269-c5cm.c5",  0x800000, 0xe4f20b43, 3 | BRF_GRA },           //  6
+	{ "269-c6cm.c6",  0x800000, 0xa9d62fa7, 3 | BRF_GRA },           //  7
+	{ "269-c7cm.c7",  0x800000, 0x94742c9b, 3 | BRF_GRA },           //  8
+	{ "269-c8cm.c8",  0x800000, 0x115af8da, 3 | BRF_GRA },           //  9
+
+	/* Encrypted */
+	{ "269-m1.m1",    0x080000,  0xf6819d00, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+
+	/* Encrypted */
+	{ "269-v1.v1",    0x800000, 0xc659b34c, 5 | BRF_SND },           // 11 Sound data
+	{ "269-v2.v2",    0x800000, 0xdd903835, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(svccm, svccm, neogeo)
+STD_ROM_FN(svccm)
+
+struct BurnDriver BurnDrvSvccm = {
+	"svccm", "svc", "neogeo", NULL, "2003",
+	"SNK vs. Capcom - SVC Chaos (Code Mystics Version)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF | FBF_SF,
+	NULL, svccmRomInfo, svccmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	svcpcbInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// SNK vs. Capcom - SVC Chaos (Code Mystics Version, Fully Decrypted)
+// The S1 data is used in C7,C8
+
+static struct BurnRomInfo svccmdRomDesc[] = {
+	{ "269-p1d.p1"	,	0x100000, 0x19fc03a9, 1 | BRF_ESS | BRF_PRG },
+//	{ "269-p1d.bin"	,	0x800000, 0xf58d274c, 1 | BRF_ESS | BRF_PRG },
+	{ "269-p2d.p2",		0x500000, 0xf1547feb, 1 | BRF_ESS | BRF_PRG },
+
+	{ "269-s1d.s1",		0x080000, 0xad184232, 2 | BRF_GRA },
+
+	{ "269-c1d.c1",		0x800000, 0x465d473b, 3 | BRF_GRA },
+	{ "269-c2d.c2",		0x800000, 0x3eb28f78, 3 | BRF_GRA },
+	{ "269-c3d.c3",		0x800000, 0xf4d4ab2b, 3 | BRF_GRA },
+	{ "269-c4d.c4",		0x800000, 0xa69d523a, 3 | BRF_GRA },
+	{ "269-c5d.c5",		0x800000, 0xba2a7892, 3 | BRF_GRA },
+	{ "269-c6d.c6",		0x800000, 0x37371ca1, 3 | BRF_GRA },
+	{ "269-c7dcm.c7",	0x800000, 0x8aa5f196, 3 | BRF_GRA },
+	{ "269-c8dcm.c8",	0x800000, 0x08688e27, 3 | BRF_GRA },
+
+	{ "269-m1d.m1",		0x080000, 0x7b7bf462, 4 | BRF_ESS | BRF_PRG },
+
+	{ "269-v1d.v1",		0x800000, 0xff64cd56, 5 | BRF_SND },
+	{ "269-v2d.v2",		0x800000, 0xa8dd6446, 5 | BRF_SND },
+};
+
+STDROMPICKEXT(svccmd, svccmd, neogeo)
+STD_ROM_FN(svccmd)
+
+//static void svcpdCallback()
+//{
+//}
+
+static INT32 svcpdInit()
+{
+	INT32 nRet;
+
+//	NeoCallbackActive->pInitialise = svcpdCallback;
+
+	nRet = NeoPVCInit();
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvSvccmd = {
+	"svccmd", "svc", "neogeo", NULL, "2003",
+	"SNK vs. Capcom - SVC Chaos (Code Mystics Version, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
+	NULL, svccmdRomInfo, svccmdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	svcpdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
