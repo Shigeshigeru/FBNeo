@@ -28902,8 +28902,8 @@ struct BurnDriver BurnDrvMslug4hd = {
 	0x1000,	304, 224, 4, 3
 };
 
-// SNK vs. Capcom - SVC Chaos (Code Mystics Version)
-/* Encrypted Set */ /* This set is unknown */
+// SNK vs. Capcom - SVC Chaos (Code Mystics GENJURO fixed Version)
+/* Encrypted Set */ /* This set does not fix GENJURO */
 // S1 data in c7,c8 have the same CRC 0xad184232 as the original, but the CRC of the s2.bin is 0xaf105364
 // S1 data in c7,c8 do not match the original CRC
 
@@ -28943,8 +28943,8 @@ struct BurnDriver BurnDrvSvccm = {
 	0x1000,	304, 224, 4, 3
 };
 
-// SNK vs. Capcom - SVC Chaos (Code Mystics Version, Fully Decrypted)
-// S1 data is used in C7,C8
+// SNK vs. Capcom - SVC Chaos (Code Mystics GENJURO fixed Version, Fully Decrypted)
+// Original S1 data is used in C7,C8
 // Extract it with IQ's tool
 // https://neo-source.com/index.php?topic=241.msg3110#msg3110
 // https://neo-source.com/index.php?action=dlattach;topic=241.0;attach=154
@@ -28954,8 +28954,8 @@ static struct BurnRomInfo svccmdRomDesc[] = {
 //	{ "269-p1d.bin"	,	0x800000, 0xf58d274c, 1 | BRF_ESS | BRF_PRG },
 	{ "269-p2d.p2",		0x500000, 0xf1547feb, 1 | BRF_ESS | BRF_PRG },
 
-//	{ "269-s1dcm.s1",	0x080000, 0xaf105364, 2 | BRF_GRA },
-	{ "269-s1d.s1",		0x080000, 0xad184232, 2 | BRF_GRA },
+	{ "269-s1dcm.s1",	0x080000, 0xaf105364, 2 | BRF_GRA },
+//	{ "269-s1d.s1",		0x080000, 0xad184232, 2 | BRF_GRA },
 
 	{ "269-c1d.c1",		0x800000, 0x465d473b, 3 | BRF_GRA },
 	{ "269-c2d.c2",		0x800000, 0x3eb28f78, 3 | BRF_GRA },
@@ -28992,7 +28992,7 @@ static INT32 svcpdInit()
 
 struct BurnDriver BurnDrvSvccmd = {
 	"svccmd", "svc", "neogeo", NULL, "2003",
-	"SNK vs. Capcom - SVC Chaos (Code Mystics Version, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	"SNK vs. Capcom - SVC Chaos (Code Mystics GENJURO fixed Version, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
 	NULL, svccmdRomInfo, svccmdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
