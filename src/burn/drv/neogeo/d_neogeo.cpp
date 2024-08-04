@@ -29048,7 +29048,7 @@ struct BurnDriver BurnDrvMslug4hd = {
 // https://neo-source.com/index.php?topic=241.msg3110#msg3110
 // https://neo-source.com/index.php?action=dlattach;topic=241.0;attach=154
 	
-static struct BurnRomInfo svcdRomDesc[] = {
+static struct BurnRomInfo svcd1fRomDesc[] = {
 	{ "269-p1d.p1"	,	0x100000, 0x19fc03a9, 1 | BRF_ESS | BRF_PRG },
 //	{ "269-p1d.bin"	,	0x800000, 0xf58d274c, 1 | BRF_ESS | BRF_PRG },
 	{ "269-p2d.p2",		0x500000, 0xf1547feb, 1 | BRF_ESS | BRF_PRG },
