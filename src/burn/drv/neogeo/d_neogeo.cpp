@@ -29070,8 +29070,8 @@ static struct BurnRomInfo svcdRomDesc[] = {
 	{ "269-v2d.v2",		0x800000, 0xa8dd6446, 5 | BRF_SND },
 };
 
-STDROMPICKEXT(svcd, svcd, neogeo)
-STD_ROM_FN(svcd)
+STDROMPICKEXT(svcd1f, svcd1f, neogeo)
+STD_ROM_FN(svcd1f)
 
 //static void svcpdCallback()
 //{
@@ -29088,12 +29088,12 @@ static INT32 svcpdInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvSvcd = {
-	"svcd", "svc", "neogeo", NULL, "2003",
+struct BurnDriver BurnDrvsvcd1f = {
+	"svcd1f", "svc", "neogeo", NULL, "2003",
 	"SNK vs. Capcom - SVC Chaos (NGM-2690 ~ NGH-2690, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
-	NULL, svcdRomInfo, svcdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, svcd1fRomInfo, svcd1fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	svcpdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
