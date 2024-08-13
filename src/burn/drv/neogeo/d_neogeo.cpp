@@ -7453,7 +7453,6 @@ STD_ROM_FN(kof99ka)
 
 INT32 kof99kaInit()
 {
-	nNeoProtectionXor = 0x00;
 	return NeoInit();
 }
 
@@ -12291,7 +12290,6 @@ STD_ROM_FN(preisle2)
 
 INT32 preisle2Init()
 {
-	nNeoProtectionXor = 0x9F;
 	return NeoInit();
 }
 
@@ -12954,7 +12952,6 @@ STD_ROM_FN(s1945p)
 
 static INT32 s1945pInit()
 {
-	nNeoProtectionXor = 0x05;
 	s1945pmode = 1;
 
 	return NeoInit();
@@ -12969,7 +12966,6 @@ struct BurnDriver BurnDrvS1945p = {
 	s1945pInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
-
 
 // Quiz King of Fighters (SAM-080 ~ SAH-080)
 /* MVS AND AES VERSION */
@@ -28189,6 +28185,52 @@ struct BurnDriver BurnDrvPbobblean = {
 };
 
 // Strikers 1945 Plus
+/* ACA NEOGEO Version, Encrypted GFX Roms */ /* MVS ONLY RELEASE */
+
+static struct BurnRomInfo s1945poRomDesc[] = {
+	{ "254-p1.p1",    0x100000, 0xff8efcff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "254-p2.sp2",   0x400000, 0xefdfd4dd, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	{ "254-c1.c1",    0x800000, 0xae6fc8ef, 3 | BRF_GRA },           //  2 Sprite data
+	{ "254-c2.c2",    0x800000, 0x436fa176, 3 | BRF_GRA },           //  3
+	{ "254-c3.c3",    0x800000, 0xe53ff2dc, 3 | BRF_GRA },           //  4
+	{ "254-c4.c4",    0x800000, 0x818672f0, 3 | BRF_GRA },           //  5
+	{ "254-c5.c5",    0x800000, 0x4580eacd, 3 | BRF_GRA },           //  6
+	{ "254-c6.c6",    0x800000, 0xe34970fc, 3 | BRF_GRA },           //  7
+	{ "254-c7.c7",    0x800000, 0xf2323239, 3 | BRF_GRA },           //  8
+	{ "254-c8.c8",    0x800000, 0x66848c7d, 3 | BRF_GRA },           //  9
+
+	{ "254-m1an.m1",  0x020000, 0x8ad684d5, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code /ACA NEOGEO
+
+	{ "254-v1.v1",    0x400000, 0x844f58fb, 5 | BRF_SND },           // 11 Sound data
+	{ "254-v2.v2",    0x400000, 0xd9a248f0, 5 | BRF_SND },           // 12
+	{ "254-v3.v3",    0x400000, 0x0b0d2d33, 5 | BRF_SND },           // 13
+	{ "254-v4.v4",    0x400000, 0x6d13dc91, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(s1945po, s1945po, neogeo)
+STD_ROM_FN(s1945po)
+
+static INT32 s1945poInit()
+{
+	nNeoProtectionXor = 0x05;
+	s1945pmode = 1;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvS1945po = {
+	"s1945po", "s1945p", "neogeo", NULL, "1999",
+	"Strikers 1945 Plus (ACA NEOGEO Version)\0", NULL, "Psikyo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VERSHOOT, 0,
+	NULL, s1945poRomInfo, s1945poRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	s1945poInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Strikers 1945 Plus
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo s1945pdoRomDesc[] = {
@@ -28227,6 +28269,47 @@ struct BurnDriver BurnDrvs1945pdo = {
 };
 
 // Prehistoric Isle 2
+/* ACA NEOGEO Version, Encrypted GFX */ /* MVS ONLY RELEASE */
+
+static struct BurnRomInfo preisle2oRomDesc[] = {
+	{ "255-p1.p1",    0x100000, 0xdfa3c0f3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "255-p2.sp2",   0x400000, 0x42050b80, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "255-c1.c1",    0x800000, 0xea06000b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "255-c2.c2",    0x800000, 0x04e67d79, 3 | BRF_GRA },           //  3
+	{ "255-c3.c3",    0x800000, 0x60e31e08, 3 | BRF_GRA },           //  4
+	{ "255-c4.c4",    0x800000, 0x40371d69, 3 | BRF_GRA },           //  5
+	{ "255-c5.c5",    0x800000, 0x0b2e6adf, 3 | BRF_GRA },           //  6
+	{ "255-c6.c6",    0x800000, 0xb001bdd3, 3 | BRF_GRA },           //  7
+
+	{ "255-m1an.m1",  0x020000, 0x3ad3b043, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code /ACA NEOGEO
+
+	{ "255-v1.v1",    0x400000, 0x5a14543d, 5 | BRF_SND },           //  9 Sound data
+	{ "255-v2.v2",    0x200000, 0x6610d91a, 5 | BRF_SND },           // 10
+};
+
+STDROMPICKEXT(preisle2o, preisle2o, neogeo)
+STD_ROM_FN(preisle2o)
+
+INT32 preisle2oInit()
+{
+	nNeoProtectionXor = 0x9F;
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvPreisle2o = {
+	"preisle2o", "preisle2", "neogeo", NULL, "1999",
+	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_HORSHOOT, 0,
+	NULL, preisle2oRomInfo, preisle2oRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	preisle2oInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Prehistoric Isle 2
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo preisle2doRomDesc[] = {
@@ -28258,6 +28341,51 @@ struct BurnDriver BurnDrvpreis2anfd = {
 	NULL, preisle2doRomInfo, preisle2doRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Millennium Battle
+/* Original Version - Encrypted GFX */ /* ACA NEOGEO VERSION */
+
+static struct BurnRomInfo kof99kaoRomDesc[] = {
+	{ "251-p1da.p1",  0x100000, 0xf2c7ddfa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
+	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  2 Sprite data
+	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  3
+	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  4
+	{ "251-c4.c4",    0x800000, 0x438c8b22, 3 | BRF_GRA },           //  5
+	{ "251-c5.c5",    0x800000, 0x0b0abd0a, 3 | BRF_GRA },           //  6
+	{ "251-c6.c6",    0x800000, 0x65bbf281, 3 | BRF_GRA },           //  7
+	{ "251-c7.c7",    0x800000, 0xff65f62e, 3 | BRF_GRA },           //  8
+	{ "251-c8.c8",    0x800000, 0x8d921c68, 3 | BRF_GRA },           //  9
+
+	{ "251-m1an.m1",  0x020000, 0xda5ec463, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code /ACA NEOGEO
+
+	{ "251-v1da.v1",  0x400000, 0x69f93c86, 5 | BRF_SND },           // 11 Sound data /ACA NEOGEO
+	{ "251-v2da.v2",  0x400000, 0x29a514f2, 5 | BRF_SND },           // 12 ACA NEOGEO
+	{ "251-v3da.v3",  0x400000, 0xc0404462, 5 | BRF_SND },           // 13 ACA NEOGEO
+	{ "251-v4da.v4",  0x200000, 0xc9aa9daf, 5 | BRF_SND },           // 14 ACA NEOGEO
+};
+
+STDROMPICKEXT(kof99kao, kof99kao, neogeo)
+STD_ROM_FN(kof99kao)
+
+INT32 kof99kaoInit()
+{
+	nNeoProtectionXor = 0x00;
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvKof99kao = {
+	"kof99kao", "kof99", "neogeo", NULL, "1999",
+	"The King of Fighters '99 - Millennium Battle (ACA NEOGEO Version)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99kaoRomInfo, kof99kaoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99kaoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };
 
 // The King of Fighters '99 - Millennium Battle
