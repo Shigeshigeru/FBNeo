@@ -7451,13 +7451,19 @@ static struct BurnRomInfo kof99kaRomDesc[] = {
 STDROMPICKEXT(kof99ka, kof99ka, neogeo)
 STD_ROM_FN(kof99ka)
 
+INT32 kof99kaInit()
+{
+	nNeoProtectionXor = 0x00;
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvKof99ka = {
 	"kof99ka", "kof99", "neogeo", NULL, "1999",
 	"The King of Fighters '99 - Millennium Battle (Korean release, non-encrypted program)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99kaRomInfo, kof99kaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof99kaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -12283,13 +12289,19 @@ static struct BurnRomInfo preisle2RomDesc[] = {
 STDROMPICKEXT(preisle2, preisle2, neogeo)
 STD_ROM_FN(preisle2)
 
+INT32 preisle2Init()
+{
+	nNeoProtectionXor = 0x9F;
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvPreisle2 = {
 	"preisle2", NULL, "neogeo", NULL, "1999",
 	"Prehistoric Isle 2\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_HORSHOOT, 0,
 	NULL, preisle2RomInfo, preisle2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	preisle2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -12942,6 +12954,7 @@ STD_ROM_FN(s1945p)
 
 static INT32 s1945pInit()
 {
+	nNeoProtectionXor = 0x05;
 	s1945pmode = 1;
 
 	return NeoInit();
