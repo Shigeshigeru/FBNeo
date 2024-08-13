@@ -28141,7 +28141,9 @@ struct BurnDriver BurnDrvKnightsch = {
 	0x1000,	304, 224, 4, 3
 };
 
-//ACA NEOGEO Version
+// -----------------------------------------------------------------------------
+// ACA NEOGEO Version and Extracts from the official release
+// -----------------------------------------------------------------------------
 
 // Puzzle Bobble / Bust-A-Move (ACA NEOGEO Version)
 /* MVS ONLY RELEASE */
@@ -28176,9 +28178,10 @@ struct BurnDriver BurnDrvPbobblean = {
 // Strikers 1945 Plus
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo s1945panfdRomDesc[] = {
+static struct BurnRomInfo s1945pdoRomDesc[] = {
 	{ "254-p1.p1",    0x100000, 0xff8efcff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "254-p2.sp2",   0x400000, 0xefdfd4dd, 1 | BRF_ESS | BRF_PRG }, //  1
+
 	{ "254-s1d.s1",   0x020000, 0x121a4f94, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 	{ "254-c1d.c1",   0x800000, 0x7b6902f9, 3 | BRF_GRA },           //  3 Sprite data
 	{ "254-c2d.c2",   0x800000, 0x51bd4252, 3 | BRF_GRA },           //  4
@@ -28197,15 +28200,15 @@ static struct BurnRomInfo s1945panfdRomDesc[] = {
 	{ "254-v4.v4",    0x400000, 0x6d13dc91, 5 | BRF_SND },           // 15
 };
 
-STDROMPICKEXT(s1945panfd, s1945panfd, neogeo)
-STD_ROM_FN(s1945panfd)
+STDROMPICKEXT(s1945pdo, s1945pdo, neogeo)
+STD_ROM_FN(s1945pdo)
 
-struct BurnDriver BurnDrvs1945panfd = {
-	"s1945panfd", "s1945p" , "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvs1945pdo = {
+	"s1945pdo", "s1945p" , "neogeo", NULL, "1999",
 	"Strikers 1945 Plus (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Psikyo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
-	NULL, s1945panfdRomInfo, s1945panfdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, s1945pdoRomInfo, s1945pdoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
@@ -28213,9 +28216,10 @@ struct BurnDriver BurnDrvs1945panfd = {
 // Prehistoric Isle 2
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo preis2anfdRomDesc[] = {
+static struct BurnRomInfo preisle2doRomDesc[] = {
 	{ "255-p1.p1",    0x100000, 0xdfa3c0f3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "255-p2.sp2",   0x400000, 0x42050b80, 1 | BRF_ESS | BRF_PRG }, //  1
+
 	{ "255-s1d.s1",   0x020000, 0x666cabdc, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 	{ "255-c1d.c1",   0x800000, 0x50fd785e, 3 | BRF_GRA },           //  3 Sprite data
 	{ "255-c2d.c2",   0x800000, 0xab913f1e, 3 | BRF_GRA },           //  4
@@ -28230,15 +28234,15 @@ static struct BurnRomInfo preis2anfdRomDesc[] = {
 	{ "255-v2.v2",    0x200000, 0x6610d91a, 5 | BRF_SND },           // 11
 };
 
-STDROMPICKEXT(preis2anfd, preis2anfd, neogeo)
-STD_ROM_FN(preis2anfd)
+STDROMPICKEXT(preisle2do, preisle2do, neogeo)
+STD_ROM_FN(preisle2do)
 
 struct BurnDriver BurnDrvpreis2anfd = {
-	"preis2anfd" , "preisle2", "neogeo", NULL, "1999",
+	"preisle2do" , "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
-	NULL, preis2anfdRomInfo, preis2anfdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, preisle2doRomInfo, preisle2doRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -28246,9 +28250,10 @@ struct BurnDriver BurnDrvpreis2anfd = {
 // The King of Fighters '99 - Millennium Battle
 /* ACA NEOGEO Fully Decrypted Version */
 
-static struct BurnRomInfo kof99anfdRomDesc[] = {
+static struct BurnRomInfo kof99kadoRomDesc[] = {
 	{ "251-p1da.p1",  0x100000, 0xe9b35003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
+
 	{ "251-s1d.s1",   0x020000, 0x1b0133fe, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 	{ "251-c1d.c1",   0x800000, 0xb3d88546, 3 | BRF_GRA },           //  3 Sprite data
 	{ "251-c2d.c2",   0x800000, 0x915c8634, 3 | BRF_GRA },           //  4
@@ -28267,15 +28272,15 @@ static struct BurnRomInfo kof99anfdRomDesc[] = {
 	{ "251-v4da.v4",  0x200000, 0xc9aa9daf, 5 | BRF_SND },           // 15 ACA NEOGEO
 };
 
-STDROMPICKEXT(kof99anfd, kof99anfd, neogeo)
-STD_ROM_FN(kof99anfd)
+STDROMPICKEXT(kof99kado, kof99kado, neogeo)
+STD_ROM_FN(kof99kado)
 
-struct BurnDriver BurnDrvkof99anfd = {
-	"kof99anfd", "kof99", "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvkof99kado = {
+	"kof99kado", "kof99", "neogeo", NULL, "1999",
 	"The King of Fighters '99 - Millennium Battle (ACA NEOGEO Fully Decrypted Version)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof99anfdRomInfo, kof99anfdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof99kadoRomInfo, kof99kadoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
