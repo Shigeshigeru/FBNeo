@@ -28224,7 +28224,7 @@ struct BurnDriver BurnDrvS1945po = {
 	"s1945po", "s1945p", "neogeo", NULL, "1999",
 	"Strikers 1945 Plus (ACA NEOGEO Version)\0", NULL, "Psikyo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VERSHOOT, 0,
 	NULL, s1945poRomInfo, s1945poRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	s1945poInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
@@ -28303,7 +28303,7 @@ struct BurnDriver BurnDrvPreisle2o = {
 	"preisle2o", "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_HORSHOOT, 0,
 	NULL, preisle2oRomInfo, preisle2oRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	preisle2oInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -28347,7 +28347,7 @@ struct BurnDriver BurnDrvpreis2anfd = {
 /* Original Version - Encrypted GFX */ /* ACA NEOGEO VERSION */
 
 static struct BurnRomInfo kof99kaoRomDesc[] = {
-	{ "251-p1da.p1",  0x100000, 0xf2c7ddfa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
+	{ "251-p1da.p1",  0x100000, 0xe9b35003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
