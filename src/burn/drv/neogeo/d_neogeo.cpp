@@ -29144,11 +29144,11 @@ static struct BurnRomInfo mslug4hdRomDesc[] = {
 	{ "263-ph1d.p1",   0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-ph2d.sp2",  0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1
 
-// Use S1 data
+// The S1 data used will be modified based on this.
 // Data segment (0x040000~0x05ffff) in s2.bin (512KB) from Code Mystics ROM Folder etc.
 
-	{ "263-s1d.s1",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
-	
+	{ "263-s1d.s1",    0x020000, 0xc4f4ed0e, 2 | BRF_GRA },           //  2 Text layer tiles
+
 	{ "263-c1d.c1",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  3 Sprite data
 	{ "263-c2d.c2",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  4
 	{ "263-c3d.c3",    0x800000, 0x61af560c, 3 | BRF_GRA },           //  5
