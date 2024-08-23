@@ -13767,7 +13767,7 @@ struct BurnDriver BurnDrvfds_meikyjiidab = {
 
 // Metroid (Japan)(v1.30)
 static struct BurnRomInfo fds_metroidjRomDesc[] = {
-	{ "Metroid (Japan)(v1.30).fds",          131000, 0x5e4f013d, BRF_ESS | BRF_PRG },
+	{ "Metroid (Japan).fds",          131000, 0x5e4f013d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_metroidj, fds_metroidj, fds_fdsbios)
