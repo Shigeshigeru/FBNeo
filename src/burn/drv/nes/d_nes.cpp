@@ -59502,7 +59502,8 @@ struct BurnDriver BurnDrvnes_winlosordra = {
 
 // Wing of Madoola, The (Japan)
 static struct BurnRomInfo nes_wingmadRomDesc[] = {
-	{ "Wing of Madoola, The (Japan)(1986)(Sunsoft).nes",          65552, 0x929899d8, BRF_ESS | BRF_PRG },
+//	{ "Wing of Madoola, The (Japan)(1986)(Sunsoft).nes",          65552, 0x929899d8, BRF_ESS | BRF_PRG },
+	{ "Madoola no Tsubasa (Japan)(1986)(Sunsoft).nes",            65552, 0xe07e0fa7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_wingmad)
