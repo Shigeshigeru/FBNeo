@@ -29391,7 +29391,7 @@ struct BurnDriver BurnDrvsvcd1f = {
 /* ACA NEOGEO VERSION */
 
 static struct BurnRomInfo kof98anRomDesc[] = {
-	{ "242-an1.p1",   0x100000, 0xba09784a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p1an.p1",  0x100000, 0xba09784a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "242-p2.sp2",   0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "242-s1.s1",    0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
