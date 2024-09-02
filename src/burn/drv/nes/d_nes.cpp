@@ -33224,9 +33224,9 @@ struct BurnDriver BurnDrvnes_athena = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Atlantis no Nazo (Japan)
+// Atlantis no Nazo (Japan)(NES2.0)
 static struct BurnRomInfo nes_atlantisnonazojRomDesc[] = {
-	{ "Atlantis no Nazo (Japan)(1986)(Sunsoft).nes",          49168, 0xdccbe3ae, BRF_ESS | BRF_PRG },
+	{ "Atlantis no Nazo (Japan)(1986)(Sunsoft).nes",          49168, 0xf250a44c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_atlantisnonazoj)
@@ -33242,13 +33242,13 @@ struct BurnDriver BurnDrvnes_atlantisnonazoj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Atlantis no Nazo (Hack, Zone Select)
+// Atlantis no Nazo (Hack, Zone Select)(NES2.0)
 // Shigeru's ips 2016
 // Download
 // https://note.com/api/v2/attachments/download/2f8d207b8dc640f39db49a88fe929b54
 
 static struct BurnRomInfo nes_atlantisnonazojzRomDesc[] = {
-	{ "Atlantis no Nazo (Zone Select).nes",          49168, 0xaf9dc5f7, BRF_ESS | BRF_PRG },
+	{ "Atlantis no Nazo (Zone Select).nes",          49168, 0x81068215, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_atlantisnonazojz)
@@ -56734,9 +56734,9 @@ struct BurnDriver BurnDrvnes_takesnosenfuu = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Takeshi no Chousenjou (Japan)
+// Takeshi no Chousenjou (Japan)(NES2.0)
 static struct BurnRomInfo nes_takesschajRomDesc[] = {
-	{ "Takeshi no Chousenjou (Japan).nes",          131088, 0xe810b35c, BRF_ESS | BRF_PRG },
+	{ "Takeshi no Chousenjou (Japan).nes",          131088, 0x7fd76c80, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_takesschaj)
@@ -59537,9 +59537,9 @@ struct BurnDriver BurnDrvnes_winlosordra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Wing of Madoola, The (Japan)
+// Wing of Madoola, The (Japan)(NES2.0)
 static struct BurnRomInfo nes_wingmadRomDesc[] = {
-	{ "Wing of Madoola, The (Japan)(1986)(Sunsoft).nes",          65552, 0x929899d8, BRF_ESS | BRF_PRG },
+	{ "Wing of Madoola, The (Japan)(1986)(Sunsoft).nes",          65552, 0xe07e0fa7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_wingmad)
