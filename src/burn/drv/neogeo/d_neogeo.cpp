@@ -29350,15 +29350,6 @@ static struct BurnRomInfo svcd1fRomDesc[] = {
 STDROMPICKEXT(svcd1f, svcd1f, neogeo)
 STD_ROM_FN(svcd1f)
 
-static INT32 svcpdInit()
-{
-	INT32 nRet;
-
-	nRet = NeoPVCInit();
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvsvcd1f = {
 	"svcd1f", "svc", "neogeo", NULL, "2003",
 	"SNK vs. Capcom - SVC Chaos (NGM-2690 ~ NGH-2690, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
