@@ -29156,8 +29156,8 @@ struct BurnDriver BurnDrvkf2k3mdf = {
 // Metal Slug 4 (NGH-2630, Fully Decrypted)
 
 static struct BurnRomInfo mslug4hdRomDesc[] = {
-	{ "263-ph1d.p1",   0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-ph2d.sp2",  0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-ph1.p1",    0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-ph2.sp2",   0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1
 
 // The S1 data used will be modified based on this.
 // Data segment (0x040000~0x05ffff) in s2.bin (512KB) from Code Mystics ROM Folder etc.
