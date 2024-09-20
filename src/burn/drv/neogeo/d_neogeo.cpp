@@ -29161,6 +29161,9 @@ static struct BurnRomInfo mslug4hdRomDesc[] = {
 
 // The S1 data used will be modified based on this.
 // Data segment (0x040000~0x05ffff) in s2.bin (512KB) from Code Mystics ROM Folder etc.
+// For more information on how to make this set, please refer to this page.
+// https://note.com/shigeshigeru/n/nd653e59c1702
+// Japanese only
 
 	{ "263-s1d.s1",    0x020000, 0xc4f4ed0e, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -29414,4 +29417,44 @@ struct BurnDriver BurnDrvKof98an = {
 	NULL, kof98anRomInfo, kof98anRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof98anInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+// Magician Lord (Returned OP Screen Version)
+
+/* This is a restored version of the opening demo that was deleted in the later version.
+  (Not dumped from the actual board)
+   For more information on how to make this set, please refer to this page.
+   https://milkchoco.info/archives/8743
+   This hack author is Siphon. */
+
+static struct BurnRomInfo maglordopRomDesc[] = {
+	{ "005-p1op.p1",  0x080000, 0xd9a33220, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ Returned OP Screen Version
+
+	{ "005-s1.s1",    0x020000, 0x1c5369a2, 2 | BRF_GRA },           //  1 Text layer tiles / MB831000
+
+	{ "005-c1.c1",    0x080000, 0x806aee34, 3 | BRF_GRA },           //  2 Sprite data 		/ MB834200
+	{ "005-c2.c2",    0x080000, 0x34aa9a86, 3 | BRF_GRA },           //  3 					/ MB834200
+	{ "005-c3.c3",    0x080000, 0xc4c2b926, 3 | BRF_GRA },           //  4 					/ MB834200
+	{ "005-c4.c4",    0x080000, 0x9c46dcf4, 3 | BRF_GRA },           //  5 					/ MB834200
+	{ "005-c5.c5",    0x080000, 0x69086dec, 3 | BRF_GRA },           //  6 					/ MB834200
+	{ "005-c6.c6",    0x080000, 0xab7ac142, 3 | BRF_GRA },           //  7 					/ MB834200
+
+	{ "005-m1.m1",    0x040000, 0x26259f0f, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code 		/ MB832000
+
+	{ "005-v11.v11",  0x080000, 0xcc0455fd, 5 | BRF_SND },           //  9 Sound data 		/ MB834000
+	{ "005-v21.v21",  0x080000, 0xf94ab5b7, 6 | BRF_SND },           // 10 					/ MB834000
+	{ "005-v22.v22",  0x080000, 0x232cfd04, 6 | BRF_SND },           // 11 					/ MB834000
+};
+
+STDROMPICKEXT(maglordop, maglordop, neogeo)
+STD_ROM_FN(maglordop)
+
+struct BurnDriver BurnDrvMaglordop = {
+	"maglordop", "maglord", "neogeo", NULL, "2024",
+	"Magician Lord (Returned OP Screen Version)\0", NULL, "Alpha Denshi Co.", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NULL, maglordopRomInfo, maglordopRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
 };
