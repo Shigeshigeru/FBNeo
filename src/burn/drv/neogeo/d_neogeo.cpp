@@ -28506,6 +28506,7 @@ static struct BurnRomInfo kof99kadoRomDesc[] = {
 	{ "251-p1da.p1",  0x100000, 0xe9b35003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
 
+	// This set does not include s1 data in Cx ROMs.
 	{ "251-s1d.s1",   0x020000, 0x1b0133fe, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 	{ "251-c1d.c1",   0x800000, 0xb3d88546, 3 | BRF_GRA },           //  3 Sprite data
 	{ "251-c2d.c2",   0x800000, 0x915c8634, 3 | BRF_GRA },           //  4
