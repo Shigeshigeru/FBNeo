@@ -29477,7 +29477,7 @@ static struct BurnRomInfo mslug3handRomDesc[] = {
 	{ "256-c7da.c7",   0x800000, 0x1861dfc5, 3 | BRF_GRA },          //  9
 	{ "256-c8da.c8",   0x800000, 0xbc18f71d, 3 | BRF_GRA },          // 10
 
-	{ "256-m1.m1",    0x040000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
 	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
