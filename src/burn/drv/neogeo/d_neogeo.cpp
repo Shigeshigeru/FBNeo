@@ -29460,7 +29460,7 @@ struct BurnDriver BurnDrvMaglordop = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Metal Slug 3 (ACA NEOGEO Version, Fully Decrypted)
+// Metal Slug 3 (NGH-2560, Fully Decrypted ACA NEOGEO Version)
 
 static struct BurnRomInfo mslug3handRomDesc[] = {
 	{ "256-ph1.p1",		0x100000, 0x9c42ca85, 1 | BRF_ESS | BRF_PRG },
@@ -29490,7 +29490,7 @@ STD_ROM_FN(mslug3hand)
 
 struct BurnDriver BurnDrvMslug3hand = {
 	"mslug3hand", "mslug3", "neogeo", NULL, "2000",
-	"Metal Slug 3 (ACA NEOGEO Fully Decrypted Version)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug 3 (NGH-2560, Fully Decrypted ACA NEOGEO Version)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3handRomInfo, mslug3handRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
