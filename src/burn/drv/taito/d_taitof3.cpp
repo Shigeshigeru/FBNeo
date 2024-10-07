@@ -3531,6 +3531,41 @@ struct BurnDriver BurnDrvDariusgj = {
 	320, 232, 4, 3
 };
 
+// Darius Gaiden - Silver Hawk (Ver 2.5J Darius Cosmic Collection Version)
+
+static struct BurnRomInfo dariusgjccRomDesc[] = {
+	{ "d87-12cc.bin",		0x080000, 0xbe34646a, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d87-11cc.bin",		0x080000, 0x41ce3164, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d87-10cc.bin",		0x080000, 0x31f2b36c, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d87-09cc.bin",		0x080000, 0x91bbd6a0, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "d87-03.bin",		0x200000, 0x4be1666e, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d87-04.bin",		0x200000, 0x2616002c, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d87-05.bin",		0x200000, 0x4e5891a9, TAITO_SPRITESA },           //  6
+
+	{ "d87-06.bin",		0x200000, 0x3b97a07c, TAITO_CHARS_BYTESWAP },     //  7 Layer Tiles
+	{ "d87-17.bin",		0x200000, 0xe601d63e, TAITO_CHARS_BYTESWAP },     //  8
+	{ "d87-08.bin",		0x200000, 0x76d23602, TAITO_CHARS },              //  9
+
+	{ "d87-13.bin",		0x040000, 0x15b1fff4, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d87-14.bin",		0x040000, 0xeecda29a, TAITO_68KROM2_BYTESWAP },   // 11
+
+	{ "d87-01.bin",		0x200000, 0x3848a110, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "d87-02.bin",		0x200000, 0x9250abae, TAITO_ES5505_BYTESWAP },    // 13
+};
+
+STD_ROM_PICK(dariusgjcc)
+STD_ROM_FN(dariusgjcc)
+
+struct BurnDriver BurnDrvDariusgjcc = {
+	"dariusgjcc", "dariusg", NULL, NULL, "2021",
+	"Darius Gaiden - Silver Hawk (Ver 2.5J Darius Cosmic Collection Version)\0", NULL, "Taito Corporation", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, dariusgjccRomInfo, dariusgjccRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 232, 4, 3
+};
 
 // Darius Gaiden - Silver Hawk (Ver 2.5A 1994/09/19)
 
