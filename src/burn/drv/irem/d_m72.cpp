@@ -1042,6 +1042,14 @@ static const UINT8 loht_crc[18] = {
 	0x39,0x00,0x82,0xae, 0x2c,0x9d,0x4b,0x73,0xfb,0xac,0xd4,0x6d, 0x6d,0x5b,0x77,0xc0, 0x00,0x00
 };
 
+/* Gallop - Armed police Unit */
+static const INT32 gallop_sample_offsets[32] = {
+	31,
+	0x00000, 0x00020, 0x00040, 0x01360, 0x02580, 0x04f20, 0x06240, 0x076e0,
+	0x08660, 0x092a0, 0x09ba0, 0x0a560, 0x0cee0, 0x0de20, 0x0e620, 0x0f1c0,
+	0x10200, 0x10220, 0x10240, 0x11380, 0x12760, 0x12780, 0x127a0, 0x13c40,
+	0x140a0, 0x16760, 0x17e40, 0x18ee0, 0x19f60, 0x1bbc0, 0x1cee0 };
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -4565,6 +4573,63 @@ struct BurnDriver BurnDrvGallopm72 = {
 	384, 256, 4, 3
 };
 
+// Gallop - Armed Police Unit (Japan, M72 hardware, old Version)
+
+static struct BurnRomInfo gallopm72oRomDesc[] = {
+	{ "cc_c-h0-.ic40",	0x20000, 0x2217dcd0, 0x01 | BRF_PRG | BRF_ESS },    //  0 V30 Code
+	{ "cc_c-l0-.ic37",	0x20000, 0xff39d7fb, 0x01 | BRF_PRG | BRF_ESS },    //  1
+	{ "cc_c-h3-.ic43",	0x20000, 0x9b2bbab9, 0x01 | BRF_PRG | BRF_ESS },    //  2
+	{ "cc_c-l3-.ic34",	0x20000, 0xacd3278e, 0x01 | BRF_PRG | BRF_ESS },    //  3
+
+	{ "cc_c-00.ic53",	0x20000, 0x9d99deaa, 0x02 | BRF_GRA },              //  4 Sprites
+	{ "cc_c-10.ic51",	0x20000, 0x7eb083ed, 0x02 | BRF_GRA },              //  5
+	{ "cc_c-20.ic49",	0x20000, 0x9421489e, 0x02 | BRF_GRA },              //  6
+	{ "cc_c-30.ic47",	0x20000, 0x920ec735, 0x02 | BRF_GRA },              //  7
+
+	{ "cc_b-a0.ic21",	0x10000, 0xa33472bd, 0x03 | BRF_GRA },              //  8 Foreground Tiles
+	{ "cc_b-a1.ic22",	0x10000, 0x118b1f2d, 0x03 | BRF_GRA },              //  9
+	{ "cc_b-a2.ic20",	0x10000, 0x83cebf48, 0x03 | BRF_GRA },              // 10
+	{ "cc_b-a3.ic23",	0x10000, 0x572903fc, 0x03 | BRF_GRA },              // 11
+
+	{ "cc_b-b0.ic26",	0x10000, 0x0df5b439, 0x04 | BRF_GRA },              // 12 Background Tiles
+	{ "cc_b-b1.ic27",	0x10000, 0x010b778f, 0x04 | BRF_GRA },              // 13
+	{ "cc_b-b2.ic25",	0x10000, 0xbda9f6fb, 0x04 | BRF_GRA },              // 14
+	{ "cc_b-b3.ic24",	0x10000, 0xd361ba3f, 0x04 | BRF_GRA },              // 15
+
+	{ "cc_c-v0.ic44",	0x20000, 0x6247bade, 0x05 | BRF_SND },              // 16 DAC Samples
+	
+//	{ "cc_c-pr-.ic1",	0x01000, 0xac4421b1, 0x07 | BRF_PRG },              // 17 i8751 microcontroller
+	{ "cc_c-pr-.ic1", 	0x01000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+
+	{ "m72_a-8l-.ic66",	0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
+	{ "m72_a-9l-.ic75",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19
+
+	{ "m72_a-3d-.ic11",	0x00117, 0x8a3732ff, 0x00 | BRF_OPT },              // 20 PLDs
+	{ "m72_a-4d-.ic19",	0x00117, 0x56c29834, 0x00 | BRF_OPT },              // 21
+	{ "cc_c-3f-.ic13",	0x00117, 0x16ca7c50, 0x00 | BRF_OPT },              // 22
+};
+
+STD_ROM_PICK(gallopm72o)
+STD_ROM_FN(gallopm72o)
+
+static INT32 gallopm72oInit()
+{
+	protection_sample_offsets = gallop_sample_offsets;
+	Clock_16mhz = 1;
+
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);
+}
+
+struct BurnDriver BurnDrvGallopm72o = {
+	"gallopm72o", "cosmccop", NULL, NULL, "1991",
+	"Gallop - Armed Police Unit (Japan, M72 hardware, old Version)\0", NULL, "Irem", "Irem M72",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
+	NULL, gallopm72oRomInfo, gallopm72oRomName, NULL, NULL, NULL, NULL, CommonInputInfo, GallopDIPInfo,
+	gallopm72oInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	384, 256, 4, 3
+};
+
 
 // Gallop - Armed Police Unit (Japan, M84 hardware)
 
@@ -4607,7 +4672,6 @@ struct BurnDriver BurnDrvGallop = {
 	cosmccopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
-
 
 
 // Legend of Hero Tonma (World)
