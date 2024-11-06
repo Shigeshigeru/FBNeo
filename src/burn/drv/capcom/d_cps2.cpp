@@ -10668,7 +10668,7 @@ struct BurnDriver BurnDrvCpsSfau1 = {
 	"sfau1", "sfa", NULL, NULL, "1995",
 	"Street Fighter Alpha - warriors' dreams (950727 USA) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfau1RomInfo, Sfau1RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -10908,7 +10908,7 @@ struct BurnDriver BurnDrvCpsNwarre = {
 	"nwarre", "nwarr", NULL, NULL, "1995",
 	"Night Warriors: Darkstalkers' Revenge (Euro 950420) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, NwarreRomInfo, NwarreRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -10978,7 +10978,7 @@ struct BurnDriver BurnDrvCpsVhuntjr3 = {
 	"vhuntjr3", "nwarr", NULL, NULL, "1995",
 	"Vampire Hunter: Darkstalkers' Revenge (Japan 950420) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, Vhuntjr3RomInfo, Vhuntjr3RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -14241,7 +14241,7 @@ struct BurnDriver BurnDrvCpsCsclubu = {
 	"csclubu", "csclub", NULL, NULL, "1997",
 	"Capcom Sports Club (971017 USA) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SPORTSMISC, 0,
 	NULL, CsclubuRomInfo, CsclubuRomName, NULL, NULL, NULL, NULL, CsclubInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
