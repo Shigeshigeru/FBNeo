@@ -29498,7 +29498,7 @@ struct BurnDriver BurnDrvMslug3hand = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Demo Version)
+// Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Version)
 
 static struct BurnRomInfo rotddcRomDesc[] = {
 // This ROM will not boot.
@@ -29535,7 +29535,7 @@ STD_ROM_FN(rotddc)
 
 struct BurnDriver BurnDrvRotddc = {
 	"rotddc", "rotd" , "neogeo", NULL, "2024",
-	"Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Demo Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
+	"Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
 	NULL, rotddcRomInfo, rotddcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -29543,7 +29543,7 @@ struct BurnDriver BurnDrvRotddc = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Rage of the Dragons (Rage of the Dragons NEO Demo Version)
+// Rage of the Dragons (Rage of the Dragons NEO Version)
 
 static struct BurnRomInfo rotdcRomDesc[] = {
 // This ROM will not boot.
@@ -29572,7 +29572,7 @@ STD_ROM_FN(rotdc)
 
 struct BurnDriver BurnDrvRotdc = {
 	"rotdc", "rotd" , "neogeo", NULL, "2024",
-	"Rage of the Dragons (Rage of the Dragons NEO Demo Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
+	"Rage of the Dragons (Rage of the Dragons NEO Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
 	NULL, rotdcRomInfo, rotdcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
