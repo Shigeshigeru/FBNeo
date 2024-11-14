@@ -29497,3 +29497,85 @@ struct BurnDriver BurnDrvMslug3hand = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Demo Version)
+
+static struct BurnRomInfo rotddcRomDesc[] = {
+// This ROM will not boot.
+// To fix P1(OriginalCRC:747023ea), change the 0xb9 of the 0x2400 to 0x71
+//	{ "264-p1.p1",    0x800000, 0x747023ea, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "264-p1np.p1",  0x800000, 0xb32f7fd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+// Original S1 data is used in C7,C8
+// Extract it with IQ's tool
+// https://neo-source.com/index.php?topic=241.msg3110#msg3110
+// https://neo-source.com/index.php?action=dlattach;topic=241.0;attach=154S1
+// Data segment (0x060000~0x07ffff) in s1 (512KB) from C7,C8 128Kb(CRC32:c155d4ff)
+
+	{ "264-s1d.s1",   0x020000, 0xc155d4ff, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "264-c1d.c1",   0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  2 Sprite data
+	{ "264-c2d.c2",   0x800000, 0xb1069066, 3 | BRF_GRA },           //  3
+	{ "264-c3dn.c3",  0x800000, 0xeec3345a, 3 | BRF_GRA },           //  4
+	{ "264-c4dn.c4",  0x800000, 0x94cabe9b, 3 | BRF_GRA },           //  5
+	{ "264-c5dn.c5",  0x800000, 0x550479cf, 3 | BRF_GRA },           //  6
+	{ "264-c6dn.c6",  0x800000, 0x34575f18, 3 | BRF_GRA },           //  7
+	{ "264-c7dn.c7",  0x800000, 0xb2e5461f, 3 | BRF_GRA },           //  8
+	{ "264-c8dn.c8",  0x800000, 0xd563aa3b, 3 | BRF_GRA },           //  9
+
+	{ "264-m1.m1",    0x020000, 0x4dbd7b43, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+
+	{ "264-v1.v1",    0x800000, 0xfa005812, 5 | BRF_SND },           // 11 Sound data
+	{ "264-v2.v2",    0x800000, 0xc3dc8bf0, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(rotddc, rotddc, neogeo)
+STD_ROM_FN(rotddc)
+
+struct BurnDriver BurnDrvRotddc = {
+	"rotddc", "rotd" , "neogeo", NULL, "2024",
+	"Rage of the Dragons (Decrypted C, Rage of the Dragons NEO Demo Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
+	NULL, rotddcRomInfo, rotddcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Rage of the Dragons (Rage of the Dragons NEO Demo Version)
+
+static struct BurnRomInfo rotdcRomDesc[] = {
+// This ROM will not boot.
+// To fix P1(OriginalCRC:747023ea), change the 0xb9 of the 0x2400 to 0x71
+//	{ "264-p1.p1",    0x800000, 0x747023ea, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "264-p1np.p1",  0x800000, 0xb32f7fd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "264-c1n.c1",   0x800000, 0x11de989c, 3 | BRF_GRA },           //  1 Sprite data
+	{ "264-c2n.c2",   0x800000, 0xe70eaf48, 3 | BRF_GRA },           //  2
+	{ "264-c3n.c3",   0x800000, 0x4637842c, 3 | BRF_GRA },           //  3
+	{ "264-c4n.c4",   0x800000, 0xd638367b, 3 | BRF_GRA },           //  4
+	{ "264-c5n.c5",   0x800000, 0x16fe4f9f, 3 | BRF_GRA },           //  5
+	{ "264-c6n.c6",   0x800000, 0xe8e4ebbf, 3 | BRF_GRA },           //  6
+	{ "264-c7n.c7",   0x800000, 0x1705a3ca, 3 | BRF_GRA },           //  7
+	{ "264-c8n.c8",   0x800000, 0xae10d1af, 3 | BRF_GRA },           //  8
+
+	{ "264-m1.m1",    0x020000, 0x4dbd7b43, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "264-v1.v1",    0x800000, 0xfa005812, 5 | BRF_SND },           // 10 Sound data
+	{ "264-v2.v2",    0x800000, 0xc3dc8bf0, 5 | BRF_SND },           // 11
+};
+
+STDROMPICKEXT(rotdc, rotdc, neogeo)
+STD_ROM_FN(rotdc)
+
+struct BurnDriver BurnDrvRotdc = {
+	"rotdc", "rotd" , "neogeo", NULL, "2024",
+	"Rage of the Dragons (Rage of the Dragons NEO Demo Version)\0", NULL, "QUByte / PIKO", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
+	NULL, rotdcRomInfo, rotdcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
