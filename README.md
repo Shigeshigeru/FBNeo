@@ -1,10 +1,12 @@
 # FinalBurn Neo NeCo
-Unofficial FinalBurn Neo
-It is the Unofficial Version that is specialized in complete self-catering and supports ROM images etc. from official reprinted games etc. that are not officially supported by the manufacturer.
-ROM images, etc. that are not officially supported.
-This is an Unofficial Version specialized in complete self-cooking.
-Basically, it is mainly for the addition of modified sets, and there is almost no addition of new drivers.
-The license is the same as FinalBurn Neo.
+FinalBurn Neo Neco is Unofficial Version.
+
+This is an unofficial version that specializes in complete self-cooking and supports ROM images, etc. of game makers' official reprinted games, etc. that are not officially supported.
+To make the emulator world a place where the sun shines
+And it was created for the purpose of eradicating illegal downloading.
+This is an unofficial version specialized in complete self-cooking.
+Basically, the addition of the official maker modification set is the main, and there is almost no addition of a new driver.
+License is the same as FinalBurn Neo.
 
 # FinalBurn Neo
 Official Forum: https://neo-source.com
