@@ -1,10 +1,10 @@
 # FinalBurn Neo NeCo
 Unofficial FinalBurn Neo
-公式バージョンで対応されていない
-改変されているメーカー公式復刻ゲーム等からの
-ROMイメージ等に対応している完全自炊特化型Unofficial Versionです
-基本的に改変されたセットの追加でありドライバーの追加はほぼありません
-ライセンスに関してはFinalBurn Neoと同様です
+It is the Unofficial Version that is specialized in complete self-catering and supports ROM images etc. from official reprinted games etc. that are not officially supported by the manufacturer.
+ROM images, etc. that are not officially supported.
+This is an Unofficial Version specialized in complete self-cooking.
+Basically, it is mainly for the addition of modified sets, and there is almost no addition of new drivers.
+The license is the same as FinalBurn Neo.
 
 # FinalBurn Neo
 Official Forum: https://neo-source.com
