@@ -1,5 +1,5 @@
 # FinalBurn Neo NeCo
-FinalBurn Neo Neco is Unofficial Version.
+FinalBurn Neo NeCo is Unofficial Version.
 
 This is an unofficial version that specializes in complete self-cooking and supports ROM images, etc. of game makers' official reprinted games, etc. that are not officially supported.
 To make the emulator world a place where the sun shines
