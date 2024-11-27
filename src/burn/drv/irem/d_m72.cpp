@@ -3296,7 +3296,7 @@ struct BurnDriver BurnDrvNspirito = {
 	"nspirito", "nspirit", NULL, NULL, "1988",
 	"Ninja Spirit (World, oldset)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritoRomInfo, nspiritoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
 	nspiritoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
