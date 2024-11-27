@@ -3245,7 +3245,7 @@ struct BurnDriver BurnDrvNspirit = {
 // Ninja Spirit (World, oldset)
 // doesn't wait / check for japan warning string.. fails rom check if used with japanese mcu rom (World version?)
 
-static struct BurnRomInfo nspiritRomDesc[] = {
+static struct BurnRomInfo nspiritoRomDesc[] = {
 	{ "nin_c-h0-b.ic40",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS },    //  0 V30 Code
 	{ "nin_c-l0-b.ic37",	0x10000, 0x9a405898, 0x01 | BRF_PRG | BRF_ESS },    //  1
 	{ "nin_c-h1-.ic41",		0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS },    //  2
