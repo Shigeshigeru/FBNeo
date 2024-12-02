@@ -1272,7 +1272,6 @@ del %(Filename).exe
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256Opt.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sort.c" />
-    <ClCompile Include="..\..\src\dep\libs\lib7z\SwapBytes.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Threads.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Xxh64.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Xz.c" />
