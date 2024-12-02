@@ -31,6 +31,9 @@
     <ClCompile Include="..\..\src\burn\load.cpp">
       <Filter>burn</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\burn_sha1.cpp">
+      <Filter>burn</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\tiles_generic.cpp">
       <Filter>burn</Filter>
     </ClCompile>
@@ -2893,6 +2896,9 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\LzFindMt.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\LzFindOpt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\dep\libs\lib7z\Lzma2Dec.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
@@ -2926,13 +2932,28 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd7Enc.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd7aDec.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1Opt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256Opt.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sort.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\SwapBytes.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\dep\libs\lib7z\Threads.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Xxh64.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\dep\libs\lib7z\Xz.c">
@@ -3090,6 +3111,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp">
       <Filter>burn\drv\nes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp">
+      <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_sshangha.cpp">
       <Filter>burn\drv\dataeast</Filter>
