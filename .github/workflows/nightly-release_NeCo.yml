@@ -206,88 +206,88 @@ jobs:
           asset_path: Windows x64 (Debug).zip
           asset_content_type: application/zip
 
-  build_linux_sdl2:
-    name: Linux SDL 2
-    needs: nightly_release
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        shell: bash {0}
-
-    steps:
-      - name: Install Linux dependencies
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install libsdl2-dev libsdl2-image-dev
-
-      - uses: actions/checkout@v2
-
-      - name: Build FBNeo
-        run: |
-          make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Linux SDL 2
-          path: |
-            fbneo
-
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Linux SDL 2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Linux SDL 2.zip
-          asset_path: Linux SDL 2.zip
-          asset_content_type: application/zip
-
-  build_linux_sdl12:
-    name: Linux SDL 1.2
-    needs: nightly_release
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        shell: bash {0}
-
-    steps:
-      - name: Install Linux dependencies
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install libsdl1.2-dev
-
-      - uses: actions/checkout@v2
-
-      - name: Build FBNeo
-        run: |
-          make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Linux SDL 1.2
-          path: |
-            fbneo
-
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Linux SDL 1.2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Linux SDL 1.2.zip
-          asset_path: Linux SDL 1.2.zip
-          asset_content_type: application/zip
-
+#  build_linux_sdl2:
+#    name: Linux SDL 2
+#    needs: nightly_release
+#    runs-on: ubuntu-20.04
+#    defaults:
+#      run:
+#        shell: bash {0}
+#
+#    steps:
+#      - name: Install Linux dependencies
+#        run: |
+#          sudo apt-get -y update
+#          sudo apt-get -y install libsdl2-dev libsdl2-image-dev
+#
+#      - uses: actions/checkout@v2
+#
+#      - name: Build FBNeo
+#        run: |
+#          make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
+#
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: Linux SDL 2
+#          path: |
+#            fbneo
+#
+#      - name: Build release asset
+#        run: |
+#          zip --junk-paths "Linux SDL 2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+#
+#      - name: Upload release asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+#          asset_name: Linux SDL 2.zip
+#          asset_path: Linux SDL 2.zip
+#          asset_content_type: application/zip
+#
+#  build_linux_sdl12:
+#    name: Linux SDL 1.2
+#    needs: nightly_release
+#    runs-on: ubuntu-20.04
+#    defaults:
+#      run:
+#        shell: bash {0}
+#
+#    steps:
+#      - name: Install Linux dependencies
+#        run: |
+#          sudo apt-get -y update
+#          sudo apt-get -y install libsdl1.2-dev
+#
+#      - uses: actions/checkout@v2
+#
+#      - name: Build FBNeo
+#        run: |
+#          make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
+#
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: Linux SDL 1.2
+#          path: |
+#            fbneo
+#
+#      - name: Build release asset
+#        run: |
+#          zip --junk-paths "Linux SDL 1.2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+#
+#      - name: Upload release asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+#          asset_name: Linux SDL 1.2.zip
+#          asset_path: Linux SDL 1.2.zip
+#          asset_content_type: application/zip
+#
 #  build_macos:
 #    name: macOS
 #    needs: nightly_release
