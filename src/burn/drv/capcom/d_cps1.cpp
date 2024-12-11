@@ -8160,6 +8160,37 @@ static struct BurnRomInfo LostwrldRomDesc[] = {
 STD_ROM_PICK(Lostwrld)
 STD_ROM_FN(Lostwrld)
 
+// Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)
+static struct BurnRomInfo LostwrldcasRomDesc[] = {
+	{ "lw_11cas.14f",  0x020000, 0x8c1fb462, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
+	{ "lw_15cas.14g",  0x020000, 0x478f5fdf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
+	{ "lw_10cas.13f",  0x020000, 0x86C93C59, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
+	{ "lw_14cas.13g",  0x020000, 0x5D05406E, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
+	{ "lw-07.13e",     0x080000, 0xfd252a26, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "lw-01.9d",      0x080000, 0x0318f298, BRF_GRA | CPS1_TILES },
+	{ "lw-08.9f",      0x080000, 0x25a8e43c, BRF_GRA | CPS1_TILES },
+	{ "lw-05.9e",      0x080000, 0xe4552fd7, BRF_GRA | CPS1_TILES },
+	{ "lw-12.9g",      0x080000, 0x8e6a832b, BRF_GRA | CPS1_TILES },
+	{ "lw-02.12d",     0x080000, 0x43e6c5c8, BRF_GRA | CPS1_TILES },
+	{ "lw-09.12f",     0x080000, 0x899cb4ad, BRF_GRA | CPS1_TILES },
+	{ "lw-06.12e",     0x080000, 0x5b9edffc, BRF_GRA | CPS1_TILES },
+	{ "lw-13.12g",     0x080000, 0x8e058ef5, BRF_GRA | CPS1_TILES },
+
+	{ "lw_00b.14a",    0x010000, 0x59df2a63, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "lw-03.14c",     0x020000, 0xce2159e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "lw-04.13c",     0x020000, 0x39305536, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "lwchr.3a",      0x000117, 0x54ed4c39, BRF_OPT },	// b-board PLDs
+	{ "lwio.15e",      0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Lostwrldcas)
+STD_ROM_FN(Lostwrldcas)
+
 static struct BurnRomInfo LostwrldoRomDesc[] = {
 	{ "lw_11.14f",     0x020000, 0x61e2cc56, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "lw_15.14g",     0x020000, 0x8a0c18d3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -16871,6 +16902,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "forgottnue"    , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "forgottnj"     , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrld"      , CPS_B_01    , mapper_LWCHR , 1, NULL                },
+	{ "lostwrldcas"   , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrldo"     , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "ganbare"       , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "ghouls"        , CPS_B_01    , mapper_DM620 , 0, NULL                },
@@ -22954,6 +22986,17 @@ struct BurnDriver BurnDrvCpsLostwrld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
 	NULL, LostwrldRomInfo, LostwrldRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
+	ForgottnInit, ForgottnExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)
+struct BurnDriver BurnDrvCpsLostwrldcas = {
+	"lostwrldcas", "forgottn", NULL, NULL, "1988",
+	"Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
+	NULL, LostwrldcasRomInfo, LostwrldcasRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
 	ForgottnInit, ForgottnExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
