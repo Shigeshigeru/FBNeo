@@ -14315,7 +14315,7 @@ struct BurnDriver BurnDrvCpsCsclub1d = {
 
 struct BurnDriver BurnDrvCpsCsclubu = {
 	"csclubu", "csclub", NULL, NULL, "1997",
-	"Capcom Sports Club (971017 USA) witch CAS2 Hack\0", NULL, "Capcom", "CPS2",
+	"Capcom Sports Club (971017 USA) CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SPORTSMISC, 0,
 	NULL, CsclubuRomInfo, CsclubuRomName, NULL, NULL, NULL, NULL, CsclubInputInfo, NULL,
