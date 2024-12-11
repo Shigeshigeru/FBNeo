@@ -8160,7 +8160,7 @@ static struct BurnRomInfo LostwrldRomDesc[] = {
 STD_ROM_PICK(Lostwrld)
 STD_ROM_FN(Lostwrld)
 
-// Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)
+// Lost World (Japan, CAS Version as Forgotten Worlds)
 static struct BurnRomInfo LostwrldcasRomDesc[] = {
 	{ "lw_11cas.14f",  0x020000, 0x8c1fb462, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
 	{ "lw_15cas.14g",  0x020000, 0x478f5fdf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },//cas
@@ -22990,10 +22990,10 @@ struct BurnDriver BurnDrvCpsLostwrld = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)
+// Lost World (Japan, CAS Version as Forgotten Worlds)
 struct BurnDriver BurnDrvCpsLostwrldcas = {
 	"lostwrldcas", "forgottn", NULL, NULL, "1988",
-	"Lost World (Japan, Capcon Arcade Studium Version as Forgotten Worlds)\0", NULL, "Capcom", "CPS1",
+	"Lost World (Japan, CAS Version as Forgotten Worlds)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
 	NULL, LostwrldcasRomInfo, LostwrldcasRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
