@@ -11032,7 +11032,7 @@ struct BurnDriver BurnDrvCpsVhuntjr2 = {
 
 struct BurnDriver BurnDrvCpsVhuntjr3 = {
 	"vhuntjr3", "nwarr", NULL, NULL, "1995",
-	"Vampire Hunter: Darkstalkers' Revenge (Japan 950420) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
+	"Vampire Hunter: Darkstalkers' Revenge (Japan 950420) CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, Vhuntjr3RomInfo, Vhuntjr3RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -14315,7 +14315,7 @@ struct BurnDriver BurnDrvCpsCsclub1d = {
 
 struct BurnDriver BurnDrvCpsCsclubu = {
 	"csclubu", "csclub", NULL, NULL, "1997",
-	"Capcom Sports Club (971017 USA) Switch CAS2 Hack\0", NULL, "Capcom", "CPS2",
+	"Capcom Sports Club (971017 USA) witch CAS2 Hack\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SPORTSMISC, 0,
 	NULL, CsclubuRomInfo, CsclubuRomName, NULL, NULL, NULL, NULL, CsclubInputInfo, NULL,
