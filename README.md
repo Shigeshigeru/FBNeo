@@ -8,7 +8,7 @@ This is an unofficial version specialized in complete self-cooking.
 Basically, the addition of the official maker modification set is the main, and there is almost no addition of a new driver.
 License is the same as FinalBurn Neo.
 
-闇建築最新版は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/tag/latest)になります
+闇建築分は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/)になります
 
 # FinalBurn Neo
 Official Forum: https://neo-source.com
