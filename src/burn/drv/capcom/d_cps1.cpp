@@ -23210,7 +23210,7 @@ struct BurnDriver BurnDrvCpsKodj = {
 
 struct BurnDriver BurnDrvCpsKodjr3 = {
 	"kodjr3", "kod", NULL, NULL, "1991",
-	"The King of Dragons (Japan 910910, B-Board 89625B-1) Switch CAS2 Hack\0", NULL, "Capcom", "CPS1",
+	"The King of Dragons (Japan 910910, B-Board 89625B-1) CAS2 Hack\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Kodjr3RomInfo, Kodjr3RomName, NULL, NULL, NULL, NULL, KodInputInfo, KodDIPInfo,
@@ -23270,7 +23270,7 @@ struct BurnDriver BurnDrvCpsMegaman = {
 
 struct BurnDriver BurnDrvCpsMegamanj = {
 	"megamanj", "megaman", NULL, NULL, "1995",
-	"Rockman: The Power Battle (CPS1, Japan 951006) Switch CAS2 Hack\0", NULL, "Capcom", "CPS1",
+	"Rockman: The Power Battle (CPS1, Japan 951006) CAS2 Hack\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, MegamanjRomInfo, MegamanjRomName, NULL, NULL, NULL, NULL, MegamanInputInfo, RockmanjDIPInfo,
@@ -25070,7 +25070,7 @@ struct BurnDriver BurnDrvCpsMbomberj = {
 
 struct BurnDriver BurnDrvCpsMbomberjr1 = {
 	"mbomberjr1", "slammast", NULL, NULL, "1993",
-	"Muscle Bomber: The Body Explosion (Japan 930901) Switch CAS2 Hack \0", NULL, "Capcom", "CPS1",
+	"Muscle Bomber: The Body Explosion (Japan 930901) CAS2 Hack \0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, Mbomberjr1RomInfo, Mbomberjr1RomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
