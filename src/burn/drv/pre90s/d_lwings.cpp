@@ -2513,7 +2513,7 @@ static struct BurnRomInfo trojanjocRomDesc[] = {
 STD_ROM_PICK(trojanjoc)
 STD_ROM_FN(trojanjoc)
 
-struct BurnDriver BurnDrvTrojanjo = {
+struct BurnDriver BurnDrvTrojanjoc = {
 	"trojanjoc", "trojan", NULL, NULL, "1986",
 	"Tatakai no Banka (Japan, CAS old ver.)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
