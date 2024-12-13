@@ -2470,6 +2470,58 @@ struct BurnDriver BurnDrvTrojanjo = {
 	256, 240, 4, 3
 };
 
+// Tatakai no Banka (Japan, CAS old ver.)
+
+static struct BurnRomInfo trojanjocRomDesc[] = {
+	{ "tb_04.10n",		0x8000, 0x134dc35b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb_06.13n",		0x8000, 0xfdda9d55, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "tb01.6d",		0x4000, 0x1c0f91b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code (CAS)
+
+	{ "tb_03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "tb_13.6b",		0x8000, 0x285a052b, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "tb_09.6a",		0x8000, 0xaeb693f7, 5 | BRF_GRA },           //  7
+	{ "tb_12.4b",		0x8000, 0xdfb0fe5c, 5 | BRF_GRA },           //  8
+	{ "tb_08.4a",		0x8000, 0xd3a4c9d1, 5 | BRF_GRA },           //  9
+	{ "tb_11.3b",		0x8000, 0x00f0f4fd, 5 | BRF_GRA },           // 10
+	{ "tb_07.3a",		0x8000, 0xdff2ee02, 5 | BRF_GRA },           // 11
+	{ "tb_14.8b",		0x8000, 0x14bfac18, 5 | BRF_GRA },           // 12
+	{ "tb_10.8a",		0x8000, 0x71ba8a6d, 5 | BRF_GRA },           // 13
+
+	{ "tb_18.7l",		0x8000, 0x862c4713, 6 | BRF_GRA },           // 14 Sprites
+	{ "tb_16.3l",		0x8000, 0xd86f8cbd, 6 | BRF_GRA },           // 15
+	{ "tb_17.5l",		0x8000, 0x12a73b3f, 6 | BRF_GRA },           // 16
+	{ "tb_15.2l",		0x8000, 0xbb1a2769, 6 | BRF_GRA },           // 17
+	{ "tb_22.7n",		0x8000, 0x39daafd4, 6 | BRF_GRA },           // 18
+	{ "tb_20.3n",		0x8000, 0x94615d2a, 6 | BRF_GRA },           // 19
+	{ "tb_21.5n",		0x8000, 0x66c642bd, 6 | BRF_GRA },           // 20
+	{ "tb_19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
+
+	{ "tb_25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "tb_24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+
+	{ "tb_23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbb-2.7j",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "tbb-1.1e",		0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(trojanjoc)
+STD_ROM_FN(trojanjoc)
+
+struct BurnDriver BurnDrvTrojanjo = {
+	"trojanjoc", "trojan", NULL, NULL, "1986",
+	"Tatakai no Banka (Japan, CAS old ver.)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, trojanjocRomInfo, trojanjocRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
 
 // Trojan (location test)
 
