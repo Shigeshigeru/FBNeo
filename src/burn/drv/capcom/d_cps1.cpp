@@ -25241,7 +25241,7 @@ struct BurnDriver BurnDrvCpsStriderjr2 = {
 	L"\u30B9\u30C8\u30E9\u30A4\u30C0\u30FC\u98DB\u7ADC\0Strider Hiryu (Japan Resale CAS Ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Striderjr2RomInfo, Striderjr2RomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
-	Striderjr2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	StriderjrInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
