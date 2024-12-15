@@ -15590,6 +15590,38 @@ static struct BurnRomInfo StriderjrRomDesc[] = {
 STD_ROM_PICK(Striderjr)
 STD_ROM_FN(Striderjr)
 
+//Strider Hiryu (Japan Resale CAS Ver.)
+static struct BurnRomInfo Striderjr2RomDesc[] = {
+//	{ "sthj_23.8f",    0x080000, 0x046e7b12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sthj_23c.8f",   0x080000, 0x96e63d55, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sthj_22.7f",    0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "sth_01.3a",     0x080000, 0x4eee9aea, BRF_GRA | CPS1_TILES },
+	{ "sth_02.4a",     0x080000, 0x2d7f21e4, BRF_GRA | CPS1_TILES },
+	{ "sth_03.5a",     0x080000, 0x7705aa46, BRF_GRA | CPS1_TILES },
+	{ "sth_04.6a",     0x080000, 0x5b18b722, BRF_GRA | CPS1_TILES },
+	{ "sth_05.7a",     0x080000, 0x005f000b, BRF_GRA | CPS1_TILES },
+	{ "sth_06.8a",     0x080000, 0xb9441519, BRF_GRA | CPS1_TILES },
+	{ "sth_07.9a",     0x080000, 0xb7d04e8b, BRF_GRA | CPS1_TILES },
+	{ "sth_08.10a",    0x080000, 0x6b4713b4, BRF_GRA | CPS1_TILES },
+
+	{ "sth_09.12a",    0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, 
+
+	{ "sth_18.11c",    0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sth_19.12c",    0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "sth63b.1a",     0x000117, 0xc706b773, BRF_OPT }, // b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Striderjr2)
+STD_ROM_FN(Striderjr2)
+
 static struct BurnRomInfo StriderjRomDesc[] = {
 	{ "sth_36.12f",    0x020000, 0x53c7b006, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sth_42.12h",    0x020000, 0x4037f65f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -15643,6 +15675,7 @@ static struct BurnRomInfo StriderjRomDesc[] = {
 	{ "st22b.1a",      0x000117, 0x68fecc55, BRF_OPT },	// b-board PLDs
 	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
 };
+
 
 STD_ROM_PICK(Striderj)
 STD_ROM_FN(Striderj)
@@ -17126,6 +17159,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "striderua"     , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "strideruc"     , CPS_B_17    , mapper_ST24M1, 1, NULL                },
 	{ "striderjr"     , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
+	{ "striderjr2"    , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
 	{ "striderj"      , CPS_B_01    , mapper_ST22B , 1, NULL                },
 	{ "striderfix"    , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "unsquad"       , CPS_B_11    , mapper_AR24B , 0, NULL                },
@@ -25198,6 +25232,16 @@ struct BurnDriver BurnDrvCpsStriderjr = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderjrRomInfo, StriderjrRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderjrInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsStriderjr2 = {
+	"striderjr2", "strider", NULL, NULL, "1989",
+	"Strider Hiryu (Japan Resale CAS Ver.)\0", NULL, "Capcom", "CPS1",
+	L"\u30B9\u30C8\u30E9\u30A4\u30C0\u30FC\u98DB\u7ADC\0Strider Hiryu (Japan Resale CAS Ver.)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, Striderjr2RomInfo, Striderjr2RomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
+	Striderjr2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
