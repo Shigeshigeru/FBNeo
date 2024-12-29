@@ -9446,6 +9446,59 @@ static struct BurnRomInfo MercsjRomDesc[] = {
 STD_ROM_PICK(Mercsj)
 STD_ROM_FN(Mercsj)
 
+// Senjou no ookami II CAS Version
+// crc32 and sha-1 in mercsj.mameac.2
+
+static struct BurnRomInfo MercsjcRomDesc[] = {
+	{ "so2_36.12f",    0x020000, 0xe17f9bf7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_42.12h",    0x020000, 0x2c3884c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_37.13f",    0x020000, 0x51204d36, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_43.13h",    0x020000, 0x9cfba8b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_34.10f",    0x020000, 0xb8dae95f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_40.10h",    0x020000, 0xde37771c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_35.11f",    0x020000, 0x7d24394d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "so2_41.11h",    0x020000, 0x914f85e0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "so2_09.4b",     0x020000, 0x690c261d, BRF_GRA | CPS1_TILES },
+	{ "so2_01.4a",     0x020000, 0x31fd2715, BRF_GRA | CPS1_TILES },
+	{ "so2_13.9b",     0x020000, 0xb5e48282, BRF_GRA | CPS1_TILES },
+	{ "so2_05.9a",     0x020000, 0x54bed82c, BRF_GRA | CPS1_TILES },
+	{ "so2_24.5e",     0x020000, 0x78b6f0cb, BRF_GRA | CPS1_TILES },
+	{ "so2_17.5c",     0x020000, 0xe78bb308, BRF_GRA | CPS1_TILES },
+	{ "so2_38.8h",     0x020000, 0x0010a9a2, BRF_GRA | CPS1_TILES },
+	{ "so2_32.8f",     0x020000, 0x75dffc9a, BRF_GRA | CPS1_TILES },
+	{ "so2_10c.5b",    0x020000, 0xee266bda, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_02c.5a",    0x020000, 0x72323425, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_14c.10b",   0x020000, 0xb5fae0d9, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_06c.10a",   0x020000, 0x5bf5fbc3, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_25c.7e",    0x020000, 0xe90fd958, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_18c.7c",    0x020000, 0x0dd002f7, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_39c.9h"     0x020000, 0x4e0dbe8f, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_33c.9f",    0x020000, 0xa29f109c, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_11.7b",     0x020000, 0x3f254efe, BRF_GRA | CPS1_TILES },
+	{ "so2_03.7a",     0x020000, 0xf5a8905e, BRF_GRA | CPS1_TILES },
+	{ "so2_15.11b",    0x020000, 0xf3aa5a4a, BRF_GRA | CPS1_TILES },
+	{ "so2_07.11a",    0x020000, 0xb43cd1a8, BRF_GRA | CPS1_TILES },
+	{ "so2_26.8e",     0x020000, 0x8ca751a3, BRF_GRA | CPS1_TILES },
+	{ "so2_19.8c",     0x020000, 0xe9f569fd, BRF_GRA | CPS1_TILES },
+	{ "so2_28.10e",    0x020000, 0xfce9a377, BRF_GRA | CPS1_TILES },
+	{ "so2_21.10c",    0x020000, 0xb7df8a06, BRF_GRA | CPS1_TILES },
+
+	{ "so2_23.13b",    0x010000, 0xd09d7c7a, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "so2_30.12c",    0x020000, 0xbbea1643, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "so2_31.13c",    0x020000, 0xac58aa71, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "o222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },
+	{ "c628",          0x000117, 0x662e090f, BRF_OPT }, // c-board PLDs
+};
+
+STD_ROM_PICK(Mercsjc)
+STD_ROM_FN(Mercsjc)
+
 static struct BurnRomInfo MswordRomDesc[] = {
 	{ "mse_30.11f",    0x020000, 0x03fc8dbc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "mse_35.11h",    0x020000, 0xd5bf66cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -16974,6 +17027,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mercsu"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsur1"      , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsj"        , CPS_B_12    , mapper_O224B , 0, NULL                },
+	{ "mercsjc"       , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsc"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "msword"        , CPS_B_13    , mapper_MS24B , 0, NULL                },
 	{ "mswordr1"      , CPS_B_13    , mapper_MS24B , 0, NULL                },
@@ -23411,6 +23465,16 @@ struct BurnDriver BurnDrvCpsMercsj = {
 	L"\u6226\u5834\u306E\u72FC II\0Senjou no Ookami II (Japan 900302)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
 	NULL, MercsjRomInfo, MercsjRomName, NULL, NULL, NULL, NULL, MercsInputInfo, MercsDIPInfo,
+	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCpsMercsjc = {
+	"mercsjc", "mercs", NULL, NULL, "1990",
+	"Senjou no Ookami II (Japan 900302, CAS Version)\0", NULL, "Capcom", "CPS1",
+	L"\u6226\u5834\u306E\u72FC II\0Senjou no Ookami II (Japan 900302, CAS Version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, MercsjcRomInfo, MercsjcRomName, NULL, NULL, NULL, NULL, MercsInputInfo, MercsDIPInfo,
 	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
