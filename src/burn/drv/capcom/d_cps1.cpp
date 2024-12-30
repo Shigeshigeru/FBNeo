@@ -9467,14 +9467,14 @@ static struct BurnRomInfo MercsjcRomDesc[] = {
 	{ "so2_17.5c",     0x020000, 0xe78bb308, BRF_GRA | CPS1_TILES },
 	{ "so2_38.8h",     0x020000, 0x0010a9a2, BRF_GRA | CPS1_TILES },
 	{ "so2_32.8f",     0x020000, 0x75dffc9a, BRF_GRA | CPS1_TILES },
-	{ "so2_10c.5b",    0x020000, 0xee266bda, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_02c.5a",    0x020000, 0x72323425, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_14c.10b",   0x020000, 0xb5fae0d9, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_06c.10a",   0x020000, 0x5bf5fbc3, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_25c.7e",    0x020000, 0xe90fd958, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_18c.7c",    0x020000, 0x0dd002f7, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_39c.9h"     0x020000, 0x4e0dbe8f, BRF_GRA | CPS1_TILES },// CAS Ver
-	{ "so2_33c.9f",    0x020000, 0xa29f109c, BRF_GRA | CPS1_TILES },// CAS Ver
+	{ "so2_10c.5b",    0x020000, 0xee266bda, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_02c.5a",    0x020000, 0x72323425, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_14c.10b",   0x020000, 0xb5fae0d9, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_06c.10a",   0x020000, 0x5bf5fbc3, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_25c.7e",    0x020000, 0xe90fd958, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_18c.7c",    0x020000, 0x0dd002f7, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_39c.9h"     0x020000, 0x4e0dbe8f, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_33c.9f",    0x020000, 0xa29f109c, BRF_GRA | CPS1_TILES }, // CAS Ver
 	{ "so2_11.7b",     0x020000, 0x3f254efe, BRF_GRA | CPS1_TILES },
 	{ "so2_03.7a",     0x020000, 0xf5a8905e, BRF_GRA | CPS1_TILES },
 	{ "so2_15.11b",    0x020000, 0xf3aa5a4a, BRF_GRA | CPS1_TILES },
