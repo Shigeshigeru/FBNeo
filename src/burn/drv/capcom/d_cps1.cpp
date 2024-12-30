@@ -9473,7 +9473,7 @@ static struct BurnRomInfo MercsjcRomDesc[] = {
 	{ "so2_06c.10a",   0x020000, 0x5bf5fbc3, BRF_GRA | CPS1_TILES }, // CAS Ver
 	{ "so2_25c.7e",    0x020000, 0xe90fd958, BRF_GRA | CPS1_TILES }, // CAS Ver
 	{ "so2_18c.7c",    0x020000, 0x0dd002f7, BRF_GRA | CPS1_TILES }, // CAS Ver
-	{ "so2_39c.9h"     0x020000, 0x4e0dbe8f, BRF_GRA | CPS1_TILES }, // CAS Ver
+	{ "so2_39c.9h",    0x020000, 0x4e0dbe8f, BRF_GRA | CPS1_TILES }, // CAS Ver
 	{ "so2_33c.9f",    0x020000, 0xa29f109c, BRF_GRA | CPS1_TILES }, // CAS Ver
 	{ "so2_11.7b",     0x020000, 0x3f254efe, BRF_GRA | CPS1_TILES },
 	{ "so2_03.7a",     0x020000, 0xf5a8905e, BRF_GRA | CPS1_TILES },
