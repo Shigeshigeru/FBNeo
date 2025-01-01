@@ -28387,7 +28387,38 @@ struct BurnDriver BurnDrvKnightsch = {
 	0x1000,	304, 224, 4, 3
 };
 
-<<<<<<< HEAD
+// Captain Barrel
+// Neo Byte Force Ltd
+// https://www.neobyteforce.com/
+
+static struct BurnRomInfo captainbarrelRomDesc[] = {
+	{ "captain-p1.bin", 0x100000, 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "captain-p2.bin",	0x100000, 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
+
+	{ "captain-s1.bin",	0x020000, 0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "captain-c1.bin",	0x200000, 0xbce671cd, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "captain-c2.bin",	0x200000, 0x843e16ac, 3 | BRF_GRA },           	//  4
+
+	{ "captain-m1.bin",	0x010000, 0xed6260d2, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "captain-v1.bin",	0x800000, 0x8cfcceb7, 5 | BRF_SND },           	//  6 Sound data
+	{ "captain-v2.bin",	0x800000, 0xd1080962, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(captainbarrel, captainbarrel, neogeo)
+STD_ROM_FN(captainbarrel)
+
+struct BurnDriver BurnDrvCaptainBarrel = {
+	"captainbarrel", NULL, "neogeo", NULL, "2024",
+	"Captain Barrel\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, captainbarrelRomInfo, captainbarrelRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // -----------------------------------------------------------------------------
 // ACA NEOGEO Version and Extracts from the official release
 // -----------------------------------------------------------------------------
@@ -29707,35 +29738,3 @@ struct BurnDriver BurnDrvRotdc = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Captain Barrel
-// Neo Byte Force Ltd
-// https://www.neobyteforce.com/
-
-static struct BurnRomInfo captainbarrelRomDesc[] = {
-	{ "captain-p1.bin", 0x100000, 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
-	{ "captain-p2.bin",	0x100000, 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
-
-	{ "captain-s1.bin",	0x020000, 0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
-
-	{ "captain-c1.bin",	0x200000, 0xbce671cd, 3 | BRF_GRA },           	//  3 Sprite data
-	{ "captain-c2.bin",	0x200000, 0x843e16ac, 3 | BRF_GRA },           	//  4
-
-	{ "captain-m1.bin",	0x010000, 0xed6260d2, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
-
-	{ "captain-v1.bin",	0x800000, 0x8cfcceb7, 5 | BRF_SND },           	//  6 Sound data
-	{ "captain-v2.bin",	0x800000, 0xd1080962, 5 | BRF_SND },           	//  6 Sound data
-};
-
-STDROMPICKEXT(captainbarrel, captainbarrel, neogeo)
-STD_ROM_FN(captainbarrel)
-
-struct BurnDriver BurnDrvCaptainBarrel = {
-	"captainbarrel", NULL, "neogeo", NULL, "2024",
-	"Captain Barrel\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, captainbarrelRomInfo, captainbarrelRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 320, 224, 4, 3
-};
->>>>>>> 1cab4d9f89acf10713656cd0f64676ab84762f7a
