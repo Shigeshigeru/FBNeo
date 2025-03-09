@@ -19847,7 +19847,10 @@ struct BurnDriver BurnDrvMslug4unity = {
 	{ "263-v1d.v1",	0x400000, 0x8cb5a9ef, 5 | BRF_SND },	\
 	{ "263-v2d.v2",	0x400000, 0x94217b1e, 5 | BRF_SND },	\
 	{ "263-v3d.v3",	0x400000, 0x7616fcec, 5 | BRF_SND },	\
-	{ "263-v4d.v4",	0x400000, 0xc5967f91, 5 | BRF_SND },
+// Bad Rom CRC
+//	{ "263-v4d.v4",	0x400000, 0xc5967f91, 5 | BRF_SND },
+// Org Rom CRC
+	{ "263-v4d.v4",	0x400000, 0x7b0b92a1, 5 | BRF_SND },
 #define MSLUG4_DECRYPTED_COMPONENTS							\
 	MSLUG4_DECRYPTED_TEXT									\
 	MSLUG4_DECRYPTED_SPR1	MSLUG4_DECRYPTED_SPR2			\
@@ -30189,19 +30192,19 @@ static struct BurnRomInfo rotddcRomDesc[] = {
 
 //	{ "264-s1d.s1",   0x020000, 0xc155d4ff, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "264-c1d.c1",   0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  2 Sprite data
-	{ "264-c2d.c2",   0x800000, 0xb1069066, 3 | BRF_GRA },           //  3
-	{ "264-c3dn.c3",  0x800000, 0xeec3345a, 3 | BRF_GRA },           //  4
-	{ "264-c4dn.c4",  0x800000, 0x94cabe9b, 3 | BRF_GRA },           //  5
-	{ "264-c5dn.c5",  0x800000, 0x550479cf, 3 | BRF_GRA },           //  6
-	{ "264-c6dn.c6",  0x800000, 0x34575f18, 3 | BRF_GRA },           //  7
-	{ "264-c7dn.c7",  0x800000, 0xb2e5461f, 3 | BRF_GRA },           //  8
-	{ "264-c8dn.c8",  0x800000, 0xd563aa3b, 3 | BRF_GRA },           //  9
+	{ "264-c1d.c1",   0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  1 Sprite data
+	{ "264-c2d.c2",   0x800000, 0xb1069066, 3 | BRF_GRA },           //  2
+	{ "264-c3dn.c3",  0x800000, 0xeec3345a, 3 | BRF_GRA },           //  3
+	{ "264-c4dn.c4",  0x800000, 0x94cabe9b, 3 | BRF_GRA },           //  4
+	{ "264-c5dn.c5",  0x800000, 0x550479cf, 3 | BRF_GRA },           //  5
+	{ "264-c6dn.c6",  0x800000, 0x34575f18, 3 | BRF_GRA },           //  6
+	{ "264-c7dn.c7",  0x800000, 0xb2e5461f, 3 | BRF_GRA },           //  7
+	{ "264-c8dn.c8",  0x800000, 0xd563aa3b, 3 | BRF_GRA },           //  8
 
-	{ "264-m1.m1",    0x020000, 0x4dbd7b43, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+	{ "264-m1.m1",    0x020000, 0x4dbd7b43, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "264-v1.v1",    0x800000, 0xfa005812, 5 | BRF_SND },           // 11 Sound data
-	{ "264-v2.v2",    0x800000, 0xc3dc8bf0, 5 | BRF_SND },           // 12
+	{ "264-v1.v1",    0x800000, 0xfa005812, 5 | BRF_SND },           // 10 Sound data
+	{ "264-v2.v2",    0x800000, 0xc3dc8bf0, 5 | BRF_SND },           // 11
 };
 
 STDROMPICKEXT(rotddc, rotddc, neogeo)
