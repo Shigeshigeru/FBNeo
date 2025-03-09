@@ -30187,7 +30187,7 @@ static struct BurnRomInfo rotddcRomDesc[] = {
 // https://neo-source.com/index.php?action=dlattach;topic=241.0;attach=154S1
 // Data segment (0x060000~0x07ffff) in s1 (512KB) from C7,C8 128Kb(CRC32:c155d4ff)
 
-	{ "264-s1d.s1",   0x020000, 0xc155d4ff, 2 | BRF_GRA },           //  1 Text layer tiles
+//	{ "264-s1d.s1",   0x020000, 0xc155d4ff, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "264-c1d.c1",   0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  2 Sprite data
 	{ "264-c2d.c2",   0x800000, 0xb1069066, 3 | BRF_GRA },           //  3
