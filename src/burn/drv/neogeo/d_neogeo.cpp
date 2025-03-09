@@ -19848,8 +19848,8 @@ struct BurnDriver BurnDrvMslug4unity = {
 	{ "263-v2d.v2",	0x400000, 0x94217b1e, 5 | BRF_SND },	\
 	{ "263-v3d.v3",	0x400000, 0x7616fcec, 5 | BRF_SND },	\
 // Bad Rom CRC
-//	{ "263-v4d.v4",	0x400000, 0xc5967f91, 5 | BRF_SND },
-// Org Rom CRC
+//	0xc5967f91
+// Org Rom Fix
 	{ "263-v4d.v4",	0x400000, 0x7b0b92a1, 5 | BRF_SND },
 #define MSLUG4_DECRYPTED_COMPONENTS							\
 	MSLUG4_DECRYPTED_TEXT									\
