@@ -19831,13 +19831,7 @@ struct BurnDriver BurnDrvMslug4unity = {
 
 
 #define MSLUG4_DECRYPTED_TEXT								\
-// The S1 data used will be modified based on this.
-// Data segment (0x040000~0x05ffff) in s2.bin (512KB) from Code Mystics ROM Folder etc. (CRC 0xa9446774 is bad)
-// For more information on how to make this set, please refer to this page.
-// https://note.com/shigeshigeru/n/nd653e59c1702
-// Japanese only
-
-	{ "263-s1d.s1",	0x020000, 0xc4f4ed0e, 2 | BRF_GRA },	// Fixed S1 data
+	{ "263-s1d.s1",	0x020000, 0xc4f4ed0e, 2 | BRF_GRA },	// Data segment (0x040000~0x05ffff) in s1 (512KB) from mslug4 fixed.(Org CRC 0xa9446774)
 #define MSLUG4_DECRYPTED_SPR1								\
 	{ "263-c1d.c1",	0x800000, 0xa75ffcde, 3 | BRF_GRA },	\
 	{ "263-c2d.c2",	0x800000, 0x5ab0d12b, 3 | BRF_GRA },
