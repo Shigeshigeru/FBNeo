@@ -232,7 +232,6 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tehkanwc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tiamc1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_vampire.cpp" />
@@ -832,6 +831,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tbowl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tceptor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tehkanwc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tempest.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_terracre.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_thedeep.cpp" />
