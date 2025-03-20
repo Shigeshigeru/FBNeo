@@ -29945,7 +29945,7 @@ STD_ROM_FN(svccm)
 
 struct BurnDriver BurnDrvSvccm = {
 	"svccm", "svc", "neogeo", NULL, "2003",
-	"SNK vs. Capcom - SVC Chaos (Code Mystics GENJURO fixed Version)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	"SNK vs. CAPCOM - SVC Chaos (Code Mystics GENJURO fixed Version)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF | FBF_SF,
 	NULL, svccmRomInfo, svccmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -29991,7 +29991,7 @@ static INT32 svcpdInit()
 
 struct BurnDriver BurnDrvSvccmd = {
 	"svccmd", "svc", "neogeo", NULL, "2003",
-	"SNK vs. Capcom - SVC Chaos (Code Mystics GENJURO fixed Version, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	"SNK vs. CAPCOM - SVC Chaos (Code Mystics GENJURO fixed Version, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
 	NULL, svccmdRomInfo, svccmdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -30031,7 +30031,7 @@ STD_ROM_FN(svcd1f)
 
 struct BurnDriver BurnDrvsvcd1f = {
 	"svcd1f", "svc", "neogeo", NULL, "2003",
-	"SNK vs. Capcom - SVC Chaos (NGM-2690 ~ NGH-2690, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	"SNK vs. CAPCOM - SVC Chaos (NGM-2690 ~ NGH-2690, Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
 	NULL, svcd1fRomInfo, svcd1fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
