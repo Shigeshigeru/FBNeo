@@ -625,6 +625,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_atetris.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_avengers.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_aztarac.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
