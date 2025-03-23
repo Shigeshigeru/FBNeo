@@ -16837,7 +16837,7 @@ static struct BurnRomInfo rotddhRomDesc[] = {
 	{ "264-m1d.m1",		0x020000, 0xc5d36af9, 4 | BRF_ESS | BRF_PRG },	//  9 Z80 code
 
 	{ "264-v1.v1",		0x800000, 0xfa005812, 5 | BRF_SND },			// 10 Sound data
-	{ "264-v2d.v2",		0x800000, 0xc3dc8bf0, 5 | BRF_SND },			// 11
+	{ "264-v2.v2",		0x800000, 0xc3dc8bf0, 5 | BRF_SND },			// 11
 };
 
 STDROMPICKEXT(rotddh, rotddh, neogeo)
