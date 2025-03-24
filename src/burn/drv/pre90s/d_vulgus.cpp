@@ -662,9 +662,9 @@ static struct BurnRomInfo vulguscRomDesc[] = {
 
 	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
 	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
-	{ "e10.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
+	{ "e10cas.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
 	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
-	{ "j2.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
+	{ "j2cas.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
 	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
 
 	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
@@ -812,9 +812,9 @@ static struct BurnRomInfo vulgusjcRomDesc[] = {
 
 	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
 	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
-	{ "e10.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
+	{ "e10cas.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
 	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
-	{ "j2.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
+	{ "j2cas.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
 	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
 
 	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
