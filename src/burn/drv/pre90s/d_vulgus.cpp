@@ -675,7 +675,7 @@ STD_ROM_PICK(vulgusc)
 STD_ROM_FN(vulgusc)
 
 struct BurnDriver BurnDrvvulgusc = {
-	"vulgusc", "vulgus", NULL, NULL, NULL, "1984",
+	"vulgusc", "vulgus", NULL, NULL, "1984",
 	"Vulgus (set 1,CAS Version)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
