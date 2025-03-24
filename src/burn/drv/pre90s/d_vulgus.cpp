@@ -634,6 +634,7 @@ struct BurnDriver BurnDrvvulgus = {
 	224, 256, 3, 4
 };
 
+
 // Vulgus (set 1,CAS Version)
 
 static struct BurnRomInfo vulguscRomDesc[] = {
@@ -782,6 +783,7 @@ struct BurnDriver BurnDrvvulgusj = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
+
 
 // Vulgus (Japan,CAS Version)
 
