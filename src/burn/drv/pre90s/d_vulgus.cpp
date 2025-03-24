@@ -634,6 +634,55 @@ struct BurnDriver BurnDrvvulgus = {
 	224, 256, 3, 4
 };
 
+// Vulgus (set 1,CAS Version)
+
+static struct BurnRomInfo vulguscRomDesc[] = {
+	{ "vulgus.002",   	0x2000, 0xe49d6c5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "vulgus.003",   	0x2000, 0x51acef76, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "vulgus.004",   	0x2000, 0x489e7f60, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "vulgus.005",   	0x2000, 0xde3a24a8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1-8n.bin",     	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "1-11c.bin",    	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "1-3d.bin",     	0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
+
+	{ "2-2a.bin",     	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "2-3a.bin",     	0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
+	{ "2-4a.bin",     	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "2-5a.bin",     	0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
+	{ "2-6a.bin",     	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "2-7a.bin",     	0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
+
+	{ "2-2n.bin",     	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "2-3n.bin",     	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "2-4n.bin",     	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "2-5n.bin",     	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+
+	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "e10.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
+	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "j2.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
+	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+
+	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129.8n",    	0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+};
+
+STD_ROM_PICK(vulgusc)
+STD_ROM_FN(vulgusc)
+
+struct BurnDriver BurnDrvvulgusc = {
+	"vulgusc", "vulgus", NULL, NULL, NULL, "1984",
+	"Vulgus (set 1,CAS Version)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, vulguscRomInfo, vulguscRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 256, 3, 4
+};
+
 
 // Vulgus (set 2)
 
@@ -730,6 +779,55 @@ struct BurnDriver BurnDrvvulgusj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, vulgusjRomInfo, vulgusjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 256, 3, 4
+};
+
+// Vulgus (Japan,CAS Version)
+
+static struct BurnRomInfo vulgusjcRomDesc[] = {
+	{ "1-4n.bin",     	0x2000, 0xfe5a5ca5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1-5n.bin",     	0x2000, 0x847e437f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1-6n.bin",     	0x2000, 0x4666c436, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1-7n.bin",     	0x2000, 0xff2097f9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1-8n.bin",     	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "1-11c.bin",    	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "1-3d.bin",     	0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
+
+	{ "2-2a.bin",     	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "2-3a.bin",     	0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
+	{ "2-4a.bin",     	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "2-5a.bin",     	0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
+	{ "2-6a.bin",     	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "2-7a.bin",     	0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
+
+	{ "2-2n.bin",     	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "2-3n.bin",     	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "2-4n.bin",     	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "2-5n.bin",     	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+
+	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "e10.bin",      	0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19 CAS Version
+	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "j2.bin",       	0x0100, 0xfb0bfe75, 6 | BRF_GRA },	       // 21 CAS Version
+	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+
+	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129.8n",    	0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+};
+
+STD_ROM_PICK(vulgusjc)
+STD_ROM_FN(vulgusjc)
+
+struct BurnDriver BurnDrvvulgusjc = {
+	"vulgusjc", "vulgus", NULL, NULL, "1984",
+	"Vulgus (Japan,CAS Version)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, vulgusjcRomInfo, vulgusjcRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
