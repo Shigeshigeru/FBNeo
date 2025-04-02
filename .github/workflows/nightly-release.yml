@@ -3,7 +3,7 @@ name: "nightly-release"
 on:
   push:
     branches:
-      - "master"
+      - "NeCo"
 
 jobs:
   nightly_release:
