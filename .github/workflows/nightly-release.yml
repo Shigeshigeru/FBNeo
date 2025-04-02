@@ -1,9 +1,9 @@
-name: "nightly-release"
+name: "nightly(yami)-release"
 
 on:
   push:
     branches:
-      - "master"
+      - "NeCo"
 
 jobs:
   nightly_release:
