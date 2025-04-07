@@ -789,6 +789,9 @@
 		FE1B26E023561A780065200C /* d_dynduke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B214C23561A6D0065200C /* d_dynduke.cpp */; };
 		FE1B26E123561A780065200C /* d_ninjakd2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B214D23561A6D0065200C /* d_ninjakd2.cpp */; };
 		FE1B26E223561A780065200C /* d_aztarac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B214E23561A6D0065200C /* d_aztarac.cpp */; };
+
+		FE1B26B523561A770065200D /* d_avengers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B212123561A6D0065200D /* d_avengers.cpp */; };
+
 		FE1B26E323561A780065200C /* d_stfight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B214F23561A6D0065200C /* d_stfight.cpp */; };
 		FE1B26E423561A780065200C /* d_jack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B215023561A6D0065200C /* d_jack.cpp */; };
 		FE1B26E523561A780065200C /* d_carjmbre.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B215123561A6D0065200C /* d_carjmbre.cpp */; };
@@ -2341,6 +2344,9 @@
 		FE1B214C23561A6D0065200C /* d_dynduke.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_dynduke.cpp; sourceTree = "<group>"; };
 		FE1B214D23561A6D0065200C /* d_ninjakd2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_ninjakd2.cpp; sourceTree = "<group>"; };
 		FE1B214E23561A6D0065200C /* d_aztarac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_aztarac.cpp; sourceTree = "<group>"; };
+
+		FE1B212123561A6D0065200D /* d_avengers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_avengers.cpp; sourceTree = "<group>"; };
+
 		FE1B214F23561A6D0065200C /* d_stfight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stfight.cpp; sourceTree = "<group>"; };
 		FE1B215023561A6D0065200C /* d_jack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_jack.cpp; sourceTree = "<group>"; };
 		FE1B215123561A6D0065200C /* d_carjmbre.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_carjmbre.cpp; sourceTree = "<group>"; };
@@ -4729,6 +4735,9 @@
 				FE1B215723561A6D0065200C /* d_asteroids.cpp */,
 				FE1B213923561A6D0065200C /* d_atetris.cpp */,
 				FE1B214E23561A6D0065200C /* d_aztarac.cpp */,
+
+				FE1B212123561A6D0065200D /* d_avengers.cpp */,
+
 				FE1B213823561A6D0065200C /* d_bagman.cpp */,
 				FE1B217D23561A6E0065200C /* d_baraduke.cpp */,
 				FE1B218623561A6E0065200C /* d_battlane.cpp */,
