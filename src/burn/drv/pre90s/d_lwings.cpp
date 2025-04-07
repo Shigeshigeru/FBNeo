@@ -2573,7 +2573,7 @@ static struct BurnRomInfo trojanjocRomDesc[] = {
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tb01.6d",		0x4000, 0x1c0f91b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code (CAS)
+	{ "tb01.6dcas",		0x4000, 0x1c0f91b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code (CAS)
 
 	{ "tb_03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
 
