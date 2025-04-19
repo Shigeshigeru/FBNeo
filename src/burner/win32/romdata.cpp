@@ -64,7 +64,7 @@ static struct HardwareIcon IconTable[] =
 	{	HARDWARE_FDS,					_T("icon_fds"),		-1	},
 	{	HARDWARE_MSX,					_T("icon_msx"),		-1	},
 	{	HARDWARE_NES,					_T("icon_nes"),		-1	},
-	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_cv"),		-1	},
+	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_pce"),		-1	},
 	{	HARDWARE_PCENGINE_SGX,			_T("icon_sgx"),		-1	},
 	{	HARDWARE_PCENGINE_TG16,			_T("icon_tg"),		-1	},
 	{	HARDWARE_SEGA_GAME_GEAR,		_T("icon_gg"),		-1	},
@@ -132,9 +132,17 @@ static INT32 FileExists(const TCHAR* szName)
 
 static HIMAGELIST HardwareIconListInit()
 {
-	hHardwareIconList = ImageList_Create(24, 24, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
+	INT32 cx = 0, cy = 0;
+
+	switch (nIconsSize) {
+		case ICON_16x16: cx = cy = 16;	break;
+		case ICON_24x24: cx = cy = 24;	break;
+		case ICON_32x32: cx = cy = 32;	break;
+	}
+
+	hHardwareIconList = ImageList_Create(cx, cy, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
 	if (NULL == hHardwareIconList) return NULL;
-	ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
+	if (bEnableIcons) ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
 
 	struct HardwareIcon* _it = &IconTable[0];
 
