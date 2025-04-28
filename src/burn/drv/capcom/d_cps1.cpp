@@ -7367,6 +7367,32 @@ static struct BurnRomInfo FfightuRomDesc[] = {
 STD_ROM_PICK(Ffightu)
 STD_ROM_FN(Ffightu)
 
+static struct BurnRomInfo FfightucasRomDesc[] = {
+	{ "ff_36.11f",     0x020000, 0xf9a5ce83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff_42.11h",     0x020000, 0x65f11215, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff_37.12f",     0x020000, 0xe1033784, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffu_43.12h",    0x020000, 0x4ca65947, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff-32m.8h",     0x080000, 0xc747696e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "ff-5m.7a_c",    0x080000, 0xa54e1f4c, BRF_GRA | CPS1_TILES },//CAS
+	{ "ff-7m.9a_c",    0x080000, 0xa2dd4365, BRF_GRA | CPS1_TILES },//CAS
+	{ "ff-1m.3a_c",    0x080000, 0xccbd1674, BRF_GRA | CPS1_TILES },//CAS
+	{ "ff-3m.5a_c",    0x080000, 0xc9956766, BRF_GRA | CPS1_TILES },//CAS
+
+	{ "ff_09.12b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ff_18.11c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ff_19.12c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
+	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightucas)
+STD_ROM_FN(Ffightucas)
+
 static struct BurnRomInfo Ffightu1RomDesc[] = {
 	{ "ff_36.11f",     0x020000, 0xf9a5ce83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "ff_42.11h",     0x020000, 0x65f11215, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -17257,6 +17283,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightaemgc"   , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
 	{ "ffighta"       , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu"       , CPS_B_04    , mapper_S224B , 0, NULL                },
+	{ "ffightucas"    , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu1"      , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu2"      , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightua"      , CPS_B_01    , mapper_S224B , 0, NULL                },
@@ -23167,6 +23194,16 @@ struct BurnDriver BurnDrvCpsFfightu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightuRomInfo, FfightuRomName, NULL, NULL, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsFfightucas = {
+	"ffightucas", "ffight", NULL, NULL, "1989",
+	"Final Fight (USA, CAS Version)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightucasRomInfo, FfightucasRomName, NULL, NULL, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
