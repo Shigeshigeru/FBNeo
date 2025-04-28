@@ -7556,6 +7556,47 @@ static struct BurnRomInfo FfightjRomDesc[] = {
 STD_ROM_PICK(Ffightj)
 STD_ROM_FN(Ffightj)
 
+static struct BurnRomInfo FfightjcasRomDesc[] = {
+	{ "ff36.bin",      0x020000, 0xf9a5ce83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff42.bin",      0x020000, 0x65f11215, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff37.bin",      0x020000, 0xe1033784, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff43.bin",      0x020000, 0xb6dee1c3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_34.10f",    0x020000, 0x0c8dc3fc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_40.10h",    0x020000, 0x8075bab9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_35.11f",    0x020000, 0x4a934121, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_41.11h",    0x020000, 0x2af68154, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "ffj_09.4b_c",     0x020000, 0xc96560f7, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_01.4a_c",     0x020000, 0x2b20d0d8, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_13.9b_c",     0x020000, 0x90a594aa, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_05.9a_c",     0x020000, 0xb6e64b2d, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_24.5e_c",     0x020000, 0x4e638a19, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_17.5c_c",     0x020000, 0x53cb6a28, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_38.8h_c",     0x020000, 0xf4f7a9c0, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_32.8f_c",     0x020000, 0x4c9783e2, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_10.5b_c",     0x020000, 0x4507108d, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_02.5a_c",     0x020000, 0xbe142dbd, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_14.10b_c",    0x020000, 0x0f47d761, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_06.10a_c",    0x020000, 0x790c0a9e, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_25.7e_c",     0x020000, 0xf31808b0, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_18.7c_c",     0x020000, 0x64589f5e, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_39.9h_c",     0x020000, 0xcbe91b96, BRF_GRA | CPS1_TILES },//CAS
+	{ "ffj_33.9f_c",     0x020000, 0x2c9655e6, BRF_GRA | CPS1_TILES },//CAS
+
+	{ "ff_23.bin",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ffj_30.bin",    0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ffj_31.bin",    0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
+	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightjcas)
+STD_ROM_FN(Ffightjcas)
+
 static struct BurnRomInfo Ffightj1RomDesc[] = {
 	{ "ffj_36.12f",    0x020000, 0xe2a48af9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "ffj_42.12h",    0x020000, 0xf4bb480e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -17222,6 +17263,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightub"      , CPS_B_03    , mapper_S224B , 0, NULL                }, // 04 handwritten on CPS-B chip
 	{ "ffightuc"      , CPS_B_05    , mapper_S224B , 0, NULL                }, 
 	{ "ffightj"       , CPS_B_04    , mapper_S224B , 0, NULL                },
+	{ "ffightjcas"    , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightj1"      , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightj2"      , CPS_B_02    , mapper_S224B , 0, NULL                },
 	{ "ffightj3"      , CPS_B_03    , mapper_S224B , 0, NULL                },
@@ -23185,6 +23227,16 @@ struct BurnDriver BurnDrvCpsFfightj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightjRomInfo, FfightjRomName, NULL, NULL, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsFfightjcas = {
+	"ffightjcas", "ffight", NULL, NULL, "1989",
+	"Final Fight (Japan, CAS Version)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightjcasRomInfo, FfightjcasRomName, NULL, NULL, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
