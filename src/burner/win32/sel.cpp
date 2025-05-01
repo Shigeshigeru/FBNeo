@@ -990,7 +990,7 @@ static void RefreshPanel()
 
 	GetTitlePreviewScale();
 
-	hPrevBmp = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
+	hPrevBmp  = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
 	hTitleBmp = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
 
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
@@ -1005,13 +1005,13 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowY & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND,  (nLoadMenuShowY & AUTOEXPAND)  ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE,   (nLoadMenuShowY & AVAILABLE)   ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
-	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_SEL_SUBDIRS, nLoadMenuShowY & SEARCHSUBDIRS ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT     ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY     ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SUBDIRS,   nLoadMenuShowY & SEARCHSUBDIRS ? BST_CHECKED : BST_UNCHECKED);
 }
 
 FILE* OpenPreview(int nIndex, TCHAR *szPath)
@@ -1616,7 +1616,7 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 	return 0;
 }
 
-void IconsCacheThreadExit()
+static void IconsCacheThreadExit()
 {
 	DWORD dwExitCode = 0;
 	GetExitCodeThread(hICThread, &dwExitCode);
@@ -2387,8 +2387,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					RebuildEverything();
 					break;
 				case IDRESCAN:
-					bRescanRoms = true;
 					LookupSubDirThreads();
+					bRescanRoms = true;
 					CreateROMInfo(hSelDlg);
 					RebuildEverything();
 					break;
@@ -2421,7 +2421,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
-						LookupSubDirThreads();
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {
