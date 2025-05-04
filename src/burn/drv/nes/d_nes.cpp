@@ -29094,7 +29094,7 @@ STD_ROM_PICK(nes_doubldraiirev1)
 STD_ROM_FN(nes_doubldraiirev1)
 
 struct BurnDriver BurnDrvnes_doubldraiirev1 = {
-	"nes_doubldraiirev1", NULL, NULL, NULL, "1990",
+	"nes_doubldraiirev1", "nes_doubldraii", NULL, NULL, "1990",
 	"Double Dragon II - The Revenge (USA)(rev1)\0", NULL, "Acclaim Entertainment", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
