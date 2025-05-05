@@ -2,7 +2,7 @@ name: "nightly-release"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ NeCo ]
 
 env:
     WINDOWS_X86_64_ARTIFACT: windows-x86_64
