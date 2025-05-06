@@ -5521,10 +5521,10 @@ struct BurnDriver BurnDrvpce_salamand = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
-// Salamander (PC-Engine Mini Ed.)
+// Salamander (PC-Engine CoreGrafx Mini Ed.)
 
 static struct BurnRomInfo pce_salamandminiRomDesc[] = {
-	{ "Salamander (PCE Mini).pce", 0x100000, 0x83b0c3a4, BRF_PRG | BRF_ESS },
+	{ "Salamander (CG Mini).pce", 0x100000, 0x83b0c3a4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_salamandmini)
@@ -5532,7 +5532,7 @@ STD_ROM_FN(pce_salamandmini)
 
 struct BurnDriver BurnDrvpce_salamandmini = {
 	"pce_salamandmini", "pce_salamand", NULL, NULL, "2020",
-	"Salamander (PC-Engine Mini Ed.)\0", NULL, "Konami", "PC Engine",
+	"Salamander (PC-Engine CoreGrafx Mini Ed.)\0", NULL, "Konami", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT | GBF_VERSHOOT, 0,
 	PceGetZipName, pce_salamandminiRomInfo, pce_salamandminiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -9457,3 +9457,63 @@ struct BurnDriver BurnDrvpce_splitres = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
+// -----------------------------------------------------------------------------
+// FBneo NeCo Additional ROM Set
+// -----------------------------------------------------------------------------
+
+// Fantasy Zone (PC-Engine Mini Ed. Actual Fix, Hack)
+
+static struct BurnRomInfo pce_fantzoneminiactRomDesc[] = {
+	{ "Fantasy Zone (PCE Mini Actual Fix).pce", 0x080000, 0xc1e363b7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_fantzoneminiact)
+STD_ROM_FN(pce_fantzoneminiact)
+
+struct BurnDriver BurnDrvpce_fantzoneminiact = {
+	"pce_fantzoneminiact", "pce_fantzone", NULL, NULL, "2024",
+	"Fantasy Zone (PC-Engine Mini Ed. Actual Fix, Hack)\0", NULL, "NEC", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
+	PceGetZipName, pce_fantzoneminiactRomInfo, pce_fantzoneminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Gradius (PC-Engine Mini Ed. Actual Fix, Hack)
+
+static struct BurnRomInfo pce_gradiusminiactRomDesc[] = {
+	{ "Gradius (PCE Mini Actual Fix).pce", 0x080000, 0x1edd32c4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_gradiusminiact)
+STD_ROM_FN(pce_gradiusminiact)
+
+struct BurnDriver BurnDrvpce_gradiusminiact = {
+	"pce_gradiusminiact", "pce_gradius", NULL, NULL, "2024",
+	"Gradius (PC-Engine Mini Ed. Acutual Fix, Hack)\0", NULL, "Konami", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
+	PceGetZipName, pce_gradiusminiactRomInfo, pce_gradiusminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Salamander (PC-Engine CoreGrafx Mini Ed. Actual Fix, Hack)
+
+static struct BurnRomInfo pce_salamandminiactRomDesc[] = {
+	{ "Salamander (CG Mini Actual Fix).pce", 0x100000, 0x276ffa91, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_salamandminiact)
+STD_ROM_FN(pce_salamandminiact)
+
+struct BurnDriver BurnDrvpce_salamandminiact = {
+	"pce_salamandminiact", "pce_salamand", NULL, NULL, "2024",
+	"Salamander (PC-Engine CoreGrafx Mini Ed. Actual Fix, Hack)\0", NULL, "Konami", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT | GBF_VERSHOOT, 0,
+	PceGetZipName, pce_salamandminiactRomInfo, pce_salamandminiactRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
