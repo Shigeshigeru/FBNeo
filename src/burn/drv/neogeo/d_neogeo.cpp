@@ -30535,3 +30535,35 @@ struct BurnDriver BurnDrvRotdc = {
 	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
+
+// Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu
+// Super Technos World: River City & Technos Arcade Classics Censored Version
+/* MVS ONLY RELEASE */
+
+static struct BurnRomInfo sdodgebcRomDesc[] = {
+	{ "208-p1c.p1",   0x200000, 0x95a2920e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ STW:RC&TAC Version
+
+	{ "208-s1.s1",    0x020000, 0x64abd6b3, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "208-c1c.c1",   0x400000, 0x25769056, 3 | BRF_GRA },           //  2 Sprite data		/ STW:RC&TAC Version
+	{ "208-c2c.c2",   0x400000, 0x1c80b42b, 3 | BRF_GRA },           //  3 					/ STW:RC&TAC Version
+	{ "208-c3.c3",    0x200000, 0x14cb1703, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "208-c4.c4",    0x200000, 0xc7165f19, 3 | BRF_GRA },           //  5 					/ TC5332205
+
+	{ "208-m1.m1",    0x020000, 0x0a5f3325, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
+
+	{ "208-v1.v1",    0x400000, 0xe7899a24, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
+};
+
+STDROMPICKEXT(sdodgebc, sdodgebc, neogeo)
+STD_ROM_FN(sdodgebc)
+
+struct BurnDriver BurnDrvSdodgebc = {
+	"sdodgebc", "sdodgeb" , "neogeo", NULL, "2025",
+	"Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (STW:RC&TAC Censored Version)\0", NULL, "Technos Japan", "Neo Geo MVS",
+	L"Super Dodge Ball\0\u304F\u306B\u304A\u306E\u71B1\u8840\u95D8\u7403\u4F1D\u8AAC (STW:RC&TAC Censored Version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
+	NULL, sdodgebcRomInfo, sdodgebcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
