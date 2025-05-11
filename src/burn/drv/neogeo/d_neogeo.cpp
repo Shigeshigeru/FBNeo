@@ -30540,6 +30540,20 @@ struct BurnDriver BurnDrvRotdc = {
 // Super Technos World: River City & Technos Arcade Classics Censored Version
 /* MVS ONLY RELEASE */
 
+// To modify PROMs to work
+// 0xFF,0xFF for 0x001006ac
+// 0xFF,0xFF for 0x00102e72
+// 0xFF,0xFF for 0x00102f3e
+// 0xFF,0xFF for 0x00102fb4
+// 0xFF,0xFF for 0x001051c8
+// 0xFF,0xFF for 0x0010523c
+// 0xFF,0xFF for 0x001053ae
+// 0xFF,0xFF for 0x0010574e
+// 0xFF,0xFF for 0x00112520
+// 0xFF,0xFF for 0x0014773c
+// Change these 10 locations to the original PROM values.
+
+
 static struct BurnRomInfo sdodgebcRomDesc[] = {
 	{ "208-p1c.p1",   0x200000, 0x95a2920e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ STW:RC&TAC Version
 
