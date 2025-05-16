@@ -15625,6 +15625,7 @@ static struct BurnRomInfo Punishercps2RomDesc[] = {
 
 	{ "psu.13m",       0x400000, 0x589995d3,  CPS2_GFX | BRF_GRA },
 	{ "psu.15m",       0x400000, 0xca311c10,  CPS2_GFX | BRF_GRA },
+	{ "psu.17m",       0x400000, 0x3064894a,  CPS2_GFX | BRF_GRA },
 	{ "psu.19m",       0x400000, 0xb9e34eda,  CPS2_GFX | BRF_GRA },
 
 	{ "psu.01",        0x020000, 0xf81ee7f7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
