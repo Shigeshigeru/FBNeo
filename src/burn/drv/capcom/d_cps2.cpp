@@ -1135,8 +1135,6 @@ static struct BurnInputInfo Pzloop2InputList[] = {
 	{"Volume Down"      , BIT_DIGITAL   , &Cps2VolDwn   , "p1 fire 3"   },
 };
 
-
-
 #undef A
 
 STDINPUTINFO(Pzloop2)
