@@ -29217,6 +29217,35 @@ struct BurnDriver BurnDrvShinobing = {
 };
 
 
+// Neo DriftOut Arcade TechDemo
+// blastar@gmx.net
+// https://blastar.citavia.de/
+
+static struct BurnRomInfo ndo_a_tdRomDesc[] = {
+	{ "ndo_a_td.p1", 0x080000, 0x0b42acff, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "ndo_a_td.s1", 0x020000, 0x00bef8e5, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "ndo_a_td.c1", 0x080000, 0x3913d0d5, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "ndo_a_td.c2", 0x080000, 0x0a70ac8e, 3 | BRF_GRA },           	//  4
+
+	{ "ndo_a_td.m1", 0x010000, 0x0125c35b, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "ndo_a_td.v1", 0x080000, 0x23ce128d, 5 | BRF_SND },           	//  6 Sound data
+};
+STDROMPICKEXT(ndo_a_td, ndo_a_td, neogeo)
+STD_ROM_FN(ndo_a_td)
+
+struct BurnDriver BurnDrvndo_a_td = {
+	"ndo_a_td", NULL, "neogeo", NULL, "2021",
+	"Neo DriftOut Arcade TechDemo\0", "TechDemo", "blastar@gmx.net", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
+	NULL, ndo_a_tdRomInfo, ndo_a_tdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // -----------------------------------------------------------------------------
 // ACA NEOGEO Version and Extracts from the official release
 // -----------------------------------------------------------------------------
