@@ -29630,7 +29630,7 @@ struct BurnDriver BurnDrvpreis2anfd = {
 // The King of Fighters '99 - Millennium Battle
 /* Original Version - Encrypted GFX */ /* ACA NEOGEO VERSION */
 
-static struct BurnRomInfo kof99kaoRomDesc[] = {
+static struct BurnRomInfo kof99anRomDesc[] = {
 	{ "251-p1da.p1",  0x100000, 0xe9b35003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29653,29 +29653,29 @@ static struct BurnRomInfo kof99kaoRomDesc[] = {
 	{ "251-v4da.v4",  0x200000, 0xc9aa9daf, 5 | BRF_SND },           // 14 ACA NEOGEO
 };
 
-STDROMPICKEXT(kof99kao, kof99kao, neogeo)
-STD_ROM_FN(kof99kao)
+STDROMPICKEXT(kof99an, kof99an, neogeo)
+STD_ROM_FN(kof99an)
 
-INT32 kof99kaoInit()
+INT32 kof99anInit()
 {
 	nNeoProtectionXor = 0x00;
 	return NeoInit();
 }
 
-struct BurnDriver BurnDrvKof99kao = {
-	"kof99kao", "kof99", "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvKof99an = {
+	"kof99an", "kof99", "neogeo", NULL, "1999",
 	"The King of Fighters '99 - Millennium Battle (ACA NEOGEO Version)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof99kaoRomInfo, kof99kaoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	kof99kaoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, kof99anRomInfo, kof99anRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99anInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 // The King of Fighters '99 - Millennium Battle
 /* ACA NEOGEO Fully Decrypted Version */
 
-static struct BurnRomInfo kof99kadoRomDesc[] = {
+static struct BurnRomInfo kof99andRomDesc[] = {
 	{ "251-p1da.p1",  0x100000, 0xe9b35003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code /ACA NEOGEO
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29698,15 +29698,15 @@ static struct BurnRomInfo kof99kadoRomDesc[] = {
 	{ "251-v4da.v4",  0x200000, 0xc9aa9daf, 5 | BRF_SND },           // 15 ACA NEOGEO
 };
 
-STDROMPICKEXT(kof99kado, kof99kado, neogeo)
-STD_ROM_FN(kof99kado)
+STDROMPICKEXT(kof99and, kof99and, neogeo)
+STD_ROM_FN(kof99and)
 
-struct BurnDriver BurnDrvkof99kado = {
-	"kof99kado", "kof99", "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvkof99and = {
+	"kof99and", "kof99", "neogeo", NULL, "1999",
 	"The King of Fighters '99 - Millennium Battle (ACA NEOGEO Fully Decrypted Version)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof99kadoRomInfo, kof99kadoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof99andRomInfo, kof99andRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
