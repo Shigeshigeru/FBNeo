@@ -52995,7 +52995,7 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 // FBneo NeCo Additional ROM Set
 // -----------------------------------------------------------------------------
 
-// Double Dragon II - The Revenge (USA)(rev1)
+// Double Dragon II: The Revenge (USA)(rev1)
 static struct BurnRomInfo nes_doubldraiirev1RomDesc[] = {
 	{ "Double Dragon II - The Revenge (USA)(rev1)(1990)(Acclaim).nes",          262160, 0xa0f7027d, BRF_ESS | BRF_PRG },
 };
@@ -53005,7 +53005,7 @@ STD_ROM_FN(nes_doubldraiirev1)
 
 struct BurnDriver BurnDrvnes_doubldraiirev1 = {
 	"nes_doubldraiirev1", "nes_doubldraii", NULL, NULL, "1990",
-	"Double Dragon II - The Revenge (USA)(rev1)\0", NULL, "Acclaim Entertainment", "NES / Famicom",
+	"Double Dragon II: The Revenge (USA)(rev1)\0", NULL, "Acclaim Entertainment", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_doubldraiirev1RomInfo, nes_doubldraiirev1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
