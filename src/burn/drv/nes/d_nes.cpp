@@ -11907,6 +11907,23 @@ struct BurnDriver BurnDrvnes_yarsrev = {
 // Aftermarket/Hack/Homebrew Games
 // -------------------------------
 
+// Piopow (HB)
+static struct BurnRomInfo nes_piopowRomDesc[] = {
+	{ "Piopow (2024)(Jeremias Babini).nes",          40976, 0x1c8c6b32, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_piopow)
+STD_ROM_FN(nes_piopow)
+
+struct BurnDriver BurnDrvnes_piopow = {
+	"nes_piopow", NULL, NULL, NULL, "2024",
+	"Piopow (HB)\0", NULL, "Jeremias Babini", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_piopowRomInfo, nes_piopowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {
@@ -14063,6 +14080,25 @@ struct BurnDriver BurnDrvnes_celestemario = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_celestemarioRomInfo, nes_celestemarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Celeste Mario's Zap & Dash DELUXE! v2.00 (Hack)
+// https://www.romhacking.net/hacks/9044/
+static struct BurnRomInfo nes_celestemariodlRomDesc[] = {
+	{ "Celeste Mario's Zap & Dash DELUXE! v2.00 (2025)(w7n).nes",          655376, 0x3a8afc37, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_celestemariodl)
+STD_ROM_FN(nes_celestemariodl)
+
+struct BurnDriver BurnDrvnes_celestemariodl = {
+	"nes_celestemariodl", "nes_smb", NULL, NULL, "2025",
+	"Celeste Mario's Zap & Dash DELUXE! v2.00 (Hack)\0", NULL, "w7n", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_celestemariodlRomInfo, nes_celestemariodlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
