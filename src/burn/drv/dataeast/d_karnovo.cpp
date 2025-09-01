@@ -905,7 +905,7 @@ static INT32 DrvInit()
 	M6502Close();
 
 	BurnYM3526Init(3000000, &DrvYM3526FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
@@ -1155,11 +1155,11 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 		
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdateEnd((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
