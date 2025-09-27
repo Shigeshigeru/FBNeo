@@ -18,6 +18,10 @@ MacOS分は現状必殺無頼拳の都合上ビルドされません
 
 パクられたものの取り返しみたいな感じ
 
+結局公式と仲良くするなんて無理でした
+
+HBMAMEのロバートさんなら問題ありません
+
 # FinalBurn Neo
 Official Forum: https://neo-source.com
 
