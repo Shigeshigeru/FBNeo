@@ -11,6 +11,7 @@ License is the same as FinalBurn Neo.
 闇建築分は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/)になります
 
 MacOS分は現状必殺無頼拳の都合上ビルドされません
+
 個人的にやることは終わりましたが公式が死ぬまでクソ更新をやるみたいなのでパクらせてもらいま(ぽちるだけなので楽ちん！
 
 # FinalBurn Neo
