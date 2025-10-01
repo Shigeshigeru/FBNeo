@@ -20728,7 +20728,17 @@ static struct BurnRomInfo mslug5dRomDesc[] = {
 	{ "268-p2d.sp2",	0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
-};
+
+static INT32 mslug5dInit()
+{
+	INT32 nRet;
+
+	NeoCallbackActive->pInitialise = mslug5b2Callback;
+
+	nRet = NeoPVCInit();
+
+	return nRet;
+}
 
 STDROMPICKEXT(mslug5d, mslug5d, neogeo)
 STD_ROM_FN(mslug5d)
@@ -20739,7 +20749,7 @@ struct BurnDriver BurnDrvMslug5d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5dRomInfo, mslug5dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5dInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -20762,7 +20772,7 @@ struct BurnDriver BurnDrvMslug5hd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5hdRomInfo, mslug5hdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5dInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -30207,24 +30217,13 @@ static struct BurnRomInfo mslug5beRomDesc[] = {
 STDROMPICKEXT(mslug5be, mslug5be, neogeo)
 STD_ROM_FN(mslug5be)
 
-static INT32 mslug5beInit()
-{
-	INT32 nRet;
-
-	NeoCallbackActive->pInitialise = mslug5b2Callback;
-
-	nRet = NeoPVCInit();
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvmslug5be = {
 	"mslug5be", "mslug5", "neogeo", NULL, "2003",
 	"Metal Slug 5 (NGM-2680, Metal Slug Complete Version, bootleg)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5beRomInfo, mslug5beRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug5beInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5dInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
