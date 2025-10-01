@@ -20721,6 +20721,52 @@ struct BurnDriver BurnDrvMslug5fd = {
 };
 
 
+// Metal Slug 5 (NGM-2680, Fully Decrypted)
+
+static struct BurnRomInfo mslug5dRomDesc[] = {
+	{ "268-p1md.p1",	0x100000, 0xe6d297af, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p2d.sp2",	0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG },
+
+	MSLUG5_DECRYPTED_COMPONENTS
+};
+
+STDROMPICKEXT(mslug5d, mslug5d, neogeo)
+STD_ROM_FN(mslug5d)
+
+struct BurnDriver BurnDrvMslug5d = {
+	"mslug5d", "mslug5", "neogeo", NULL, "2003",
+	"Metal Slug 5 (NGM-2680, Fully Decrypted)\0", NULL, "SNK Playmore", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5dRomInfo, mslug5dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoOcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Metal Slug 5 (NGH-2680, Fully Decrypted)
+
+static struct BurnRomInfo mslug5hdRomDesc[] = {
+	{ "268-p1hd.p1",	0x100000, 0x96bda916, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p2d.sp2",	0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG },
+
+	MSLUG5_DECRYPTED_COMPONENTS
+};
+
+STDROMPICKEXT(mslug5hd, mslug5hd, neogeo)
+STD_ROM_FN(mslug5hd)
+
+struct BurnDriver BurnDrvMslug5hd = {
+	"mslug5hd", "mslug5", "neogeo", NULL, "2003",
+	"Metal Slug 5 (NGH-2680, Fully Decrypted)\0", NULL, "SNK Playmore", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5hdRomInfo, mslug5hdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoOcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Metal Slug 5 (Not Encrypted)
 
 static struct BurnRomInfo mslug5ndRomDesc[] = {
