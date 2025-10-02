@@ -20728,6 +20728,7 @@ static struct BurnRomInfo mslug5dRomDesc[] = {
 	{ "268-p2d.sp2",	0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
+};
 
 static INT32 mslug5dInit()
 {
