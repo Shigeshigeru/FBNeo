@@ -1,26 +1,9 @@
 # FinalBurn Neo NeCo
 FinalBurn Neo NeCo is Unofficial Version.
 
-This is an unofficial version that specializes in complete self-cooking and supports ROM images, etc. of game makers' official reprinted games, etc. that are not officially supported.
-To make the emulator world a place where the sun shines
-And it was created for the purpose of eradicating illegal downloading.
-This is an unofficial version specialized in complete self-cooking.
-Basically, the addition of the official maker modification set is the main, and there is almost no addition of a new driver.
-License is the same as FinalBurn Neo.
-
 闇建築分は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/)になります
 
 MacOS分は現状必殺無頼拳の都合上ビルドされません
-
-個人的にやることは終わりましたが公式が死ぬまで
-
-クソ更新をやるみたいなのでパクらせてもらいま(ポチるだけなので楽ちん！
-
-結局FBneoの公式と仲良くするなんて無理でした
-
-海賊版大好きの泥棒精神の持ち主なら仲良くなれますよ！
-
-HBMAMEのロバートさんなら問題ありません
 
 # FinalBurn Neo
 Official Forum: https://neo-source.com
