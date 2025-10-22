@@ -19668,7 +19668,7 @@ STD_ROM_FN(mslug3fd)
 
 struct BurnDriver BurnDrvMslug3fd = {
 	"mslug3fd", "mslug3", "neogeo", NULL, "2000",
-	"Metal Slug 3 (Fully Decrypted)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug 3 (NGH-2560, Fully Decrypted)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3fdRomInfo, mslug3fdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
