@@ -29805,7 +29805,7 @@ STDROMPICKEXT(preis2and, preis2and, neogeo)
 STD_ROM_FN(preisle2and)
 
 struct BurnDriver BurnDrvpreis2and = {
-	"preisle2and" , "preisle2", "neogeo", NULL, "1999",
+	"preis2and" , "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
