@@ -29802,7 +29802,7 @@ static struct BurnRomInfo preis2andRomDesc[] = {
 };
 
 STDROMPICKEXT(preis2and, preis2and, neogeo)
-STD_ROM_FN(preisle2od)
+STD_ROM_FN(preisle2and)
 
 struct BurnDriver BurnDrvpreis2and = {
 	"preisle2do" , "preisle2", "neogeo", NULL, "1999",
