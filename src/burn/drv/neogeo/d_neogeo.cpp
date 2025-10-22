@@ -29657,7 +29657,7 @@ struct BurnDriver BurnDrvPbobblean = {
 // Strikers 1945 Plus
 /* ACA NEOGEO Version, Encrypted GFX Roms */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo s1945poRomDesc[] = {
+static struct BurnRomInfo s1945panRomDesc[] = {
 	{ "254-p1.p1",    0x100000, 0xff8efcff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "254-p2.sp2",   0x400000, 0xefdfd4dd, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29679,10 +29679,10 @@ static struct BurnRomInfo s1945poRomDesc[] = {
 	{ "254-v4.v4",    0x400000, 0x6d13dc91, 5 | BRF_SND },           // 14
 };
 
-STDROMPICKEXT(s1945po, s1945po, neogeo)
-STD_ROM_FN(s1945po)
+STDROMPICKEXT(s1945pan, s1945pan, neogeo)
+STD_ROM_FN(s1945pan)
 
-static INT32 s1945poInit()
+static INT32 s1945panInit()
 {
 	nNeoProtectionXor = 0x05;
 	s1945pmode = 1;
@@ -29690,20 +29690,20 @@ static INT32 s1945poInit()
 	return NeoInit();
 }
 
-struct BurnDriver BurnDrvS1945po = {
-	"s1945po", "s1945p", "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvs1945pan = {
+	"s1945pan", "s1945p", "neogeo", NULL, "1999",
 	"Strikers 1945 Plus (ACA NEOGEO Version)\0", NULL, "Psikyo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VERSHOOT, 0,
-	NULL, s1945poRomInfo, s1945poRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	s1945poInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, s1945panRomInfo, s1945panRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	s1945panInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
 
 // Strikers 1945 Plus
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo s1945pdoRomDesc[] = {
+static struct BurnRomInfo s1945pandRomDesc[] = {
 	{ "254-p1.p1",    0x100000, 0xff8efcff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "254-p2.sp2",   0x400000, 0xefdfd4dd, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29726,15 +29726,15 @@ static struct BurnRomInfo s1945pdoRomDesc[] = {
 	{ "254-v4.v4",    0x400000, 0x6d13dc91, 5 | BRF_SND },           // 15
 };
 
-STDROMPICKEXT(s1945pdo, s1945pdo, neogeo)
-STD_ROM_FN(s1945pdo)
+STDROMPICKEXT(s1945pand, s1945pand, neogeo)
+STD_ROM_FN(s1945pand)
 
-struct BurnDriver BurnDrvs1945pdo = {
-	"s1945pdo", "s1945p" , "neogeo", NULL, "1999",
+struct BurnDriver BurnDrvs1945pand = {
+	"s1945pand", "s1945p" , "neogeo", NULL, "1999",
 	"Strikers 1945 Plus (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Psikyo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
-	NULL, s1945pdoRomInfo, s1945pdoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, s1945pandRomInfo, s1945pandRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
@@ -29742,7 +29742,7 @@ struct BurnDriver BurnDrvs1945pdo = {
 // Prehistoric Isle 2
 /* ACA NEOGEO Version, Encrypted GFX */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo preisle2oRomDesc[] = {
+static struct BurnRomInfo preis2anRomDesc[] = {
 	{ "255-p1.p1",    0x100000, 0xdfa3c0f3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "255-p2.sp2",   0x400000, 0x42050b80, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29761,29 +29761,29 @@ static struct BurnRomInfo preisle2oRomDesc[] = {
 	{ "255-v2.v2",    0x200000, 0x6610d91a, 5 | BRF_SND },           // 10
 };
 
-STDROMPICKEXT(preisle2o, preisle2o, neogeo)
-STD_ROM_FN(preisle2o)
+STDROMPICKEXT(preis2an, preis2an, neogeo)
+STD_ROM_FN(preis2an)
 
-INT32 preisle2oInit()
+INT32 preis2anInit()
 {
 	nNeoProtectionXor = 0x9F;
 	return NeoInit();
 }
 
 struct BurnDriver BurnDrvPreisle2o = {
-	"preisle2o", "preisle2", "neogeo", NULL, "1999",
+	"preis2an", "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_HORSHOOT, 0,
-	NULL, preisle2oRomInfo, preisle2oRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	preisle2oInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, preis2anRomInfo, preis2anRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	preis2anInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 // Prehistoric Isle 2
 /* ACA NEOGEO Fully Decrypted Version */ /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo preisle2doRomDesc[] = {
+static struct BurnRomInfo preis2andRomDesc[] = {
 	{ "255-p1.p1",    0x100000, 0xdfa3c0f3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "255-p2.sp2",   0x400000, 0x42050b80, 1 | BRF_ESS | BRF_PRG }, //  1
 
@@ -29801,15 +29801,15 @@ static struct BurnRomInfo preisle2doRomDesc[] = {
 	{ "255-v2.v2",    0x200000, 0x6610d91a, 5 | BRF_SND },           // 11
 };
 
-STDROMPICKEXT(preisle2do, preisle2do, neogeo)
-STD_ROM_FN(preisle2do)
+STDROMPICKEXT(preis2and, preis2and, neogeo)
+STD_ROM_FN(preisle2od)
 
-struct BurnDriver BurnDrvpreis2anfd = {
+struct BurnDriver BurnDrvpreis2and = {
 	"preisle2do" , "preisle2", "neogeo", NULL, "1999",
 	"Prehistoric Isle 2 Genshi-tou (ACA NEOGEO Fully Decrypted Version)\0", NULL, "Yumekobo / Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
-	NULL, preisle2doRomInfo, preisle2doRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, preis2andRomInfo, preis2andRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
