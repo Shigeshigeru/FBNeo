@@ -12969,7 +12969,7 @@ STD_ROM_FN(MSX_livingstone2)
 
 struct BurnDriver BurnDrvMSX_livingstone2 = {
 	"msx_livingstone2", NULL, "msx_msx", NULL, "1989",
-	"Livingstone Supongo II (Euro, Spanish)\0", NULL, "Opera Soft", "MSX",
+	"Livingstone Supongo II (Euro, Spanish)\0", "Password Part 2: 15215", "Opera Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_livingstone2RomInfo, MSX_livingstone2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
@@ -21809,7 +21809,7 @@ STD_ROM_FN(MSX_abadcrim)
 
 struct BurnDriver BurnDrvMSX_abadcrim = {
 	"msx_abadcrim", NULL, "msx_msx", NULL, "1988",
-	"Abadia del Crimen, La (Euro, Spanish)\0", NULL, "Opera Soft", "MSX",
+	"Abadia del Crimen, La (Euro, Spanish)\0", "To use main character: A, K, L and SPACE", "Opera Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_abadcrimRomInfo, MSX_abadcrimRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23108,10 +23108,10 @@ STDROMPICKEXT(MSX_desperado, MSX_desperado, msx_msx)
 STD_ROM_FN(MSX_desperado)
 
 struct BurnDriver BurnDrvMSX_desperado = {
-	"msx_desperado", NULL, "msx_msx", NULL, "1987",
+	"msx_desperado", "msx_gunsmokee", "msx_msx", NULL, "1987",
 	"Desperado (Euro, Spanish)\0", "At title & options screen turn the Tape to Side B", "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_desperadoRomInfo, MSX_desperadoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -24052,22 +24052,40 @@ struct BurnDriver BurnDrvMSX_habilit = {
 	272, 228, 4, 3
 };
 
-// Hammer Boy (Euro, Spanish)
+// Hammer Boy - Part 1 (Euro)
 
-static struct BurnRomInfo MSX_hammboyRomDesc[] = {
-	{ "Hammer Boy (Euro, ES)(1991)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	0x0da92, 0x907a6931, BRF_PRG | BRF_ESS },
-	{ "Hammer Boy (Euro, ES)(1991)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	0x0da92, 0x2e7eba8e, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo MSX_hammerboy1RomDesc[] = {
+	{ "Hammer Boy (Euro)(1991)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	0x0da92, 0x907a6931, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_hammboy, MSX_hammboy, msx_msx)
-STD_ROM_FN(MSX_hammboy)
+STDROMPICKEXT(MSX_hammerboy1, MSX_hammerboy1, msx_msx)
+STD_ROM_FN(MSX_hammerboy1)
 
-struct BurnDriver BurnDrvMSX_hammboy = {
-	"msx_hammboy", NULL, "msx_msx", NULL, "1991",
-	"Hammer Boy (Euro, Spanish)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
+struct BurnDriver BurnDrvMSX_hammerboy1 = {
+	"msx_hammerboy1", NULL, "msx_msx", NULL, "1991",
+	"Hammer Boy - Part 1 (Euro)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
-	MSXGetZipName, MSX_hammboyRomInfo, MSX_hammboyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_hammerboy1RomInfo, MSX_hammerboy1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Hammer Boy - Part 2 (Euro)
+
+static struct BurnRomInfo MSX_hammerboy2RomDesc[] = {
+	{ "Hammer Boy (Euro)(1991)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	0x0da92, 0x2e7eba8e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_hammerboy2, MSX_hammerboy2, msx_msx)
+STD_ROM_FN(MSX_hammerboy2)
+
+struct BurnDriver BurnDrvMSX_hammerboy2 = {
+	"msx_hammerboy2", "msx_hammerboy1", "msx_msx", NULL, "1991",
+	"Hammer Boy - Part 2 (Euro)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_hammerboy2RomInfo, MSX_hammerboy2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -26227,22 +26245,40 @@ struct BurnDriver BurnDrvMSX_stdragon = {
 	272, 228, 4, 3
 };
 
-// Satan (Euro)
+// Satan - Part 1 (Euro)
 
-static struct BurnRomInfo MSX_satanRomDesc[] = {
+static struct BurnRomInfo MSX_satan1RomDesc[] = {
 	{ "Satan (Euro)(1989)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	0x0da31, 0x6c16e392, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_satan1, MSX_satan1, msx_msx)
+STD_ROM_FN(MSX_satan1)
+
+struct BurnDriver BurnDrvMSX_satan1 = {
+	"msx_satan1", NULL, "msx_msx", NULL, "1989",
+	"Satan - Part 1 (Euro)\0", NULL, "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_satan1RomInfo, MSX_satan1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Satan - Part 2 (Euro)
+
+static struct BurnRomInfo MSX_satan2RomDesc[] = {
 	{ "Satan (Euro)(1989)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	0x0da31, 0x10914f8a, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_satan, MSX_satan, msx_msx)
-STD_ROM_FN(MSX_satan)
+STDROMPICKEXT(MSX_satan2, MSX_satan2, msx_msx)
+STD_ROM_FN(MSX_satan2)
 
-struct BurnDriver BurnDrvMSX_satan = {
-	"msx_satan", NULL, "msx_msx", NULL, "1989",
-	"Satan (Euro)\0", NULL, "Dinamic Software", "MSX",
+struct BurnDriver BurnDrvMSX_satan2 = {
+	"msx_satan2", "msx_satan1", "msx_msx", NULL, "1989",
+	"Satan - Part 2 (Euro)\0", "Password: 01020304", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RUNGUN | GBF_PLATFORM, 0,
-	MSXGetZipName, MSX_satanRomInfo, MSX_satanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_satan2RomInfo, MSX_satan2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -26533,22 +26569,40 @@ struct BurnDriver BurnDrvMSX_solnegro2 = {
 	272, 228, 4, 3
 };
 
-// Soviet (Euro)
+// Soviet - Part 1 (Euro)
 
-static struct BurnRomInfo MSX_sovietRomDesc[] = {
+static struct BurnRomInfo MSX_soviet1RomDesc[] = {
 	{ "Soviet (Euro)(1990)(Opera Soft)(Side A)[BLOAD'CAS-',R].cas",	102992, 0xeac0c700, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_soviet1, MSX_soviet1, msx_msx)
+STD_ROM_FN(MSX_soviet1)
+
+struct BurnDriver BurnDrvMSX_soviet1 = {
+	"msx_soviet1", NULL, "msx_msx", NULL, "1990",
+	"Soviet - Part 1 (Euro)\0", NULL, "Opera Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_soviet1RomInfo, MSX_soviet1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Soviet - Part 2 (Euro)
+
+static struct BurnRomInfo MSX_soviet2RomDesc[] = {
 	{ "Soviet (Euro)(1990)(Opera Soft)(Side B)[BLOAD'CAS-',R].cas",	119128, 0x183dcfb4, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_soviet, MSX_soviet, msx_msx)
-STD_ROM_FN(MSX_soviet)
+STDROMPICKEXT(MSX_soviet2, MSX_soviet2, msx_msx)
+STD_ROM_FN(MSX_soviet2)
 
-struct BurnDriver BurnDrvMSX_soviet = {
-	"msx_soviet", NULL, "msx_msx", NULL, "1990",
-	"Soviet (Euro)\0", NULL, "Opera Soft", "MSX",
+struct BurnDriver BurnDrvMSX_soviet2 = {
+	"msx_soviet2", "msx_soviet1", "msx_msx", NULL, "1990",
+	"Soviet - Part 2 (Euro)\0", "Password: REDWOLF", "Opera Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
-	MSXGetZipName, MSX_sovietRomInfo, MSX_sovietRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_soviet2RomInfo, MSX_soviet2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
