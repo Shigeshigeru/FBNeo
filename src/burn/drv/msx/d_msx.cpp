@@ -21886,7 +21886,7 @@ STD_ROM_FN(MSX_aburner)
 
 struct BurnDriver BurnDrvMSX_aburner = {
 	"msx_aburner", NULL, "msx_msx", NULL, "1988",
-	"After Burner (Euro)\0", NULL, "Activision", "MSX",
+	"After Burner (Euro)\0", "At title screen turn the Tape to Side B", "Activision", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_aburnerRomInfo, MSX_aburnerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
@@ -28037,6 +28037,24 @@ struct BurnDriver BurnDrvMSX_antiair = {
 	272, 228, 4, 3
 };
 
+// Arcade Fever (HB)
+static struct BurnRomInfo MSX_arcadefeverRomDesc[] = {
+	{ "Arcade Fever (2025)(SMX Team).rom",	1998848, 0x5cc305c3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_arcadefever, MSX_arcadefever, msx_msx)
+STD_ROM_FN(MSX_arcadefever)
+
+struct BurnDriver BurnDrvMSX_arcadefever = {
+	"msx_arcadefever", NULL, "msx_msx", NULL, "2025",
+	"Arcade Fever (HB)\0", "R-Type doesn't work", "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_arcadefeverRomInfo, MSX_arcadefeverRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Arcomage (HB)
 static struct BurnRomInfo MSX_arcomageRomDesc[] = {
 	{ "Arcomage (2015)(Bitvision).rom",	65536, 0xa72794ba, BRF_PRG | BRF_ESS },
@@ -28902,6 +28920,24 @@ struct BurnDriver BurnDrvMSX_caos = {
 	272, 228, 4, 3
 };
 
+// Casio Collection (HB)
+static struct BurnRomInfo MSX_casiocollRomDesc[] = {
+	{ "Casio Collection (2025)(SMX Team).rom",	827392, 0xcb857ad7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_casiocoll, MSX_casiocoll, msx_msx)
+STD_ROM_FN(MSX_casiocoll)
+
+struct BurnDriver BurnDrvMSX_casiocoll = {
+	"msx_casiocoll", NULL, "msx_msx", NULL, "2025",
+	"Casio Collection (HB)\0", NULL, "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_casiocollRomInfo, MSX_casiocollRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Castle Tomb (HB)
 static struct BurnRomInfo MSX_castletombRomDesc[] = {
 	{ "Castle Tomb (2009)(AG Software).rom",	16384, 0x811d91c1, BRF_PRG | BRF_ESS },
@@ -29682,6 +29718,24 @@ struct BurnDriver BurnDrvMSX_dicedtour = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_CASINO, 0,
 	MSXGetZipName, MSX_dicedtourRomInfo, MSX_dicedtourRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Dinamic Treasures (Spanish) (HB)
+static struct BurnRomInfo MSX_dinamictrsRomDesc[] = {
+	{ "Dinamic Treasures ES (2025)(SMX Team).rom",	1908736, 0x1bbbc643, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dinamictrs, MSX_dinamictrs, msx_msx)
+STD_ROM_FN(MSX_dinamictrs)
+
+struct BurnDriver BurnDrvMSX_dinamictrs = {
+	"msx_dinamictrs", NULL, "msx_msx", NULL, "2025",
+	"Dinamic Treasures (Spanish) (HB)\0", "Selection of Dinamic Software games from 1985 to 1991", "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_dinamictrsRomInfo, MSX_dinamictrsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
