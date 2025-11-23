@@ -26792,6 +26792,7 @@ STD_ROM_FN(kof2k3fd)
 struct BurnDriver BurnDrvKof2k3fd = {
 	"kof2k3fd", "kof2003", "neogeo", NULL, "2003",
 	"The King of Fighters 2003 (Earlier Hack, Fully Decrypted)\0", NULL, "SNK Playmore", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2k3fdRomInfo, kof2k3fdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
