@@ -3932,30 +3932,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\burn\burn_sound_a.asm">
+    <NASM Include="..\..\src\burn\burn_sound_a.asm">
       <Filter>burn</Filter>
-    </None>
+    </NASM>
     <None Include="..\..\src\intf\video\win32\resource\bicubic.fx">
       <Filter>interfaces\video\win32\resource</Filter>
     </None>
-    <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
+    <NASM Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\eagle_fm.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\eagle_fm.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq2x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq2x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq3x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq3x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq4x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq4x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\superscale.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\superscale.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
+    </NASM>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">
