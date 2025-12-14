@@ -3,8 +3,6 @@ FinalBurn Neo NeCo is Unofficial Version.
 
 闇建築分は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/)になります
 
-MacOS分は現状必殺無頼拳の都合上ビルドされません
-
 # FinalBurn Neo
 Official Forum: https://neo-source.com
 
