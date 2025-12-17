@@ -671,6 +671,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_asteroids.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_atetris.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_aztarac.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_avengers.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_bagman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_baraduke.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_battlane.cpp" />
