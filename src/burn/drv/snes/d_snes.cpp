@@ -4145,7 +4145,7 @@ struct BurnDriver BurnDrvsnes_Battlesoccerte = {
 	512, 448, 4, 3
 };
 
-// Battle Soccer ~ Futebol dos Heróis (Hack, Portuguese)
+// Battle Soccer ~ Futebol dos Herois (Hack, Portuguese)
 
 static struct BurnRomInfo snes_BattlesoccertpRomDesc[] = {
 	{ "Battle Soccer - Futebol dos Herois T-Por (2003)(Trans-Center).sfc", 1048576, 0x8e06ca02, BRF_ESS | BRF_PRG },
@@ -5509,6 +5509,25 @@ struct BurnDriver BurnDrvsnes_Brainlordj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_BrainlordjRomInfo, snes_BrainlordjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Brain Lord (Hack, Portuguese v1.05)
+// https://www.romhacking.net/translations/7525/
+static struct BurnRomInfo snes_BrainlordtpRomDesc[] = {
+	{ "Brain Lord PT-BR v1.05 (2024-26)(Dindo - Mumble).sfc", 2097152, 0x7ce76c1b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Brainlordtp)
+STD_ROM_FN(snes_Brainlordtp)
+
+struct BurnDriver BurnDrvsnes_Brainlordtp = {
+	"snes_brainlordtp", "snes_brainlord", NULL, NULL, "2024-26",
+	"Brain Lord (Hack, Portuguese v1.05)\0", NULL, "Dindo - Mumble", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_BrainlordtpRomInfo, snes_BrainlordtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -9096,10 +9115,10 @@ STD_ROM_PICK(snes_Deaetono)
 STD_ROM_FN(snes_Deaetono)
 
 struct BurnDriver BurnDrvsnes_Deaetono = {
-	"snes_deaetono", NULL, NULL, NULL, "1995",
+	"snes_deaetono", "snes_feudalbros", NULL, NULL, "1995",
 	"Deae Tonosama - Appare Ichiban (Japan)\0", NULL, "Sunsoft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_DeaetonoRomInfo, snes_DeaetonoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -9163,7 +9182,7 @@ struct BurnDriver BurnDrvsnes_Demolmane = {
 	512, 448, 4, 3
 };
 
-// Demônio Rei (Hack, Portuguese)
+// Demonio Rei (Hack, Portuguese)
 // https://www.romhacking.net/translations/7237/
 static struct BurnRomInfo snes_DemonioreitpRomDesc[] = {
 	{ "Demonio Rei PT-BR (2024)(Dindo).sfc", 1572864, 0xb39d5fd8, BRF_ESS | BRF_PRG },
@@ -10717,6 +10736,25 @@ struct BurnDriver BurnDrvsnes_Dragballzhdte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzhdteRomInfo, snes_DragballzhdteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dragon Ball Z: Hiper Dimensao (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=2749.0
+static struct BurnRomInfo snes_DragballzhdtpRomDesc[] = {
+	{ "Dragon Ball Z - Hiper Dimensao PT-BR (2024)(Vila Oculta do Romhacking).sfc", 3670016, 0xd319b002, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dragballzhdtp)
+STD_ROM_FN(snes_Dragballzhdtp)
+
+struct BurnDriver BurnDrvsnes_Dragballzhdtp = {
+	"snes_dragballzhdtp", "snes_dragballzhdte", NULL, NULL, "2024",
+	"Dragon Ball Z: Hiper Dimensao (Hack, Portuguese)\0", "SA-1 enhancement CPU", "Vila Oculta do Romhacking", "SNES / Super Famicom",
+	L"Dragon Ball Z: Hiper Dimens\u00e3o (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_DragballzhdtpRomInfo, snes_DragballzhdtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -12294,6 +12332,25 @@ struct BurnDriver BurnDrvsnes_Fatalfuryspe = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_FatalfuryspeRomInfo, snes_FatalfuryspeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Feudal Bros - Tonosama 1 (World)
+
+static struct BurnRomInfo snes_FeudalbrosRomDesc[] = {
+	{ "Feudal Bros - Tonosama 1 (W)(1995-2025)(Sunsoft).sfc", 2097152, 0xd283f4e9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Feudalbros)
+STD_ROM_FN(snes_Feudalbros)
+
+struct BurnDriver BurnDrvsnes_Feudalbros = {
+	"snes_feudalbros", NULL, NULL, NULL, "1995-2025",
+	"Feudal Bros - Tonosama 1 (World)\0", NULL, "Sunsoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
+	SNESGetZipName, snes_FeudalbrosRomInfo, snes_FeudalbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -14393,6 +14450,25 @@ struct BurnDriver BurnDrvsnes_Ganbgoemon2ts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Ganbgoemon2tsRomInfo, snes_Ganbgoemon2tsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Manda Ver! Goemon II: O Estranho General MacGuiness (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=2893.0
+static struct BurnRomInfo snes_Ganbgoemon2tpRomDesc[] = {
+	{ "Manda Ver! Goemon II - O Estranho General MacGuiness PT-BR (2024)(Maverick Blue Warrior).sfc", 4194304, 0x297329d2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ganbgoemon2tp)
+STD_ROM_FN(snes_Ganbgoemon2tp)
+
+struct BurnDriver BurnDrvsnes_Ganbgoemon2tp = {
+	"snes_ganbgoemon2tp", "snes_ganbgoemon2te", NULL, NULL, "2024",
+	"Manda Ver! Goemon II: O Estranho General MacGuiness (Hack, Portuguese)\0", NULL, "Maverick Blue Warrior", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Ganbgoemon2tpRomInfo, snes_Ganbgoemon2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -24733,7 +24809,7 @@ struct BurnDriver BurnDrvsnes_Neugierte = {
 	512, 448, 4, 3
 };
 
-// Neugier: De Volta à Casa (Hack, Portuguese)
+// Neugier: De Volta a Casa (Hack, Portuguese)
 // https://www.romhacking.net/translations/7144/
 static struct BurnRomInfo snes_NeugiertpRomDesc[] = {
 	{ "Neugier - De Volta a Casa PT-BR (2023)(Dindo, Taihen).sfc", 1572864, 0xdf345666, BRF_ESS | BRF_PRG },
@@ -35015,6 +35091,25 @@ struct BurnDriver BurnDrvsnes_Superadvisland2e = {
 	512, 448, 4, 3
 };
 
+// Super Adventure Island II (Hack, Portuguese v1.01)
+// https://www.romhacking.net.br/index.php?topic=3142.0
+static struct BurnRomInfo snes_Superadvisland2tpRomDesc[] = {
+	{ "Super Adventure Island II PT-BR v1.01(2025)(Patryckpo).sfc", 2097152, 0x6a33ddd7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superadvisland2tp)
+STD_ROM_FN(snes_Superadvisland2tp)
+
+struct BurnDriver BurnDrvsnes_Superadvisland2tp = {
+	"snes_superadvisland2tp", "snes_superadvisland2", NULL, NULL, "2025",
+	"Super Adventure Island II (Hack, Portuguese v1.01)\0", NULL, "Patryckpo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Superadvisland2tpRomInfo, snes_Superadvisland2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Air Diver 2 (Japan)
 
 static struct BurnRomInfo snes_Superairdiver2RomDesc[] = {
@@ -38682,18 +38777,18 @@ struct BurnDriver BurnDrvsnes_Terranigmati = {
 	512, 448, 4, 3
 };
 
-// Terranigma (Hack, Portuguese v1.01)
+// Terranigma (Hack, Portuguese v2.0)
 // https://www.romhacking.net/translations/7276/
 static struct BurnRomInfo snes_TerranigmatpRomDesc[] = {
-	{ "Terranigma PT-BR v1.01 (2024)(Dindo).sfc", 4194304, 0x66350def, BRF_ESS | BRF_PRG },
+	{ "Terranigma PT-BR v2.0 (2024-26)(Dindo).sfc", 6291456, 0x867a6c06, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Terranigmatp)
 STD_ROM_FN(snes_Terranigmatp)
 
 struct BurnDriver BurnDrvsnes_Terranigmatp = {
-	"snes_terranigmatp", "snes_terranigmae", NULL, NULL, "2024",
-	"Terranigma (Hack, Portuguese v1.01)\0", NULL, "Dindo", "SNES / Super Famicom",
+	"snes_terranigmatp", "snes_terranigmae", NULL, NULL, "2024-26",
+	"Terranigma (Hack, Portuguese v2.0)\0", NULL, "Dindo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_TerranigmatpRomInfo, snes_TerranigmatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -43903,10 +43998,10 @@ struct BurnDriver BurnDrvsnes_Bofwofg = {
 	512, 448, 4, 3
 };
 
-// Bubsy: Less Bad Edition (Hack, v2.0)
+// Bubsy: Less Bad Edition (Hack, v1.3)
 // https://www.romhacking.net/hacks/9453/
 static struct BurnRomInfo snes_BubsylbeRomDesc[] = {
-	{ "Bubsy - Less Bad Edition v2.0 (2026)(NoPLo).sfc", 2097152, 0x0a54b6e9, BRF_ESS | BRF_PRG },
+	{ "Bubsy - Less Bad Edition v1.3 (2026)(NoPLo).sfc", 2097152, 0x72f7fc86, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Bubsylbe)
@@ -43914,7 +44009,7 @@ STD_ROM_FN(snes_Bubsylbe)
 
 struct BurnDriver BurnDrvsnes_Bubsylbe = {
 	"snes_bubsylbe", "snes_bubsy", NULL, NULL, "2026",
-	"Bubsy: Less Bad Edition (Hack, v2.0)\0", NULL, "NoPLo", "Nintendo",
+	"Bubsy: Less Bad Edition (Hack, v1.3)\0", NULL, "NoPLo", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BubsylbeRomInfo, snes_BubsylbeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -44055,7 +44150,7 @@ struct BurnDriver BurnDrvsnes_Crashbanden = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot e a Dimensão Retrô (GlobalHack, Portuguese)
+// Crash Bandicoot e a Dimensao Retro (GlobalHack, Portuguese)
 
 static struct BurnRomInfo snes_CrashbandptRomDesc[] = {
 	{ "Crash Bandicoot e a Dimensao Retro (Portuguese)(2025)(Bandicoot).sfc", 4194304, 0x49118dcf, BRF_ESS | BRF_PRG },
