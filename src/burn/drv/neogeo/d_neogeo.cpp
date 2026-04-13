@@ -31244,3 +31244,34 @@ struct BurnDriver BurnDrvSdodgebc = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Neo Turf Masters / Big Tournament Golf (ACA NEOGEO , Censored Version)
+// Thanks for the information, KENBO
+
+static struct BurnRomInfo turfmastacRomDesc[] = {
+	{ "200-p1ac.p1",	0x200000, 0x25f4f6c3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1
+
+	{ "200-c1.c1",		0x400000, 0x8e7bf41a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "200-c2.c2",		0x400000, 0x5a65a8ce, 3 | BRF_GRA },           //  3
+
+	{ "200-m1.m1",		0x020000, 0x9994ac00, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "200-v1.v1",		0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data
+	{ "200-v2.v2",		0x200000, 0xcaf341a8, 5 | BRF_SND },           //  6
+	{ "200-v3.v3",		0x200000, 0x7abca053, 5 | BRF_SND },           //  7
+	{ "200-v4ac.v4",	0x200000, 0x52508225, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(turfmastac, turfmastac, neogeo)
+STD_ROM_FN(turfmastac)
+
+struct BurnDriver BurnDrvTurfmastac = {
+	"turfmastac", "turfmast", "neogeo", NULL, "2022",
+	"Neo Turf Masters / Big Tournament Golf (ACA NEOGEO , Censored Version)\0", NULL, "dericmiller", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE , 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
+	NULL, turfmastacRomInfo, turfmastacRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
