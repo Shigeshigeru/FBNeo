@@ -31268,7 +31268,7 @@ STD_ROM_FN(turfmastac)
 
 struct BurnDriver BurnDrvTurfmastac = {
 	"turfmastac", "turfmast", "neogeo", NULL, "2022",
-	"Neo Turf Masters / Big Tournament Golf (ACA NEOGEO , Censored Version)\0", NULL, "dericmiller", "Neo Geo MVS",
+	"Neo Turf Masters / Big Tournament Golf (ACA NEOGEO , Censored Version)\0", NULL, "Nazca", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE , 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastacRomInfo, turfmastacRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
