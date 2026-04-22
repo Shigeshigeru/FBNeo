@@ -4872,7 +4872,7 @@ struct BurnDriver BurnDrvKungfum = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumRomInfo, KungfumRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 //Irem Arcade Hits
@@ -4894,7 +4894,7 @@ struct BurnDriver BurnDrvKungfumd = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumdRomInfo, KungfumdRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumdInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvSpartanx = {
@@ -4904,7 +4904,7 @@ struct BurnDriver BurnDrvSpartanx = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, SpartanxRomInfo, SpartanxRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvKungfub = {
@@ -4914,7 +4914,7 @@ struct BurnDriver BurnDrvKungfub = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfubRomInfo, KungfubRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvKungfub2 = {
@@ -4924,7 +4924,7 @@ struct BurnDriver BurnDrvKungfub2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub2RomInfo, Kungfub2RomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvKungfub3 = {
@@ -4934,7 +4934,7 @@ struct BurnDriver BurnDrvKungfub3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub3RomInfo, Kungfub3RomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	Kungfub3Init, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvKungfub3s = {
@@ -4944,7 +4944,7 @@ struct BurnDriver BurnDrvKungfub3s = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub3sRomInfo, Kungfub3sRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	Kungfub3Init, M62Exit, M62Frame, KungfumDraw, M62Scan,
-	NULL, 0x200, 256, 246, 4, 3
+	NULL, 0x200, 256, 248, 4, 3
 };
 
 struct BurnDriver BurnDrvBattroad = {
