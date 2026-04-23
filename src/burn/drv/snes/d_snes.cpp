@@ -4554,10 +4554,10 @@ STDROMPICKEXT(snes_Bikedaisuki, snes_Bikedaisuki, snes_dsp1)
 STD_ROM_FN(snes_Bikedaisuki)
 
 struct BurnDriver BurnDrvsnes_Bikedaisuki = {
-	"snes_bikedaisuki", NULL, "snes_dsp1", NULL, "1994",
+	"snes_bikedaisuki", "snes_riderspirits", "snes_dsp1", NULL, "1994",
 	"Bike Daisuki! Hashiriya Tamashii (Japan)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_BikedaisukiRomInfo, snes_BikedaisukiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -9749,7 +9749,7 @@ struct BurnDriver BurnDrvsnes_Dinodini = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_DinodiniRomInfo, snes_DinodiniRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // DinoCity (USA)
@@ -12423,7 +12423,7 @@ STD_ROM_FN(snes_Feudalbros)
 
 struct BurnDriver BurnDrvsnes_Feudalbros = {
 	"snes_feudalbros", NULL, NULL, NULL, "1995-2025",
-	"Feudal Bros - Tonosama 1 (World)\0", NULL, "Sunsoft", "SNES / Super Famicom",
+	"Feudal Bros - Tonosama 1 (World)\0", "Official English Translation", "Sunsoft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_FeudalbrosRomInfo, snes_FeudalbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -17054,7 +17054,7 @@ struct BurnDriver BurnDrvsnes_Huntredocte = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_HORSHOOT | GBF_SHOOT, 0,
 	SNESGetZipName, snes_HuntredocteRomInfo, snes_HuntredocteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Hunt for Red October, The (Japan)
@@ -17320,7 +17320,7 @@ struct BurnDriver BurnDrvsnes_Intsensiblesoccer = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_IntsensiblesoccerRomInfo, snes_IntsensiblesoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Ignition Factor, The (USA)
@@ -27010,7 +27010,7 @@ struct BurnDriver BurnDrvsnes_Pilotwingse = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_SIM, 0,
 	SNESGetZipName, snes_PilotwingseRomInfo, snes_PilotwingseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Pilotwings (Japan)
@@ -28795,6 +28795,25 @@ struct BurnDriver BurnDrvsnes_Riddickbb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_RiddickbbRomInfo, snes_RiddickbbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rider's Spirits (World)
+
+static struct BurnRomInfo snes_RiderspiritsRomDesc[] = {
+	{ "Rider's Spirits (W)(1994-2024)(NCS - Masaya).sfc", 1048576, 0xe5d5fa92, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_Riderspirits, snes_Riderspirits, snes_dsp1)
+STD_ROM_FN(snes_Riderspirits)
+
+struct BurnDriver BurnDrvsnes_Riderspirits = {
+	"snes_riderspirits", NULL, "snes_dsp1", NULL, "1994-2024",
+	"Rider's Spirits (World)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RiderspiritsRomInfo, snes_RiderspiritsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30907,7 +30926,7 @@ struct BurnDriver BurnDrvsnes_Sensiblesoccer = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_SensiblesoccerRomInfo, snes_SensiblesoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Venom & Spider-Man - Separation Anxiety (USA)
@@ -32427,7 +32446,7 @@ struct BurnDriver BurnDrvsnes_Smallstarsworlde = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SmallstarsworldeRomInfo, snes_SmallstarsworldeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)
