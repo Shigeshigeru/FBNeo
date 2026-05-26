@@ -6450,6 +6450,40 @@ struct BurnDriver BurnDrvketmatsuri = {
 };
 
 
+// #############################################################################
+// Ketsui: Kizuna Jigoku Tachi (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)
+// aka Ketsui Blue Label or Sports Ketsui
+// - More aggressive bullet patterns (some parts are similar to second loop patterns)
+// - One loop.
+// - Doom appears at the end every time.
+// - Extends are at different point values.
+// - Chip values have been tweaked.
+ struct BurnRomInfo ketikdRomDesc[] = {
+	 { "ketsui_v100_ikd.u38",		0x0200000, 0xdfa8a180, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	 { "cave_t04701w064.u19",		0x0800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+	 { "cave_a04701w064.u7", 		0x0800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	 { "cave_a04702w064.u8", 		0x0800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+	 { "cave_b04701w064.u1",		0x0800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	 { "cave_m04701b032.u17",		0x0400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+	 { "ket_igs027a.bin",		 	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	 { "ket_defaults.nv",		 	0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ketikd, ketikd, ketsuiBios) // custom bios
+STD_ROM_FN(ketikd)
+
+struct BurnDriver BurnDrvketikd = {
+	"ketikd", "ket", NULL, NULL, "2007",
+	"Ketsui: Kizuna Jigoku Tachi (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketikdRomInfo, ketikdRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+// #############################################################################
+
+
 // Ketsui: Kizuna Jigoku Tachi (2014/07/16 ARRANGE 1.7 VER) (hack)
 
 static struct BurnRomInfo ketarrRomDesc[] = {
@@ -7112,11 +7146,11 @@ struct BurnDriver BurnDrvPgemeni = {
 // Bootlegs & hacks
 
 
-// Gai Shi Xing Xiong (bootleg of Knights of Valour Super Heroes Plus, V302CN)
+// Gai Shi Ying Xiong Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN)
 
 /*
-   QCPASS: 2011-04-28
-   SN:  WDF*ZSCS-0459
+   QCPASS: 2011-02-15
+   SN:  WDF*ZSCS-0257
    VER: V300CN  V302CN
    DATE: DEC 29 2010
    TIME: 16:31:32
@@ -7139,7 +7173,7 @@ static struct BurnRomInfo kovgsyxRomDesc[] = {
 
 	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
-	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+	{ "gsyx_prot.c51",				0x0010000, 0x0c381ff4, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)
@@ -7163,10 +7197,50 @@ static INT32 kovgsyxInit()
 
 struct BurnDriverD BurnDrvKovgsyx = {
 	"kovgsyx", "kovshp", "pgm", NULL, "2010",
-	"Gai Shi Xing Xiong (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
-	L"Gai Shi Xing Xiong\0\u76D6\u4E16\u82F1\u96C4\u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", NULL, NULL, NULL,
+	"Gai Shi Ying Xiong Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
+	L"Gai Shi Ying Xiong Jia Qiang Ban\0\u76D6\u4E16\u82F1\u96C4\u52A0\u5F3A\u7248 (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovgsyxRomInfo, kovgsyxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovgsyxInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Zhan Shen Chuan Shuo 2 Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V201CN)
+
+/*
+   QCPASS: 2011-02-15
+   SN:  WDF*ZSCS-0257
+   VER: V300CN  V201CN
+   DATE: MAR 17 2010
+   TIME: 10:43:09
+   CREDITS TO: Mr .Qin */
+
+static struct BurnRomInfo kovzscsRomDesc[] = {
+	{ "27c322.u3",					0x0400000, 0x8f58939b, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
+
+	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a01.u8",						0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a23.u9",						0x1000000, 0x1f51c140, 3 | BRF_GRA },			//  3
+	{ "a45.u10",					0x1000000, 0x5e44fd82, 3 | BRF_GRA },			//  4
+
+	{ "b01.u6",						0x1000000, 0x779825d3, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
+
+	{ "gsyx_prot.c51",				0x0010000, 0x0c381ff4, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovzscs, kovzscs, pgm)
+STD_ROM_FN(kovzscs)
+
+struct BurnDriverD BurnDrvKovzscs = {
+	"kovzscs", "kovshp", "pgm", NULL, "2010",
+	"Zhan Shen Chuan Shuo 2 Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V201CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
+	L"Zhan Shen Chuan Shuo 2 Te Bie Ban\0\u6218\u795E\u4F20\u8BF4 2 \u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V201CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovzscsRomInfo, kovzscsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovgsyxInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
