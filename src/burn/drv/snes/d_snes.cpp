@@ -28771,6 +28771,65 @@ struct BurnDriver BurnDrvsnes_Powmongerj = {
 	512, 448, 4, 3
 };
 
+// Power of the Hired (Japan)
+
+static struct BurnRomInfo snes_powerhirRomDesc[] = {
+	{ "Power of the Hired (J)(1994)(NCS).sfc", 1572864, 0xcf276c80, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_powerhir)
+STD_ROM_FN(snes_powerhir)
+
+struct BurnDriver BurnDrvsnes_powerhir = {
+	"snes_powerhir", "snes_powerhirte", NULL, NULL, "1994",
+	"Power of the Hired (Japan)\0", NULL, "NCS", "SNES / Super Famicom",
+	L"Power of the Hired (Japan)\0\u30d1\u30ef\u30fc \u30aa\u30d6 \u30b6 \u30cf\u30a4\u30a2\u30fc\u30c9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
+	SNESGetZipName, snes_powerhirRomInfo, snes_powerhirRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Power of the Hired (Hack, English v0.75)
+// https://www.romhacking.net/translations/6031/
+
+static struct BurnRomInfo snes_powerhirteRomDesc[] = {
+	{ "Power of the Hired T-Eng v0.75 (2021)(Dynamic-Designs).sfc", 1572864, 0xd7659c54, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_powerhirte)
+STD_ROM_FN(snes_powerhirte)
+
+struct BurnDriver BurnDrvsnes_powerhirte = {
+	"snes_powerhirte", NULL, NULL, NULL, "2021",
+	"Power of the Hired (Hack, English v0.75)\0", NULL, "Dynamic-Designs", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
+	SNESGetZipName, snes_powerhirteRomInfo, snes_powerhirteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Power of the Hired(Hack, Chinese)
+// https://www.nesbbs.com/bbs/thread-60305-1-1.html
+
+static struct BurnRomInfo snes_powerhirtscRomDesc[] = {
+	{ "Power of the Hired T-Chs (2026)(XiaoGuihun).sfc", 2097152, 0xce52c28d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_powerhirtsc)
+STD_ROM_FN(snes_powerhirtsc)
+
+struct BurnDriver BurnDrvsnes_powerhirtsc = {
+	"snes_powerhirtsc", "snes_powerhirte", NULL, NULL, "2026",
+	"Power of the Hired (Hack, Chinese)\0", NULL, "XiaoGuihun", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
+	SNESGetZipName, snes_powerhirtscRomInfo, snes_powerhirtscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Power Rangers Zeo - Battle Racers (USA)
 
 static struct BurnRomInfo snes_PowrangzeoRomDesc[] = {
@@ -30474,7 +30533,7 @@ STD_ROM_PICK(snes_Rrracingtp)
 STD_ROM_FN(snes_Rrracingtp)
 
 struct BurnDriver BurnDrvsnes_Rrracingtp = {
-	"snes_rrracingtp", "snes_rrracing", NULL, NULL, "1993",
+	"snes_rrracingtp", "snes_rrracing", NULL, NULL, "2018",
 	"Rock N' Roll Racing (Hack, Portuguese v.Beta)\0", NULL, "Brazilian Warriors", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
@@ -35026,18 +35085,18 @@ struct BurnDriver BurnDrvsnes_Stargatej = {
 	512, 448, 4, 3
 };
 
-// Stargate (Hack, Portuguese v.77b rev.30)
+// Stargate (Hack, Portuguese v1.0a)
 // https://www.romhacking.net.br/index.php?topic=3101.0
 static struct BurnRomInfo snes_StargatetpRomDesc[] = {
-	{ "Stargate PT-BR v.77b rev.30 (2025)(Neodash).sfc", 2097152, 0x74598268, BRF_ESS | BRF_PRG },
+	{ "Stargate PT-BR v1.0a (2025-26)(Neodash).sfc", 2097152, 0x5884863f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Stargatetp)
 STD_ROM_FN(snes_Stargatetp)
 
 struct BurnDriver BurnDrvsnes_Stargatetp = {
-	"snes_stargatetp", "snes_stargate", NULL, NULL, "1994",
-	"Stargate (Hack, Portuguese v.77b rev.30)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	"snes_stargatetp", "snes_stargate", NULL, NULL, "2025-26",
+	"Stargate (Hack, Portuguese v1.0a)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SNESGetZipName, snes_StargatetpRomInfo, snes_StargatetpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -41022,7 +41081,7 @@ STD_ROM_PICK(snes_Topgeartp)
 STD_ROM_FN(snes_Topgeartp)
 
 struct BurnDriver BurnDrvsnes_Topgeartp = {
-	"snes_topgeartp", "snes_topgear", NULL, NULL, "1992",
+	"snes_topgeartp", "snes_topgear", NULL, NULL, "2018",
 	"Top Gear (Hack, Portuguese)\0", NULL, "BlackThorne", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
@@ -45492,10 +45551,10 @@ struct BurnDriver BurnDrvsnes_Cosmogangpzlh = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.02)
+// Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.03)
 
 static struct BurnRomInfo snes_Crashband2enRomDesc[] = {
-	{ "Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt EN v1.02 (2026)(Bandicoot).sfc", 4194304, 0x154641ff, BRF_ESS | BRF_PRG },
+	{ "Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt EN v1.03 (2026)(Bandicoot).sfc", 4194304, 0x17fba547, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Crashband2en)
@@ -45503,7 +45562,7 @@ STD_ROM_FN(snes_Crashband2en)
 
 struct BurnDriver BurnDrvsnes_Crashband2en = {
 	"snes_crashband2en", NULL, NULL, NULL, "2026",
-	"Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.02)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
+	"Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.03)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Crashband2enRomInfo, snes_Crashband2enRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -45511,10 +45570,10 @@ struct BurnDriver BurnDrvsnes_Crashband2en = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.02)
+// Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.03)
 
 static struct BurnRomInfo snes_Crashband2ptRomDesc[] = {
-	{ "Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais PT v1.02 (2026)(Bandicoot).sfc", 4194304, 0xd1e5ae31, BRF_ESS | BRF_PRG },
+	{ "Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais PT v1.03 (2026)(Bandicoot).sfc", 4194304, 0xe1c7528e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Crashband2pt)
@@ -45522,7 +45581,7 @@ STD_ROM_FN(snes_Crashband2pt)
 
 struct BurnDriver BurnDrvsnes_Crashband2pt = {
 	"snes_crashband2pt", "snes_crashband2en", NULL, NULL, "2026",
-	"Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.02)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
+	"Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.03)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
 	L"Crash Bandicoot e a Dimens\u00e3o Retr\u00f4 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.02)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Crashband2ptRomInfo, snes_Crashband2ptRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
