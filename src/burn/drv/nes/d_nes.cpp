@@ -8020,6 +8020,25 @@ struct BurnDriver BurnDrvnes_chipndalresra2c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Chip 'n Dale ~ Tico E Teco: Defensores da Lei 2 (Hack, Portuguese v1.1)
+// https://www.romhacking.net/translations/7614/
+static struct BurnRomInfo nes_chipndalresra2tpRomDesc[] = {
+	{ "Tico E Teco - Defensores da Lei 2 T-Por v1.1 (2026)(xThiiix).nes",          262160, 0x5eb965bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chipndalresra2tp)
+STD_ROM_FN(nes_chipndalresra2tp)
+
+struct BurnDriver BurnDrvnes_chipndalresra2tp = {
+	"nes_chipndalresra2tp", "nes_chipndalresra2", NULL, NULL, "2026",
+	"Chip 'n Dale ~ Tico E Teco: Defensores da Lei 2 (Hack, Portuguese v1.1)\0", NULL, "xThiiix", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_chipndalresra2tpRomInfo, nes_chipndalresra2tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Contra (Hack, Spanish)
 // https://www.romhacking.net/translations/4947/
 static struct BurnRomInfo nes_contracastRomDesc[] = {
@@ -26524,6 +26543,25 @@ struct BurnDriver BurnDrvnes_tola = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_tolaRomInfo, nes_tolaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tony: Montezuma's Gold (HB)
+// https://monochrome-productions.itch.io/tony-montezumas-gold-nes
+static struct BurnRomInfo nes_tonymontRomDesc[] = {
+	{ "Tony - Montezuma's Gold (2026)(Monochrome Productions).nes",          524304, 0xc9e4180b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tonymont)
+STD_ROM_FN(nes_tonymont)
+
+struct BurnDriver BurnDrvnes_tonymont = {
+	"nes_tonymont", NULL, NULL, NULL, "2026",
+	"Tony: Montezuma's Gold (HB)\0", NULL, "Monochrome Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tonymontRomInfo, nes_tonymontRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
