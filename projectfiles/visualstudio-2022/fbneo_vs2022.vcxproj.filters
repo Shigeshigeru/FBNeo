@@ -1531,6 +1531,9 @@
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp">
       <Filter>interfaces\cd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\intf\cd\cd_chd.cpp">
+      <Filter>interfaces\cd</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp">
       <Filter>interfaces\input</Filter>
     </ClCompile>
