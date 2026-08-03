@@ -1014,6 +1014,10 @@ static int cdimgSetVolume(double dVolume)
 	return 0;
 }
 
+INT32 cdimgGetCurrentLBA() {
+	return cdimgLBA;
+}
+
 static INT32 cdimgGetSoundBuffer(INT16* buffer, INT32 samples)
 {
 
@@ -1160,4 +1164,4 @@ static INT32 cdimgGetSettings(InterfaceInfo* pInfo)
 	return 0;
 }
 
-struct CDEmuDo cdimgDo = { cdimgExit, cdimgInit, cdimgStop, cdimgPlay, cdimgLoadSector, cdimgReadTOC, cdimgReadQChannel, cdimgSetVolume, cdimgGetSoundBuffer, cdimgScan, cdimgGetSettings, _T("raw image CD emulation") };
+struct CDEmuDo cdimgDo = { cdimgExit, cdimgInit, cdimgStop, cdimgPlay, cdimgLoadSector, cdimgReadTOC, cdimgReadQChannel, cdimgSetVolume, cdimgGetCurrentLBA, cdimgGetSoundBuffer, cdimgScan, cdimgGetSettings, _T("raw image CD emulation") };
