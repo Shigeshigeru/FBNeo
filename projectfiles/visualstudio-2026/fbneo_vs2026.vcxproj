@@ -126,6 +126,7 @@
     <ClCompile Include="..\..\src\burn\drv\atari\d_arcadecl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarig1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy1.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_badlands.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_batman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_blstroid.cpp" />
@@ -243,6 +244,8 @@
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_run.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_stars.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\gba\d_gba.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\gba\gba.cpp" />
     <ClCompile Include="..\..\src\burn\drv\irem\d_m107.cpp" />
     <ClCompile Include="..\..\src\burn\drv\irem\d_m52.cpp" />
     <ClCompile Include="..\..\src\burn\drv\irem\d_m57.cpp" />
@@ -425,6 +428,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_canyon.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_capbowl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_carjmbre.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_cbasebal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ccastles.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_cclimber.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_champbas.cpp" />
@@ -1444,7 +1448,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" %(Filename).cpp
 
-.%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
+.\%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1463,7 +1467,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" %(Filename).cpp
 
-.%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
+.\%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1482,7 +1486,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" /D "BUILD_X64_EXE" %(Filename).cpp
 
-.%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
+.\%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1501,7 +1505,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" /D "BUILD_X64_EXE" %(Filename).cpp
 
-.%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
+.\%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
