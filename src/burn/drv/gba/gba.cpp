@@ -23,6 +23,7 @@ static inline void    gba_store32(gba_t* gba, UINT32 baddr, UINT32 data);
 static inline void    gba_store16(gba_t* gba, UINT32 baddr, UINT32 data);
 static inline void    gba_store8(gba_t* gba, UINT32 baddr, UINT32 data);
 static inline void    gba_io_store16(gba_t* gba, UINT32 baddr, UINT16 data);
+static inline void    gba_update_interrupt_pending(gba_t* gba);
 static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 baddr, INT32 req_type);
 static inline void    gba_process_mmio_read(gba_t* gba, UINT32 address);
 static inline bool    gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes);
@@ -30,12 +31,19 @@ static inline void    arm7_write32(void* user_data, UINT32 address, UINT32 data)
 static inline void    gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
 
 // cart.h
-static inline UINT16   gba_rom_read16(const gba_t* gba, UINT32 address);
+static inline UINT16  gba_rom_read16(const gba_t* gba, UINT32 address);
 
 // timer.h
 static inline void                  gba_compute_timers(gba_t* gba);
-static inline void     gba_tick_timers(gba_t* gba);
-static inline void     gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+static inline void    gba_tick_interrupts(gba_t* gba);
+static inline void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+
+// ppu.h
+static inline void    gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+
+// sio.h
+#define GBA_SIO_TRANSFER_TICKS	(8 * 8)
+static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 
 #include "gpio.h"
 #include "cart.h"
@@ -50,18 +58,20 @@ void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
 void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch);
 struct GbaCore {
-	gba_t			state;
-	gba_scratch_t	scratch;
-	sb_emu_state_t	host;
-	UINT8*			rom;
-	size_t			romSize;
-	bool			ownsRom;
-	UINT8			externalBios[16 * 1024];
-	bool			externalBiosLoaded;
-	UINT32			cartridgeFeatures;
-	UINT8			cartridgeBackupType;
-	double			sourceRate;
-	INT32			outputFrames;
+	gba_t state;
+	gba_scratch_t  scratch;
+	sb_emu_state_t host;
+	UINT8* rom;
+	size_t romSize;
+	bool   ownsRom;
+	UINT8  externalBios[16 * 1024];
+	bool   externalBiosLoaded;
+	bool   forceCustomBios;
+	bool   perPixelRender;
+	UINT32 cartridgeFeatures;
+	UINT8  cartridgeBackupType;
+	double sourceRate;
+	INT32  outputFrames;
 };
 
 struct GbaCartridgeProfile {
@@ -107,51 +117,155 @@ UINT8 GbaSolarLegacyToLevel(UINT16 legacy)
 	return closest;
 }
 
+// Cartridge profiles keyed by the 4-character game code at ROM offset 0xac:
+// explicit hardware devices and backup types, everything else resolves at runtime.
 static const GbaCartridgeProfile GbaCartridgeProfiles[] = {
-	{ {'U', '3', 'I', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', 'I', 'E'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', 'I', 'P'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', '2', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', '2', 'E'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', '2', 'P'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'U', '3', '3', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
-	{ {'V', '4', '9', 'J'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
-	{ {'V', '4', '9', 'E'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
-	{ {'V', '4', '9', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
-	{ {'2', 'G', 'B', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
-	{ {'R', 'Z', 'W', 'J'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
-	{ {'R', 'Z', 'W', 'E'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
-	{ {'R', 'Z', 'W', 'P'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
-	{ {'K', 'H', 'P', 'J'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
-	{ {'K', 'Y', 'G', 'J'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
-	{ {'K', 'Y', 'G', 'E'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
-	{ {'K', 'Y', 'G', 'P'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
-	{ {'B', 'L', 'J', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
-	{ {'B', 'L', 'J', 'K'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
-	{ {'B', 'L', 'V', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
-	{ {'B', 'R', '4', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
-	{ {'B', 'K', 'A', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'V', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'A', 'X', 'P', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
-	{ {'B', 'P', 'E', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	// Advance Wars
+	{ {'A', 'W', 'R', 'E'}, 0,								GBA_BACKUP_FLASH_64K  },
+	{ {'A', 'W', 'R', 'P'}, 0,								GBA_BACKUP_FLASH_64K  },
+	// Advance Wars 2: Black Hole Rising
+	{ {'A', 'W', '2', 'E'}, 0,								GBA_BACKUP_FLASH_64K  },
+	{ {'A', 'W', '2', 'P'}, 0,								GBA_BACKUP_FLASH_64K  },
+	// Boktai: The Sun is in Your Hand
+	{ {'U', '3', 'I', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', 'I', 'E'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', 'I', 'P'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	// Boktai 2: Solar Boy Django
+	{ {'U', '3', '2', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '2', 'E'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '2', 'P'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	// Crash Bandicoot 2 - N-Tranced
+	{ {'A', 'C', '8', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'C', '8', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'C', '8', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// DigiCommunication Nyo - Datou! Black Gemagema Dan
+	{ {'B', 'D', 'K', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	// Dragon Ball Z - The Legacy of Goku
+	{ {'A', 'L', 'G', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Dragon Ball Z - The Legacy of Goku II
+	{ {'A', 'L', 'F', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'L', 'F', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'L', 'F', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Dragon Ball Z - Taiketsu
+	{ {'B', 'D', 'B', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'B', 'D', 'B', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Drill Dozer
+	{ {'V', '4', '9', 'J'}, GBA_CART_RUMBLE,				GBA_BACKUP_SRAM       },
+	{ {'V', '4', '9', 'E'}, GBA_CART_RUMBLE,				GBA_BACKUP_SRAM       },
+	{ {'V', '4', '9', 'P'}, GBA_CART_RUMBLE,				GBA_BACKUP_SRAM       },
+	// e-Reader
+	{ {'P', 'E', 'A', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'P', 'S', 'A', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'P', 'S', 'A', 'E'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Final Fantasy Tactics Advance
+	{ {'A', 'F', 'X', 'E'}, 0,								GBA_BACKUP_FLASH_64K  },
+	// F-Zero - Climax
+	{ {'B', 'F', 'T', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Goodboy Galaxy
+	{ {'2', 'G', 'B', 'P'}, GBA_CART_RUMBLE,				GBA_BACKUP_SRAM       },
+	// Iridion II
+	{ {'A', 'I', '2', 'E'}, 0,								GBA_BACKUP_FORCE_NONE },
+	{ {'A', 'I', '2', 'P'}, 0,								GBA_BACKUP_FORCE_NONE },
+	// Game Boy Wars Advance 1+2
+	{ {'B', 'G', 'W', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Golden Sun: The Lost Age
+	{ {'A', 'G', 'F', 'E'}, 0,								GBA_BACKUP_FLASH_64K  },
+	// Koro Koro Puzzle - Happy Panechu!
+	{ {'K', 'H', 'P', 'J'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM     },
+	// Legendz - Yomigaeru Shiren no Shima
+	{ {'B', 'L', 'J', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K  },
+	{ {'B', 'L', 'J', 'K'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K  },
+	// Legendz - Sign of Nekuromu
+	{ {'B', 'L', 'V', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K  },
+	// Mega Man Battle Network
+	{ {'A', 'R', 'E', 'E'}, 0,								GBA_BACKUP_SRAM       },
+	// Mega Man Zero
+	{ {'A', 'Z', 'C', 'E'}, 0,								GBA_BACKUP_SRAM       },
+	// Metal Slug Advance
+	{ {'B', 'S', 'M', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	// Pokemon Ruby
+	{ {'A', 'X', 'V', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	// Pokemon Sapphire
+	{ {'A', 'X', 'P', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	// Pokemon Emerald
+	{ {'B', 'P', 'E', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	// Pokemon Mystery Dungeon
+	{ {'B', '2', '4', 'E'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', '2', '4', 'P'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Pokemon FireRed
+	{ {'B', 'P', 'R', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'E'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'P'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'I'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'S'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'D'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'R', 'F'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Pokemon LeafGreen
+	{ {'B', 'P', 'G', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'E'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'P'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'I'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'S'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'D'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'G', 'F'}, 0,								GBA_BACKUP_FLASH_128K },
+	// RockMan EXE 4.5 - Real Operation
+	{ {'B', 'R', '4', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K  },
+	// Rocky
+	{ {'A', 'R', '8', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'R', 'O', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Sennen Kazoku
+	{ {'B', 'K', 'A', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K },
+	// Shin Bokura no Taiyou: Gyakushuu no Sabata
+	{ {'U', '3', '3', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	// Stuart Little 2
+	{ {'A', 'S', 'L', 'E'}, 0,								GBA_BACKUP_FORCE_NONE },
+	{ {'A', 'S', 'L', 'F'}, 0,								GBA_BACKUP_FORCE_NONE },
+	// Super Mario Advance 2
+	{ {'A', 'A', '2', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'A', '2', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	// Super Mario Advance 3
+	{ {'A', '3', 'A', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', '3', 'A', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', '3', 'A', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Super Mario Advance 4
+	{ {'A', 'X', '4', 'J'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', '4', 'E'}, 0,								GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', '4', 'P'}, 0,								GBA_BACKUP_FLASH_128K },
+	// Super Monkey Ball Jr.
+	{ {'A', 'L', 'U', 'E'}, 0,								GBA_BACKUP_EEPROM     },
+	{ {'A', 'L', 'U', 'P'}, 0,								GBA_BACKUP_EEPROM     },
+	// Top Gun - Combat Zones
+	{ {'A', '2', 'Y', 'E'}, 0,								GBA_BACKUP_FORCE_NONE },
+	// Ueki no Housoku - Jingi Sakuretsu! Nouryokusha Battle
+	{ {'B', 'U', 'H', 'J'}, 0,								GBA_BACKUP_EEPROM     },
+	// Wario Ware Twisted
+	{ {'R', 'Z', 'W', 'J'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM    },
+	{ {'R', 'Z', 'W', 'E'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM    },
+	{ {'R', 'Z', 'W', 'P'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM    },
+	// Yoshi's Universal Gravitation
+	{ {'K', 'Y', 'G', 'J'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM     },
+	{ {'K', 'Y', 'G', 'E'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM     },
+	{ {'K', 'Y', 'G', 'P'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM     },
+	// Aging cartridge
+	{ {'T', 'C', 'H', 'K'}, 0,								GBA_BACKUP_EEPROM     },
 };
 
 static const GbaCartridgeProfile *GbaFindCartridgeProfile(const UINT8 *rom, size_t romSize)
@@ -176,7 +290,7 @@ static UINT32 GbaDetectCartridgeFeatures(const UINT8 *rom, size_t romSize)
 static UINT8 GbaDetectCartridgeBackupType(const UINT8 *rom, size_t romSize)
 {
 	const GbaCartridgeProfile *profile = GbaFindCartridgeProfile(rom, romSize);
-	return profile ? profile->backupType : 0;
+	return profile ? profile->backupType : GBA_BACKUP_NONE;
 }
 
 static void GbaCoreClearPresentation(GbaCore *core)
@@ -189,6 +303,8 @@ static void GbaCoreClearPresentation(GbaCore *core)
 
 static void GbaCoreApplyCartridgeFeatures(GbaCore *core)
 {
+	if (core->state.cart.fcmini.type)
+		return;		// FC Mini carts own their SRAM mapper
 	core->state.cart.features = core->cartridgeFeatures;
 	if (core->cartridgeBackupType != GBA_BACKUP_NONE) {
 		core->state.cart.backup_type = core->cartridgeBackupType;
@@ -201,9 +317,9 @@ static void GbaCoreApplyCartridgeFeatures(GbaCore *core)
 static void GbaCoreApplyInput(GbaCore *core, const GbaInput *input)
 {
 	memset(core->host.joy.inputs, 0, sizeof(core->host.joy.inputs));
-	core->host.joy.gyro_z                = 0;
-	core->host.joy.tilt_x                = 0;
-	core->host.joy.tilt_y                = 0;
+	core->host.joy.gyro_z = 0;
+	core->host.joy.tilt_x = 0;
+	core->host.joy.tilt_y = 0;
 	if (input == NULL)
 		return;
 	core->host.joy.inputs[SE_KEY_A     ] = (input->buttons >> GBA_BUTTON_A     ) & 1;
@@ -247,7 +363,7 @@ void GbaCoreExit(GbaCore **core)
 
 INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaRtcSeed *rtcSeed)
 {
-	if (core == NULL || rom == NULL || romSize == 0 || romSize > 32 * 1024 * 1024)
+	if (core == NULL || rom == NULL || romSize == 0 || romSize > 64 * 1024 * 1024)
 		return 1;
 	const size_t allocSize = romSize < 0x100 ? 0x100 : romSize;
 	UINT8 *romCopy = (UINT8 *)BurnMalloc((INT32)allocSize);
@@ -264,8 +380,8 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	core->cartridgeBackupType = GbaDetectCartridgeBackupType(core->rom, core->romSize);
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = romSize;
-	core->host.bios_data  = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size  = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data  = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size  = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	core->host.rom_loaded = true;
 	strcpy(core->host.rom_path, "fbneo.gba");
 	gba_host_loading  = &core->host;
@@ -310,6 +426,21 @@ INT32 GbaCoreLoadBios(GbaCore *core, const UINT8 *bios, size_t biosSize)
 	return 0;
 }
 
+void GbaCoreSetBiosMode(GbaCore *core, INT32 forceCustomBios)
+{
+	if (core == NULL)
+		return;
+	core->forceCustomBios = forceCustomBios != 0;
+}
+
+void GbaCoreSetRenderMode(GbaCore *core, INT32 perPixelMode)
+{
+	if (core == NULL)
+		return;
+	core->perPixelRender = perPixelMode != 0;
+	core->state.ppu.render_per_pixel = core->perPixelRender;
+}
+
 INT32 GbaCoreReset(GbaCore *core)
 {
 	if (core == NULL || core->rom == NULL)
@@ -321,8 +452,8 @@ INT32 GbaCoreReset(GbaCore *core)
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = core->romSize;
-	core->host.bios_data  = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size  = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data  = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size  = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	gba_host_loading      = &core->host;
 	const bool loaded     = gba_load_rom(&core->host, &core->state, &core->scratch);
 	gba_host_loading      = NULL;
@@ -332,6 +463,7 @@ INT32 GbaCoreReset(GbaCore *core)
 	core->state.rtc.rtc_seconds  = rtcSeconds;
 	core->state.rtc.host_seconds = rtcHostSeconds;
 	core->state.rtc.status       = rtcStatus;
+	core->state.ppu.render_per_pixel = core->perPixelRender;
 	gba_rtc_transport_reset(&core->state.rtc);
 	core->state.rtc.last_pins    = 0;
 	GbaCoreApplyCartridgeFeatures(core);
@@ -516,6 +648,13 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_read);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_write);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, trigger_breakpoint);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timer_event.next);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timer_event.callback);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   ppu_event.next);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   ppu_event.callback);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   sio_event.next);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   sio_event.callback);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
 	return 0;
 }
@@ -528,6 +667,8 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	memcpy(&core->state, data, sizeof(gba_t));
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
+	core->state.ppu.render_per_pixel = core->perPixelRender;
+	gba_timing_rebind(&core->state);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	if (!preserveAudio)
@@ -541,8 +682,8 @@ void GbaCoreRebind(GbaCore *core)
 		return;
 	core->host.rom_data  = core->rom;
 	core->host.rom_size  = core->romSize;
-	core->host.bios_data = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios         : NULL;
+	core->host.bios_size = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	gba_ptrs_init(&core->state, &core->scratch, core->rom);
 	core->state.cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 }
@@ -553,20 +694,157 @@ void gba_cpu_trigger_breakpoint(void* data)
 	gba->pause_after_frame = true;
 }
 
+void gba_timing_init(gba_t* gba)
+{
+	gba->timing.head          = NULL;
+	gba->timer_settle_clock   = gba->global_timer - 1;
+	gba->timer_event.next     = NULL;
+	gba->timer_event.when     = 0;
+	gba->timer_event.priority = GBA_EVENT_PRIORITY_TIMER;
+	gba->timer_event.callback = gba_timer_event;
+	gba->timer_event.active   = false;
+	gba->ppu_event.next       = NULL;
+	gba->ppu_event.when       = 0;
+	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	gba->ppu_event.callback   = gba_ppu_event;
+	gba->ppu_event.active     = false;
+	gba->sio_event.next       = NULL;
+	gba->sio_event.when       = 0;
+	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
+	gba->sio_event.callback   = gba_sio_event;
+	gba->sio_event.active     = false;
+	gba_timing_schedule(gba, &gba->timer_event, 0);
+	gba_timing_schedule(gba, &gba->ppu_event,   0);
+	gba_update_interrupt_pending(gba);
+}
+
+void gba_timing_rebind(gba_t* gba)
+{
+	gba->timer_event.priority = GBA_EVENT_PRIORITY_TIMER;
+	gba->timer_event.callback = gba_timer_event;
+	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	gba->ppu_event.callback   = gba_ppu_event;
+	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
+	gba->sio_event.callback   = gba_sio_event;
+	gba_timing_rebuild(gba);
+	gba_update_interrupt_pending(gba);
+}
+
+// lead-in length matching the per-cycle fast-forward horizon: the ppu settles on
+// its boundary, the timer one cycle past it; due events settle immediately
+static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
+{
+	INT32 ff = ticks;
+	if (gba->ppu_event.active) {
+		INT32 d = gba->ppu_event.when - (INT32)gba->global_timer;
+		if (d < 0)
+			d = 0;
+		if (d < ff)
+			ff = d;
+	}
+	if (gba->timer_event.active) {
+		INT32 d = gba->timer_event.when - (INT32)gba->global_timer;
+		d = d <= 0 ? 0 : d + 1;
+		if (d < ff)
+			ff = d;
+	}
+	return ff;
+}
+
+// advances the master clock by `ticks` cycles, firing every event that comes due
+// on the way.  Each cycle shifts the IF pipeline before its events fire, and
+// events landing exactly on the quantum end stay pending so the next iteration's
+// DMA/exec decision runs first, matching the per-cycle cadence.
+static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
+{
+	INT32 event_free = gba_timing_ff(gba, ticks);
+	if (ticks <= event_free) {
+		// event-free span: no dispatch, so shifts and audio settle in one batch
+		gba->global_timer += ticks;
+		if (gba->active_if_pipe_stages) {
+			for (INT32 i = 0; i < ticks; ++i)
+				gba_tick_interrupts(gba);
+		}
+		gba->audio.sample_accum += ticks;
+		if (gba->audio.sample_accum >= 512) {
+			double delta_t = (double)gba->audio.sample_accum / (16 * 1024 * 1024);
+			gba_tick_audio(gba, emu, delta_t, gba->audio.sample_accum);
+			gba->audio.sample_accum = 0;
+		}
+		return;
+	}
+	INT32 advanced    = 0;
+	INT32 audio_pos   = event_free;
+	INT32 dma_on_pos  = -1;
+	INT32 shifted     = 0;
+	bool  dma_was_on  = gba->activate_dmas;
+	for (;;) {
+		// entering cycle `advanced`: its pipeline shift precedes its events
+		if (shifted == advanced && advanced < ticks) {
+			if (SB_UNLIKELY(gba->active_if_pipe_stages))
+				gba_tick_interrupts(gba);
+			++shifted;
+		}
+		if (advanced == audio_pos) {
+			// audio batch point: end of the event-free lead-in, full span credited
+			audio_pos = -1;
+			gba->audio.sample_accum += ticks;
+			if (gba->audio.sample_accum >= 512) {
+				double delta_t = (double)gba->audio.sample_accum / (16 * 1024 * 1024);
+				gba_tick_audio(gba, emu, delta_t, gba->audio.sample_accum);
+				gba->audio.sample_accum = 0;
+			}
+		}
+		if (advanced < ticks) {
+			gba_timing_dispatch(gba, emu);
+			if (dma_on_pos < 0 && !dma_was_on && gba->activate_dmas)
+				dma_on_pos = advanced;
+		}
+		if (advanced >= ticks)
+			break;
+		INT32 until = gba_timing_next(gba);
+		INT32 step  = ticks - advanced;
+		if (until < step)
+			step = until;
+		if (audio_pos >= 0 && audio_pos - advanced < step)
+			step = audio_pos - advanced;
+		if (step < 1)
+			step = 1;
+		gba->global_timer += step;
+		advanced += step;
+		// batch the shifts of the cycles the step passed over; no event fires
+		// inside the batch so an empty pipeline stays empty
+		if (gba->active_if_pipe_stages) {
+			while (shifted < advanced) {
+				gba_tick_interrupts(gba);
+				++shifted;
+			}
+		} else {
+			shifted = advanced;
+		}
+	}
+	// mid-span DMA activation: the per-cycle cascade nets residual 0 and
+	// last_cpu_tick equal to the event-bearing tail length
+	if (dma_on_pos >= 0 && dma_on_pos <= ticks - 2) {
+		gba->residual_dma_ticks = 0;
+		gba->last_cpu_tick      = ticks - event_free;
+	}
+}
+
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
 {
-	gba->framebuffer      = scratch->framebuffer;
-	gba->mem.bios         = scratch->bios;
-	gba->mem.cart_rom     = rom_data;
-	gba->cpu.read8        = arm7_read8;
-	gba->cpu.read16       = arm7_read16;
-	gba->cpu.read32       = arm7_read32;
-	gba->cpu.read16_seq   = arm7_read16_seq;
-	gba->cpu.read32_seq   = arm7_read32_seq;
-	gba->cpu.write8       = arm7_write8;
-	gba->cpu.write16      = arm7_write16;
-	gba->cpu.write32      = arm7_write32;
-	gba->cpu.user_data    = gba;
+	gba->framebuffer    = scratch->framebuffer;
+	gba->mem.bios       = scratch->bios;
+	gba->mem.cart_rom   = rom_data;
+	gba->cpu.read8      = arm7_read8;
+	gba->cpu.read16     = arm7_read16;
+	gba->cpu.read32     = arm7_read32;
+	gba->cpu.read16_seq = arm7_read16_seq;
+	gba->cpu.read32_seq = arm7_read32_seq;
+	gba->cpu.write8     = arm7_write8;
+	gba->cpu.write16    = arm7_write16;
+	gba->cpu.write32    = arm7_write32;
+	gba->cpu.user_data  = gba;
 }
 
 void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
@@ -583,7 +861,7 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		solar_value = 1.00;
 	if (!(solar_value > 0.00))
 		solar_value = 0.00;
-	gba->solar_sensor.pending_value = 0xE9 - solar_value * (0xE9 - 0x32);	// latched into value when the game resets the sensor
+	gba->solar_sensor.pending_value = 0xE9 - solar_value * (0xe9 - 0x32);	// latched into value when the game resets the sensor
 	gba->gyro_sensor.pending_sample = gba_gyro_sample(emu->joy.gyro_z);
 	gba->tilt_sensor.pending_x = gba_tilt_sample(emu->joy.tilt_x);
 	gba->tilt_sensor.pending_y = gba_tilt_sample(emu->joy.tilt_y);
@@ -598,49 +876,21 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 			gba->cpu.i_cycles = 0;
 			gba->mem.requests = 0;
 			if (!gba->cpu.phased_op_id) {
-				UINT16 int_if = gba_io_read16(gba, GBA_IF);
-				if (SB_UNLIKELY(int_if)) {
-					int_if &= gba_io_read16(gba, GBA_IE);
-					UINT32 ime = gba_io_read32(gba, GBA_IME);
-					int_if *= SB_BFE(ime, 0, 1);
-					if (int_if)
-						arm7_process_interrupts(&gba->cpu);
-				}
+				if (SB_UNLIKELY(gba->interrupt_pending))
+					arm7_process_interrupts(&gba->cpu);
 			}
-			arm7_exec_instruction(&gba->cpu);
-			gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
-		}
-		gba_tick_sio(gba);
-		INT32 ppu_fast_forward   = gba->ppu.fast_forward_ticks;
-		INT32 timer_fast_forward = gba->timer_ticks_before_event - gba->deferred_timer_ticks;
-		INT32 fast_forward_ticks = ppu_fast_forward < timer_fast_forward ? ppu_fast_forward : timer_fast_forward;
-		if (fast_forward_ticks > ticks) {
-			if (gba->cpu.wait_for_interrupt)
-				ticks = fast_forward_ticks;
-			else
-				fast_forward_ticks = ticks;
-		}
-		if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
-			for (INT32 i = 0;i < fast_forward_ticks;++i)
-				gba_tick_interrupts(gba);
-		}
-		// RTC advances with host wall time, not emulated master clocks
-		gba->deferred_timer_ticks   += fast_forward_ticks;
-		gba->ppu.fast_forward_ticks -= fast_forward_ticks;
-		ticks -= fast_forward_ticks > ticks ? ticks : fast_forward_ticks;
-		double delta_t = ((double)ticks + fast_forward_ticks) / (16 * 1024 * 1024);
-		gba_tick_audio(gba, emu, delta_t, ticks + fast_forward_ticks);
-
-		bool last_activate_dmas = gba->activate_dmas;
-		for (INT32 t = 0;t < ticks;++t) {
-			if (gba->activate_dmas && !last_activate_dmas) {
-				gba->residual_dma_ticks = ticks - t - 1;
-				gba->last_cpu_tick = t + 1;
+			if (gba->cpu.wait_for_interrupt && !gba->cpu.phased_op_id) {
+				// halted: idle instruction, then run to the next event horizon
+				gba->last_cpu_tick = 1;
+				ticks              = gba_timing_next(gba);
+				if (ticks < 1)
+					ticks = 1;
+			} else {
+				arm7_exec_instruction(&gba->cpu);
+				gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
 			}
-			gba_tick_interrupts(gba);
-			gba_tick_timers(gba);
-			gba_tick_ppu(gba, emu->render_frame);
 		}
+		gba_advance(gba, emu, ticks);
 	}
 	gba_gpio_update_rumble(gba);
 	emu->joy.rumble = gba->cart.gpio.rumble;
