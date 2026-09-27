@@ -22458,9 +22458,9 @@ struct BurnDriver BurnDrvsms_evil = {
 	256, 192, 4, 3
 };
 
-// Flashback (HB, v0.0.3)
+// Flashback (HB, v0.0.4)
 static struct BurnRomInfo sms_flashbackRomDesc[] = {
-	{ "Flashback v0.0.3 (2026)(haroldo-ok).sms",	4194304, 0xa1ae7b67, BRF_PRG | BRF_ESS },
+	{ "Flashback v0.0.4 (2026)(haroldo-ok).sms",	4194304, 0xe65f94ee, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_flashback)
@@ -22468,7 +22468,7 @@ STD_ROM_FN(sms_flashback)
 
 struct BurnDriver BurnDrvsms_flashback = {
 	"sms_flashback", NULL, NULL, NULL, "2026",
-	"Flashback (HB, v0.0.3)\0", NULL, "haroldo-ok", "Sega Master System",
+	"Flashback (HB, v0.0.4)\0", NULL, "haroldo-ok", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_flashbackRomInfo, sms_flashbackRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -24258,6 +24258,24 @@ struct BurnDriver BurnDrvsms_skbnv2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_skbnv2RomInfo, sms_skbnv2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// SkyHaul (HB, v0.0.1)
+static struct BurnRomInfo sms_skyhaulRomDesc[] = {
+	{ "SkyHaul v0.0.1 (2026)(haroldo-ok).sms",	32768, 0x51fc7c6b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_skyhaul)
+STD_ROM_FN(sms_skyhaul)
+
+struct BurnDriver BurnDrvsms_skyhaul = {
+	"sms_skyhaul", NULL, NULL, NULL, "2026",
+	"SkyHaul (HB, v0.0.1)\0", NULL, "haroldo-ok", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_skyhaulRomInfo, sms_skyhaulRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
