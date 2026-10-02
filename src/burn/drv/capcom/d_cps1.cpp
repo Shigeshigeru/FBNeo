@@ -557,7 +557,7 @@ static INT32 get_distance(INT32 from, INT32 to) {
 
 static UINT8 adjusted_rotate_gunpos(INT32 i)
 {
-	return (*rotate_gunpos[i] & 0x7ff) / 0x40;
+	return (BURN_ENDIAN_SWAP_INT16(*rotate_gunpos[i]) & 0x7ff) / 0x40;
 }
 
 static void RotateDoTick()
@@ -19759,7 +19759,7 @@ void __fastcall DaimakaibFFWriteWord(UINT32 a, UINT16 d)
 	}
 	
 	UINT16 *RAM = (UINT16*)CpsRamFF;
-	RAM[((a & 0xffff) >> 1)] = d;
+	RAM[((a & 0xffff) >> 1)] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static INT32 DaimakaibInit()
@@ -20468,7 +20468,7 @@ void __fastcall PunipicFFWriteWord(UINT32 a, UINT16 d)
 	}
 	
 	UINT16 *RAM = (UINT16*)CpsRamFF;
-	RAM[((a & 0xffff) >> 1)] = d;
+	RAM[((a & 0xffff) >> 1)] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static INT32 PunipicScanCallback(INT32 nAction, INT32 *pnMin)
@@ -21483,37 +21483,37 @@ void __fastcall Sf2ceeablScrollWrite(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d - 0x3c;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x3c);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
@@ -21581,7 +21581,7 @@ void __fastcall Sf2ceeablScrollWrite(UINT32 a, UINT16 d)
 		
 		case 0x980016: {
 			// scroll3 ram offset
-			*((UINT16*)(CpsReg + 0x06)) = d;
+			*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -21948,7 +21948,7 @@ void __fastcall Sf2ceuab6WriteWord(UINT32 a, UINT16 d)
 {
 	if (a == 0x8001b2) {
 		// scroll 2 X offset has moved in this set
-		*((UINT16*)(CpsReg + 0x10)) = d;
+		*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -22108,7 +22108,7 @@ void __fastcall Sf2hfjbWriteWord(UINT32 a, UINT16 d)
 {
 	if (a == 0x800124) {
 		// row scroll start register moved in this set
-		*((UINT16*)(CpsReg + 0x20)) = d;
+		*((UINT16*)(CpsReg + 0x20)) = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -22227,7 +22227,7 @@ void __fastcall SlampicFFWriteWord(UINT32 a, UINT16 d)
 	}
 	
 	UINT16 *RAM = (UINT16*)CpsRamFF;
-	RAM[((a & 0xffff) >> 1)] = d;
+	RAM[((a & 0xffff) >> 1)] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static void SlampicPatchCallback()
@@ -22427,7 +22427,7 @@ static void __fastcall VarthbRegWriteWord(UINT32 a, UINT16 d)
 	if (a == 0x800188) {
 		if (d > 0x9000) {
 			// scroll 3 ram offset
-			*((UINT16*)(CpsReg + 0x06)) = d;
+			*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		} // sound fade command written through CpsWritePort
 	}
@@ -22762,7 +22762,7 @@ void __fastcall Wofr1blFFWriteWord(UINT32 a, UINT16 d)
 	}
 	
 	UINT16 *RAM = (UINT16*)CpsRamFF;
-	RAM[((a & 0xffff) >> 1)] = d;
+	RAM[((a & 0xffff) >> 1)] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static void WofhPatch()
@@ -22847,7 +22847,7 @@ static void __fastcall SgyxzSpriteRamWriteLong(UINT32 a, UINT32 d)
 {
 	if (d == 0xffffffff) d = 0xefffefff; // Strange protection or glitch???
 
-	*((UINT32*)(CpsRam90 + (a & 0x3fffc))) = (d << 16) | (d >> 16);
+	*((UINT32*)(CpsRam90 + (a & 0x3fffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 }
 
 static INT32 SgyxzInit()
