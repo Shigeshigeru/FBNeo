@@ -24949,6 +24949,24 @@ struct BurnDriver BurnDrvMSX_jungwarr = {
 	272, 228, 4, 3
 };
 
+// Ke rulen los petas (Euro, Spanish)
+static struct BurnRomInfo MSX_kerulenlospetasRomDesc[] = {
+	{ "Ke rulen los petas (Euro, ES)(1989)(Iber Software)[RUN'CAS-'].cas",	63618, 0xfa3e99ae, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_kerulenlospetas, MSX_kerulenlospetas, msx_msx)
+STD_ROM_FN(MSX_kerulenlospetas)
+
+struct BurnDriver BurnDrvMSX_kerulenlospetas = {
+	"msx_kerulenlospetas", NULL, "msx_msx", NULL, "1989",
+	"Ke rulen los petas (Euro, Spanish)\0", NULL, "Iber Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_kerulenlospetasRomInfo, MSX_kerulenlospetasRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Khazzad-Dum (Euro, Spanish)
 static struct BurnRomInfo MSX_khazzadRomDesc[] = {
 	{ "Khazzad-Dum (Euro, ES)(1989)(System 4)[RUN'CAS-'].cas",	0x0a2de, 0x27c10ddf, BRF_PRG | BRF_ESS },
@@ -27820,6 +27838,42 @@ struct BurnDriver BurnDrvMSX_zerofighter = {
 	272, 228, 4, 3
 };
 
+// Zipi y Zape - Part 1 (Euro, Spanish)
+static struct BurnRomInfo MSX_zipiyzape1RomDesc[] = {
+	{ "Zipi y Zape - Part 1 (Euro, ES)(1989)(Dro Soft)(Side A)[RUN'CAS-'].cas",	35224, 0x7061c0ca, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_zipiyzape1, MSX_zipiyzape1, msx_msx)
+STD_ROM_FN(MSX_zipiyzape1)
+
+struct BurnDriver BurnDrvMSX_zipiyzape1 = {
+	"msx_zipiyzape1", NULL, "msx_msx", NULL, "1989",
+	"Zipi y Zape - Part 1 (Euro, Spanish)\0", NULL, "Dro Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_zipiyzape1RomInfo, MSX_zipiyzape1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Zipi y Zape - Part 2 (Euro, Spanish)
+static struct BurnRomInfo MSX_zipiyzape2RomDesc[] = {
+	{ "Zipi y Zape - Part 2 (Euro, ES)(1989)(Dro Soft)(Side B)[RUN'CAS-'].cas",	36065, 0x5baf3c84, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_zipiyzape2, MSX_zipiyzape2, msx_msx)
+STD_ROM_FN(MSX_zipiyzape2)
+
+struct BurnDriver BurnDrvMSX_zipiyzape2 = {
+	"msx_zipiyzape2", "msx_zipiyzape1", "msx_msx", NULL, "1989",
+	"Zipi y Zape - Part 2 (Euro, Spanish)\0", "Password: tito", "Dro Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_zipiyzape2RomInfo, MSX_zipiyzape2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Zona 0 (Euro, Spanish)
 static struct BurnRomInfo MSX_zona0RomDesc[] = {
 	{ "Zona 0 (Euro, ES)(1991)(Topo Soft)[RUN'CAS-'].cas",	0x10f6e, 0x0b919291, BRF_PRG | BRF_ESS },
@@ -29176,6 +29230,24 @@ struct BurnDriver BurnDrvMSX_burnusexp = {
 	272, 228, 4, 3
 };
 
+// c0MAN (HB, v1.1)
+static struct BurnRomInfo MSX_c0manRomDesc[] = {
+	{ "c0MAN v1.1 (2026)(FONY).rom",	16384, 0x8c63b2c0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_c0man, MSX_c0man, msx_msx)
+STD_ROM_FN(MSX_c0man)
+
+struct BurnDriver BurnDrvMSX_c0man = {
+	"msx_c0man", NULL, "msx_msx", NULL, "2026",
+	"c0MAN (HB, v1.1)\0", NULL, "FONY", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
+	MSXGetZipName, MSX_c0manRomInfo, MSX_c0manRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Cacorm (HB)
 static struct BurnRomInfo MSX_cacormRomDesc[] = {
 	{ "Cacorm (2022)(Inufuto).cas",	8363, 0x7d9a0cb1, BRF_PRG | BRF_ESS },
@@ -29573,9 +29645,9 @@ struct BurnDriver BurnDrvMSX_coldblood = {
 	272, 228, 4, 3
 };
 
-// Congo Bongo - The Isometric Edition (HB)
+// Congo Bongo: The Isometric Edition (HB, v1.1)
 static struct BurnRomInfo MSX_congobongo3dRomDesc[] = {
-	{ "Congo Bongo - The Isometric Edition (2026)(Mastropiero).rom",	32768, 0x3c403f70, BRF_PRG | BRF_ESS },
+	{ "Congo Bongo - The Isometric Edition v1.1 (2026)(Mastropiero).rom",	32768, 0x3c403f70, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_congobongo3d, MSX_congobongo3d, msx_msx)
@@ -29583,7 +29655,7 @@ STD_ROM_FN(MSX_congobongo3d)
 
 struct BurnDriver BurnDrvMSX_congobongo3d = {
 	"msx_congobongo3d", NULL, "msx_msx", NULL, "2026",
-	"Congo Bongo - The Isometric Edition (HB)\0", NULL, "Mastropiero", "MSX",
+	"Congo Bongo: The Isometric Edition (HB, v1.1)\0", NULL, "Mastropiero", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_congobongo3dRomInfo, MSX_congobongo3dRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -32650,6 +32722,24 @@ struct BurnDriver BurnDrvMSX_mieyen = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
 	MSXGetZipName, MSX_mieyenRomInfo, MSX_mieyenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mikero-Odyssey (HB, v1.7.2)
+static struct BurnRomInfo MSX_mikerodysRomDesc[] = {
+	{ "Mikero-Odyssey v1.7.2 (2026)(Kanon-ai).rom",	524288, 0x0b7d4047, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mikerodys, MSX_mikerodys, msx_msx)
+STD_ROM_FN(MSX_mikerodys)
+
+struct BurnDriver BurnDrvMSX_mikerodys = {
+	"msx_mikerodys", NULL, "msx_msx", NULL, "2026",
+	"Mikero-Odyssey (HB, v1.7.2)\0", NULL, "Kanon-ai", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ACTION | GBF_ADV, 0,
+	MSXGetZipName, MSX_mikerodysRomInfo, MSX_mikerodysRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -36339,7 +36429,7 @@ struct BurnDriver BurnDrvMSX_viajecentroe = {
 	"msx_viajecentroe", "msx_viajecentro", "msx_msx", NULL, "2017",
 	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (HB, v1.3)\0", "Passwords: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED / Fase 4: MEGADETH / Fase 5: KREATOR", "Topo Siglo XXI - FX Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ACTION | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MINIGAMES, 0,
 	MSXGetZipName, MSX_viajecentroeRomInfo, MSX_viajecentroeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
