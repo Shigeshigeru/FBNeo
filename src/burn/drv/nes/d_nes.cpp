@@ -17759,6 +17759,25 @@ struct BurnDriver BurnDrvnes_dethcomplex2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Dice Royal (HB, Alpha)
+// https://simgraveline.itch.io/dice-royal-retro
+static struct BurnRomInfo nes_diceroyalRomDesc[] = {
+	{ "Dice Royal Alpha (2026)(Grave Games).nes",          73744, 0xa5c17ade, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_diceroyal)
+STD_ROM_FN(nes_diceroyal)
+
+struct BurnDriver BurnDrvnes_diceroyal = {
+	"nes_diceroyal", NULL, NULL, NULL, "2026",
+	"Dice Royal (HB, Alpha)\0", NULL, "Grave Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_diceroyalRomInfo, nes_diceroyalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Diggy Diggy Mole (HB)
 static struct BurnRomInfo nes_diggymoleRomDesc[] = {
 	{ "Diggy Diggy Mole (2026)(Novasplore Games).nes",          98320, 0xaa4951b1, BRF_ESS | BRF_PRG },
@@ -21484,6 +21503,25 @@ struct BurnDriver BurnDrvnes_machinecave = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mad Mix Game R (HB)
+// https://enriqueggalvez.itch.io/mad-mix-game-r
+static struct BurnRomInfo nes_madmixgrRomDesc[] = {
+	{ "Mad Mix Game R (2026)(Magic Games).nes",          2097168, 0x58702f7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_madmixgr)
+STD_ROM_FN(nes_madmixgr)
+
+struct BurnDriver BurnDrvnes_madmixgr = {
+	"nes_madmixgr", NULL, NULL, NULL, "2026",
+	"Mad Mix Game R (HB)\0", NULL, "Magic Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
+	NESGetZipName, nes_madmixgrRomInfo, nes_madmixgrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Mad Wizard, The: A Candelabra Chronicle (HB) (Sly Dog Studios)
 static struct BurnRomInfo nes_madwizsdsRomDesc[] = {
 	{ "Mad Wizard, The - A Candelabra Chronicle (2014)(Sly Dog Studios).nes",          131088, 0x5481d022, BRF_ESS | BRF_PRG },
@@ -22867,6 +22905,25 @@ struct BurnDriver BurnDrvnes_nebsanddebs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_nebsanddebsRomInfo, nes_nebsanddebsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nemeshit (HB)
+// https://keefbaker.itch.io/nemeshit
+static struct BurnRomInfo nes_nemeshitRomDesc[] = {
+	{ "Nemeshit (2026)(Clankerbast Software).nes",          786448, 0x9fb4b6a3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nemeshit)
+STD_ROM_FN(nes_nemeshit)
+
+struct BurnDriver BurnDrvnes_nemeshit = {
+	"nes_nemeshit", NULL, NULL, NULL, "2026",
+	"Nemeshit (HB)\0", NULL, "Clankerbast Software", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_nemeshitRomInfo, nes_nemeshitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
