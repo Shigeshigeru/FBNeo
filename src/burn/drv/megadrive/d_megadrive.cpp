@@ -38917,10 +38917,10 @@ struct BurnDriver BurnDrvmd_bulletpanic = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Cabal (HB, Beta 1)
+// Cabal (HB, Beta 2a)
 // https://mlouvet.itch.io/cabal-megadrive
 static struct BurnRomInfo md_cabalRomDesc[] = {
-	{ "Cabal Beta 1 (2026)(Oldschool Is Beautiful).bin", 2097152, 0x67e040cb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Cabal Beta 2a (2026)(Oldschool Is Beautiful).bin", 2097152, 0xd4dd88df, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cabal)
@@ -38928,7 +38928,7 @@ STD_ROM_FN(md_cabal)
 
 struct BurnDriver BurnDrvmd_cabal = {
 	"md_cabal", NULL, NULL, NULL, "2026",
-	"Cabal (HB, Beta 1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Cabal (HB, Beta 2a)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_cabalRomInfo, md_cabalRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41665,9 +41665,10 @@ struct BurnDriver BurnDrvmd_cperils = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Commando (HB, v0.8b)
+// Mega Commando (HB, v0.81b)
+// https://mxretrodev.itch.io/mega-commando
 static struct BurnRomInfo md_mcommandoRomDesc[] = {
-	{ "Mega Commando v0.8b (2026)(MXRetroDev).bin", 2752512, 0xda4a0edd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Commando v0.81b (2026)(MXRetroDev).bin", 2752512, 0x96a6d27f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcommando)
@@ -41675,7 +41676,7 @@ STD_ROM_FN(md_mcommando)
 
 struct BurnDriver BurnDrvmd_mcommando = {
 	"md_mcommando", NULL, NULL, NULL, "2026",
-	"Mega Commando (HB, v0.8b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
+	"Mega Commando (HB, v0.81b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mcommandoRomInfo, md_mcommandoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42586,10 +42587,10 @@ struct BurnDriver BurnDrvmd_pandajump = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pang (DavidGames) (HB, Beta v0.75)
+// Pang (DavidGames) (HB, Beta v0.81)
 // https://davidsgame.itch.io/pang-md
 static struct BurnRomInfo md_pangRomDesc[] = {
-	{ "Pang Beta v0.75 (2026)(DavidGames).bin", 1441792, 0x75a52a4f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Pang Beta v0.81 (2026)(DavidGames).bin", 1441792, 0xeb641d44, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pang)
@@ -42597,7 +42598,7 @@ STD_ROM_FN(md_pang)
 
 struct BurnDriver BurnDrvmd_pang = {
 	"md_pang", NULL, NULL, NULL, "2026",
-	"Pang (DavidGames) (HB, Beta v0.75)\0", NULL, "DavidGames", "Genesis / Mega Drive",
+	"Pang (DavidGames) (HB, Beta v0.81)\0", NULL, "DavidGames", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pangRomInfo, md_pangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42605,10 +42606,10 @@ struct BurnDriver BurnDrvmd_pang = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pang (Oldschool Is Beautiful) (HB, Beta 2)
+// Pang (Oldschool Is Beautiful) (HB, Beta 3)
 // https://mlouvet.itch.io/pang-megadrive
 static struct BurnRomInfo md_pangoibRomDesc[] = {
-	{ "Pang Beta 2 (2026)(Oldschool Is Beautiful).bin", 3068942, 0xf348ef08, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Pang Beta 3 (2026)(Oldschool Is Beautiful).bin", 3877096, 0xa789941b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pangoib)
@@ -42616,7 +42617,7 @@ STD_ROM_FN(md_pangoib)
 
 struct BurnDriver BurnDrvmd_pangoib = {
 	"md_pangoib", NULL, NULL, NULL, "2026",
-	"Pang (Oldschool Is Beautiful) (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Pang (Oldschool Is Beautiful) (HB, Beta 3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pangoibRomInfo, md_pangoibRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42913,6 +42914,25 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Parasol Stars (HB, Beta 2)
+// https://mlouvet.itch.io/parasol-stars-megadrive-genesis
+static struct BurnRomInfo md_parasolRomDesc[] = {
+	{ "Parasol Stars Beta 2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0xd800e880, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_parasol)
+STD_ROM_FN(md_parasol)
+
+struct BurnDriver BurnDrvmd_parasol = {
+	"md_parasol", NULL, NULL, NULL, "2026",
+	"Parasol Stars (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_parasolRomInfo, md_parasolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Phantom Gear (HB, v1.00 Demo)
 // https://bitsrulegames.itch.io/phantom-gear-demo
 static struct BurnRomInfo md_phantomgearRomDesc[] = {
@@ -43151,6 +43171,25 @@ struct BurnDriver BurnDrvmd_queenreversi = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_queenreversiRomInfo, md_queenreversiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Quoridor MD (HB)
+// https://abadede919302.itch.io/quoridor-md
+static struct BurnRomInfo md_quoridorRomDesc[] = {
+	{ "Quoridor MD (2026)(abadede919302).bin", 262144, 0xe9f77007, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_quoridor)
+STD_ROM_FN(md_quoridor)
+
+struct BurnDriver BurnDrvmd_quoridor = {
+	"md_quoridor", NULL, NULL, NULL, "2026",
+	"Quoridor MD (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_quoridorRomInfo, md_quoridorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43784,6 +43823,25 @@ struct BurnDriver BurnDrvmd_shaolincarcara2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Shinobi (HB, Beta 1)
+// https://mlouvet.itch.io/shinobi-megadrive
+static struct BurnRomInfo md_shinobiRomDesc[] = {
+	{ "Shinobi Beta 1 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x1c33bd69, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinobi)
+STD_ROM_FN(md_shinobi)
+
+struct BurnDriver BurnDrvmd_shinobi = {
+	"md_shinobi", NULL, NULL, NULL, "2026",
+	"Shinobi (HB, Beta 1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_shinobiRomInfo, md_shinobiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shylax (HB, v0.1)
 static struct BurnRomInfo md_shylaxRomDesc[] = {
 	{ "Shylax v0.1 (2023)(manu2097).bin", 1310720, 0xb29cf25d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44312,10 +44370,10 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.6b)
+// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.7)
 // https://valenzuelagustavo.itch.io/tmnt-arcade-game-megadrive-port
 static struct BurnRomInfo md_tmntarcadeRomDesc[] = {
-	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.3.6b (2026)(Gustavo Valenzuela).bin", 4063232, 0x4de8ffb4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.3.7 (2026)(Gustavo Valenzuela).bin", 4194304, 0x962efc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmntarcade)
@@ -44323,7 +44381,7 @@ STD_ROM_FN(md_tmntarcade)
 
 struct BurnDriver BurnDrvmd_tmntarcade = {
 	"md_tmntarcade", NULL, NULL, NULL, "2026",
-	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.6b)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
+	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.7)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tmntarcadeRomInfo, md_tmntarcadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44523,10 +44581,10 @@ struct BurnDriver BurnDrvmd_threestooges = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tiger Road (HB, Beta 17)
+// Tiger Road (hombreimaginario) (HB, 2026-10-17)
 // https://hombreimaginario.itch.io/tiger-road-md
 static struct BurnRomInfo md_tigeroadRomDesc[] = {
-	{ "Tiger Road Beta 17 (2026)(hombreimaginario).bin", 2490368, 0x407b4191, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tiger Road 2026-10-17 (2026)(hombreimaginario).bin", 2490368, 0x92480e61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tigeroad)
@@ -44534,10 +44592,29 @@ STD_ROM_FN(md_tigeroad)
 
 struct BurnDriver BurnDrvmd_tigeroad = {
 	"md_tigeroad", NULL, NULL, NULL, "2026",
-	"Tiger Road (HB, Beta 17)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
+	"Tiger Road (hombreimaginario) (HB, 2026-10-17)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tigeroadRomInfo, md_tigeroadRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tiger Road (Oldschool Is Beautiful) (HB, Alpha)
+
+static struct BurnRomInfo md_tigeroadoibRomDesc[] = {
+	{ "Tiger Road Alpha (2026)(Oldschool Is Beautiful).bin", 4194304, 0xe7a2835d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tigeroadoib)
+STD_ROM_FN(md_tigeroadoib)
+
+struct BurnDriver BurnDrvmd_tigeroadoib = {
+	"md_tigeroadoib", NULL, NULL, NULL, "2026",
+	"Tiger Road (Oldschool Is Beautiful) (HB, Alpha)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tigeroadoibRomInfo, md_tigeroadoibRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
