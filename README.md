@@ -1,6 +1,8 @@
 # FinalBurn Neo NeCo
 FinalBurn Neo NeCo is Unofficial Version.
 
+Githubの操作ミスったので終わりました
+
 闇建築分は[こちら](https://github.com/Shigeshigeru/FBNeo/releases/)になります
 
 # FinalBurn Neo
