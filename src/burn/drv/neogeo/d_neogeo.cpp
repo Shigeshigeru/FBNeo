@@ -26121,7 +26121,7 @@ static struct BurnRomInfo kof2k1hdRomDesc[] = {
 	KOF2001_DECRYPTED_COMPONENTS
 };
 
-STDROMPICKEXT(kof2k1fd, kof2k1hd, neogeo)
+STDROMPICKEXT(kof2k1hd, kof2k1hd, neogeo)
 STD_ROM_FN(kof2k1hd)
 
 struct BurnDriver BurnDrvKof2k1hd = {
