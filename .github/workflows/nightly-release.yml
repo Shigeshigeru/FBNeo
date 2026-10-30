@@ -2,7 +2,7 @@ name: "nightly-release"
 
 on:
   push:
-    branches: [ test ]
+    branches: [ REBORN ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
