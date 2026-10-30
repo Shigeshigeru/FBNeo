@@ -30887,3 +30887,5 @@ struct BurnDriver BurnDrvWrldrc32 = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
+
+// Test
