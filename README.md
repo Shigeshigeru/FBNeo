@@ -1,3 +1,5 @@
+ネオジオ追加分のみ（誤表記とかハックおじのCRC間違いは放置）
+
 # FinalBurn Neo
 Official Forum: https://neo-source.com
 
