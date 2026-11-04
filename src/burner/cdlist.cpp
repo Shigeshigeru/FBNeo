@@ -2,9 +2,11 @@
 #include "cdlist.h"
 #include "neocdlist.h"
 #include "pcecdlist.h"
+#include "segacdlist.h"
 #include "cd_img.h"
 #include "neocdlist_games.h"
 #include "pcecdlist_games.h"
+#include "segacdlist_games.h"
 
 static NGCDGAME* pNeoGame;
 
@@ -268,6 +270,25 @@ static INT32 IsGamesExpress(CDImage* pImage, const CDImageTrack* pTrack, UINT8* 
 	return nCrc == 0xd7b47c06 || nCrc == 0x86aec522 || nCrc == 0xc8d1b5ef || nCrc == 0x0bdbde64;
 }
 
+// Sega CD / Mega-CD disc header: system id at 0x000, titles at 0x120 (domestic) / 0x150 (overseas), region at 0x1f0
+static INT32 IsSegaCDHeader(const UINT8* pSector, INT32 nSize)
+{
+	return nSize >= 0x200 && (!memcmp(pSector, "SEGADISCSYSTEM", 14) || !memcmp(pSector, "SEGABOOTDISC", 12));
+}
+
+static void SegaCDHeaderText(TCHAR* pszDest, UINT32 nDest, const UINT8* pText, INT32 nLength)
+{
+	UINT32 n = 0;
+	for (INT32 i = 0; i < nLength && n + 1 < nDest; i++) {
+		UINT8 c = pText[i];
+		if (c < 0x20 || c > 0x7e) c = ' ';
+		if (c == ' ' && (n == 0 || pszDest[n - 1] == _T(' '))) continue;
+		pszDest[n++] = (TCHAR)c;
+	}
+	while (n && pszDest[n - 1] == _T(' ')) n--;
+	pszDest[n] = 0;
+}
+
 static INT32 IdentifyPlatform(CDImage* pImage, CDListResult* pResult)
 {
 	static const UINT8 pPceMagic[32] = {
@@ -293,6 +314,18 @@ static INT32 IdentifyPlatform(CDImage* pImage, CDListResult* pResult)
 		return 0;
 
 	INT32 nSize = 0;
+	if (ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && IsSegaCDHeader(sector, nSize)) {
+		pResult->nPlatform   = CDLIST_PLATFORM_SEGACD;
+		pResult->nSource     = CDLIST_SOURCE_MAGIC;
+		pResult->nConfidence = CDLIST_CONFIDENCE_EXACT;
+		SegaCDHeaderText(pResult->Metadata.szTitle, CDLIST_TEXT_SIZE, sector + 0x150, 0x30);
+		if (!pResult->Metadata.szTitle[0])
+			SegaCDHeaderText(pResult->Metadata.szTitle, CDLIST_TEXT_SIZE, sector + 0x120, 0x30);
+		SegaCDHeaderText(pResult->Metadata.szRegion, 64, sector + 0x1f0, 0x10);
+		CopyText(pResult->Metadata.szRequirement, CDLIST_TEXT_SIZE, _T("Sega CD / Mega-CD BIOS"));
+		CopyText(pResult->Metadata.szDescriptor,  CDLIST_TEXT_SIZE, _T("Sega CD disc system header"));
+		return 1;
+	}
 	if (ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 32 && !memcmp(sector, pPceMagic, sizeof(pPceMagic))) {
 		pResult->nPlatform   = CDLIST_PLATFORM_PCECD;
 		pResult->nSource     = CDLIST_SOURCE_MAGIC;
@@ -318,6 +351,35 @@ static INT32 IdentifyPlatform(CDImage* pImage, CDListResult* pResult)
 		return 1;
 	}
 	return 0;
+}
+
+// region of the disc security code, as checked by the bios (U, E or J)
+static TCHAR SegaCDSecurityRegion(const UINT8* pSector)
+{
+	switch (pSector[0x20b]) {
+		case 0x64: return _T('E');
+		case 0xa1: return _T('J');
+	}
+	return _T('U');
+}
+
+// discs of several regions can share the same toc, the security code region tells them apart
+static const sega_cd_game* FindSegaCDGame(const TCHAR* pszSha1, TCHAR cRegion)
+{
+	if (!pszSha1 || !pszSha1[0])
+		return NULL;
+
+	const sega_cd_game* pFound = NULL;
+	for (UINT32 i = 0; i < sizeof(segacd_games) / sizeof(segacd_games[0]); i++) {
+		const sega_cd_game* pGame = &segacd_games[i];
+		if (!pGame->sha1[0] || _tcscmp(pGame->sha1, pszSha1))
+			continue;
+		if (!pGame->region || pGame->region[0] == cRegion)
+			return pGame;
+		if (!pFound)
+			pFound = pGame;
+	}
+	return pFound;
 }
 
 static void FillNeoMetadata(CDListResult* pResult)
@@ -389,6 +451,21 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 				pResult->nSource     = CDLIST_SOURCE_GAMEDB;
 				pResult->nConfidence = CDLIST_CONFIDENCE_EXACT;
 				break;
+			}
+		}
+
+		if (pResult->nPlatform == CDLIST_PLATFORM_SEGACD) {
+			UINT8 sector[2448] = { 0 };
+			INT32 nSize = 0;
+			const CDImageTrack* pTrack = FindDataTrack(pImage);
+			TCHAR cRegion = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200) ? SegaCDSecurityRegion(sector) : _T('U');
+			const sega_cd_game* pGame = FindSegaCDGame(pResult->szTOCSha1, cRegion);
+			if (pGame) {
+				CopyText(pResult->Metadata.szTitle,   CDLIST_TEXT_SIZE, pGame->name);
+				CopyText(pResult->Metadata.szName,    CDLIST_TEXT_SIZE, pGame->id);
+				CopyText(pResult->Metadata.szYear,    32,               pGame->year);
+				CopyText(pResult->Metadata.szCompany, CDLIST_TEXT_SIZE, pGame->company);
+				pResult->nSource = CDLIST_SOURCE_GAMEDB;
 			}
 		}
 	}
@@ -598,6 +675,103 @@ void PceCDInfo_Exit()
 }
 #endif
 
+#ifdef BUILD_MEGADRIVE
+static CDListMetadata SegaCdInfo;
+static TCHAR szSegaCdNVRAM[CDLIST_TEXT_SIZE];
+static INT32 nSegaCdInfoValid = 0;
+
+static INT32 IsSegaCD()
+{
+	return (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD;
+}
+
+INT32 SegaCDInfo_Init()
+{
+	SegaCDInfo_Exit();
+
+	if (!IsSegaCD() || !CDEmuImage[0]) {
+		return 0;
+	}
+
+	// the short name comes from the image file name, so that each image gets its own saves
+	TCHAR szFile[CDLIST_TEXT_SIZE];
+	const TCHAR* pszBase = _tcsrchr(CDEmuImage, _T('\\'));
+	pszBase = pszBase ? pszBase + 1 : CDEmuImage;
+	const TCHAR* pszSlash = _tcsrchr(pszBase, _T('/'));
+	if (pszSlash) {
+		pszBase = pszSlash + 1;
+	}
+	CopyText(szFile, CDLIST_TEXT_SIZE, pszBase);
+	TCHAR* pszDot = _tcsrchr(szFile, _T('.'));
+	if (pszDot) {
+		*pszDot = _T('\0');
+	}
+
+	INT32 nLen = 0;
+	for (INT32 i = 0; szFile[i] && nLen < 32; i++) {
+		TCHAR c = _totlower(szFile[i]);
+		if (c == _T('-') || c == _T('(') || c == _T('[')) break;
+		if ((c >= _T('a') && c <= _T('z')) || (c >= _T('0') && c <= _T('9'))) {
+			SegaCdInfo.szName[nLen++] = c;
+		}
+	}
+	SegaCdInfo.szName[nLen] = _T('\0');
+	if (nLen == 0) {
+		_tcscpy(SegaCdInfo.szName, _T("unknown"));
+	}
+
+	UINT8 sector[2048] = { 0 };
+	TCHAR cRegion = (CDEmuReadDataSector(0, sector) == 0) ? SegaCDSecurityRegion(sector) : _T('U');
+	const sega_cd_game* pGame = FindSegaCDGame(ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0), cRegion);
+	if (pGame) {
+		bprintf(0, _T("segacdlist_games db: found entry %s\n"), pGame->id);
+		CopyText(SegaCdInfo.szTitle,   CDLIST_TEXT_SIZE, pGame->name);
+		CopyText(SegaCdInfo.szName,    CDLIST_TEXT_SIZE, pGame->id);
+		CopyText(SegaCdInfo.szYear,    32,               pGame->year);
+		CopyText(SegaCdInfo.szCompany, CDLIST_TEXT_SIZE, pGame->company);
+		if (pGame->nvram) CopyText(szSegaCdNVRAM, CDLIST_TEXT_SIZE, pGame->nvram);
+	} else {
+		CDListResult Result;
+		if (CDListIdentifyEx(CDEmuImage, &Result, CDLIST_IDENTIFY_FAST, NULL, NULL, NULL) && Result.nPlatform == CDLIST_PLATFORM_SEGACD && Result.Metadata.szTitle[0]) {
+			CopyText(SegaCdInfo.szTitle, CDLIST_TEXT_SIZE, Result.Metadata.szTitle);
+		} else {
+			CopyText(SegaCdInfo.szTitle, CDLIST_TEXT_SIZE, szFile);
+		}
+	}
+
+	nSegaCdInfoValid = 1;
+
+	bprintf(PRINT_NORMAL, _T("    Title: %s\n"    ), SegaCdInfo.szTitle);
+	bprintf(PRINT_NORMAL, _T("    Shortname: %s\n"), SegaCdInfo.szName);
+	if (SegaCdInfo.szYear[0])    bprintf(PRINT_NORMAL, _T("    Year: %s\n"   ), SegaCdInfo.szYear);
+	if (SegaCdInfo.szCompany[0]) bprintf(PRINT_NORMAL, _T("    Company: %s\n"), SegaCdInfo.szCompany);
+
+	return nSegaCdInfoValid;
+}
+
+TCHAR* SegaCDInfo_Text(INT32 nText)
+{
+	if (!IsSegaCD() || !nSegaCdInfoValid) {
+		return NULL;
+	}
+
+	switch (nText) {
+		case DRV_FULLNAME:		return SegaCdInfo.szTitle;
+		case DRV_NAME:			return SegaCdInfo.szName;
+		case DRV_MANUFACTURER:	return SegaCdInfo.szCompany[0] ? SegaCdInfo.szCompany : NULL;
+		case DRV_DATE:			return SegaCdInfo.szYear[0] ? SegaCdInfo.szYear : NULL;
+	}
+	return NULL;
+}
+
+void SegaCDInfo_Exit()
+{
+	memset(&SegaCdInfo, 0, sizeof(SegaCdInfo));
+	szSegaCdNVRAM[0] = 0;
+	nSegaCdInfoValid = 0;
+}
+#endif
+
 TCHAR* CDInfo_Text(INT32 nText)
 {
 	static TCHAR szNone[] = _T("NOGAME");
@@ -608,6 +782,8 @@ TCHAR* CDInfo_Text(INT32 nText)
 			return NeoCDInfo_Text(nText);
 		case CDGAME_PCE:
 			return PceCDInfo_Text(nText);
+		case CDGAME_SEGACD:
+			return SegaCDInfo_Text(nText);
 		default:
 			return szNone;
 	}
@@ -617,11 +793,25 @@ TCHAR *CDInfo_GamePrefix()
 {
 	static TCHAR buffer[128];
 
-	TCHAR g_sys_prefixes[3][20] = { _T("none_"), _T("ngcd_"), _T("pcecd_") };
+	TCHAR g_sys_prefixes[4][20] = { _T("none_"), _T("ngcd_"), _T("pcecd_"), _T("segacd_") };
 	const INT32 g_type = CDGameType();
 
 	_stprintf(buffer, _T("%s%s"), g_sys_prefixes[g_type], CDInfo_Text(DRV_NAME));
 
 	return buffer;
+}
+
+// name of the nvram file, shared by the discs of a multi-disc game
+TCHAR *CDInfo_NVRAMPrefix()
+{
+#ifdef BUILD_MEGADRIVE
+	if (CDGameType() == CDGAME_SEGACD && nSegaCdInfoValid && szSegaCdNVRAM[0]) {
+		static TCHAR buffer[CDLIST_TEXT_SIZE + 8];
+		_stprintf(buffer, _T("segacd_%s"), szSegaCdNVRAM);
+		return buffer;
+	}
+#endif
+
+	return CDInfo_GamePrefix();
 }
 
