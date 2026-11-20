@@ -506,6 +506,8 @@ int ConfigAppLoad()
 		VAR(nBurnArtworkView);
 		VAR(nBurnArtworkMaxHeight);
 		VAR(nBurnArtworkScale);
+		VAR(nBurnArtworkDefaults);
+		VAR(bBurnArtworkLayered);
 		VAR(BurnShiftEnabled);
 		VAR(bBurnGunDrawReticles);
 		VAR(bBurnGunPositionalMode);
@@ -1037,13 +1039,17 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, enable alpha blending support.\n"));
 	VAR(bBurnUseBlend);
 
-	_ftprintf(h, _T("\n// If non-zero, load MAME artwork packs (default.lay) from szAppArtworkPath.\n"));
+	_ftprintf(h, _T("\n// If non-zero, load MAME-style artwork packs (drvname.zip w/default.lay) from szAppArtworkPath.\n"));
 	VAR(bBurnArtworkEnable);
-	_ftprintf(h, _T("// Artwork view to use (0 = first view with a screen), and max. height of the composited image (lower it if slow).\n"));
+	_ftprintf(h, _T("// Artwork view to use (0 = first view with a screen), and max. height of the composited image (if slow: lower value).\n"));
 	VAR(nBurnArtworkView);
 	VAR(nBurnArtworkMaxHeight);
 	_ftprintf(h, _T("// Artwork render size: -1 = match the window / fullscreen size (sharpest), 1 = game screen at the game's own\n// resolution, 2-4 = game screen at 2x-4x, 0 = largest integer size that fits nBurnArtworkMaxHeight.\n"));
 	VAR(nBurnArtworkScale);
+	_ftprintf(h, _T("// Artwork defaults menu bitmask (1 = marquee, 2 = overlay, 4 = backdrop, 8 = bezel, 16 = control panel [31 = all])\n"));
+	VAR(nBurnArtworkDefaults);
+	_ftprintf(h, _T("// If non-zero, Direct3D 11 / DirectX9 Alt / DirectX9 Experimental / Enhanced D3D7 draw the artwork themselves, so\n// shaders, HardFX, scanlines and other effects only apply to the game screen. 0 = composite everything on the CPU.\n"));
+	VAR(bBurnArtworkLayered);
 
 	_ftprintf(h, _T("\n// If non-zero, enable gear shifter display support.\n"));
 	VAR(BurnShiftEnabled);

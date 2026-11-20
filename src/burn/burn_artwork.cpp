@@ -23,6 +23,7 @@
 #define PLUTOSVG_BUILD_STATIC
 #include "plutosvg.h"
 
+#include <ctype.h>
 #include <vector>
 #include <string>
 #include <map>
@@ -30,17 +31,21 @@
 #include <algorithm>
 #include <math.h>
 
-#ifndef __LIBRETRO__
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
-#endif
 
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
+
+#ifndef _tremove
+#define _tremove remove
+#endif
 
 INT32 bBurnArtworkEnable = 1;
 INT32 nBurnArtworkView = 0;
 INT32 nBurnArtworkMaxHeight = 2160;
 INT32 nBurnArtworkScale = -1;
+INT32 nBurnArtworkDefaults = ARTWORK_DEFAULT_OVERLAY | ARTWORK_DEFAULT_BACKDROP | ARTWORK_DEFAULT_BEZEL; //ARTWORK_DEFAULT_ALL;	// parts shown in games without their own settings
+INT32 bBurnArtworkLayered = 1;		// let frontends that can composite the artwork on the GPU do it (effects only touch the game)
 
 extern "C" INT32 BurnDrvGetNativeSize(INT32 *pnWidth, INT32 *pnHeight);
 
@@ -394,7 +399,6 @@ static UINT8 *art_load_file(const char *name, INT32 *len)
 {
 	*len = 0;
 
-#ifndef __LIBRETRO__
 	if (art_archive[0]) {
 		void *dest = NULL;
 		INT32 l = 0;
@@ -404,7 +408,6 @@ static UINT8 *art_load_file(const char *name, INT32 *len)
 		}
 		if (dest) free(dest);
 	}
-#endif
 
 	if (art_folder[0]) {
 		char path[MAX_PATH * 3];
@@ -629,6 +632,7 @@ struct litem {
 	lcolor color;
 	INT32 blend;
 	INT32 orient;		// bit0 swapxy, bit1 flipx, bit2 flipy (applied in that order)
+	UINT32 vis;			// collections (view toggles) the item is in: shown only if all of them are on
 
 	// render state
 	INT32 px0, py0, px1, py1;
@@ -636,7 +640,7 @@ struct litem {
 	std::map<INT32, abitmap> cache;
 	INT32 cache_max;	// states kept before the cache is flushed
 
-	litem() : is_screen(0), screen_index(0), elem(NULL), output(-1), blend(BLEND_DEFAULT), orient(0), px0(0), py0(0), px1(0), py1(0), last_state(-0x7fffffff), cache_max(64) { }
+	litem() : is_screen(0), screen_index(0), elem(NULL), output(-1), blend(BLEND_DEFAULT), orient(0), vis(0), px0(0), py0(0), px1(0), py1(0), last_state(-0x7fffffff), cache_max(64) { }
 };
 
 struct layer_lists {
@@ -645,14 +649,41 @@ struct layer_lists {
 
 struct lview {
 	std::string name;
-	std::vector<litem> items;
+	std::vector<litem> all;		// every item, in drawing order
+	std::vector<litem> items;	// the visible ones (see view_apply())
 	INT32 has_bounds;
-	lrect bounds;
+	lrect ebounds;				// explicit <bounds>
+	lrect bounds;				// in use: explicit, or the union of the visible items
+
+	// MAME "visibility toggles": named <collection>s (and the legacy layers), max 32
+	std::vector<std::string> tog_name;
+	UINT32 tog_def;				// on by default (layout's visible="")
+	UINT32 tog_on;				// currently on
+	lview() : has_bounds(0), tog_def(0), tog_on(0) { }
 };
 
 static std::map<std::string, lelement*> elements;
 static std::map<std::string, const XNode*> groups;
 static std::vector<lview*> views;
+static std::vector<INT32> view_list;	// views that show screen 0 (what the frontend gets to pick from)
+static INT32 cur_view = 0;				// index into view_list
+static lview *parse_view = NULL;	// view being parsed
+static UINT32 cur_vis = 0;			// collections enclosing the items being parsed
+
+// toggle bit for a named collection in the view (shared by name), 0 if out of bits
+static UINT32 view_toggle(lview *v, const std::string &name, INT32 visible)
+{
+	for (UINT32 i = 0; i < v->tog_name.size(); i++)
+		if (v->tog_name[i] == name) return 1u << i;
+	if (v->tog_name.size() >= 32) {
+		bprintf(PRINT_ERROR, _T("Artwork: view %S has too many collections, %S is always shown\n"), v->name.c_str(), name.c_str());
+		return 0;
+	}
+	UINT32 bit = 1u << v->tog_name.size();
+	v->tog_name.push_back(name);
+	if (visible) v->tog_def |= bit;
+	return bit;
+}
 static XNode *layout_root = NULL;
 
 typedef std::map<std::string, std::string> param_map;
@@ -940,11 +971,17 @@ static void add_items(const XNode *parent, layer_lists &layers, INT32 depth, INT
 		}
 
 		if (nm == "collection") {
-			if (attr_str(n, "visible", "yes") != "no") {
-				env.push_back(param_map());
-				add_items(n, layers, depth + 1);
-				env.pop_back();
+			std::string cname = attr_str(n, "name");
+			INT32 visible = (attr_str(n, "visible", "yes") != "no");
+			if (cname.empty() || parse_view == NULL) {
+				if (!visible) continue;		// unnamed: can't be toggled
 			}
+			UINT32 saved_vis = cur_vis;
+			if (!cname.empty() && parse_view) cur_vis |= view_toggle(parse_view, cname, visible);
+			env.push_back(param_map());
+			add_items(n, layers, depth + 1);
+			env.pop_back();
+			cur_vis = saved_vis;
 			continue;
 		}
 
@@ -957,6 +994,7 @@ static void add_items(const XNode *parent, layer_lists &layers, INT32 depth, INT
 		it.bounds = parse_bounds(n);
 		it.color = parse_color(n);
 		it.orient = parse_orientation(n);
+		it.vis = cur_vis;
 
 		std::vector<litem> *list = NULL;
 
@@ -1016,37 +1054,47 @@ static void parse_layout(const XNode *root)
 		v->name = attr_str(n, "name");
 
 		layer_lists layers;
+		parse_view = v;
+		cur_vis = 0;
 		env.push_back(param_map());
 		add_items(n, layers, 0);
 		env.pop_back();
+		parse_view = NULL;
+
+		// legacy layers can be toggled too (MAME names them like this)
+		{
+			std::vector<litem> *ll[5] = { &layers.backdrops, &layers.overlays, &layers.bezels, &layers.cpanels, &layers.marquees };
+			const char *ln[5] = { "Backdrops", "Overlays", "Bezels", "Control Panels", "Marquees" };
+			for (INT32 l = 0; l < 5; l++) {
+				if (ll[l]->empty()) continue;
+				UINT32 bit = view_toggle(v, ln[l], 1);
+				for (UINT32 k = 0; k < ll[l]->size(); k++) (*ll[l])[k].vis |= bit;
+			}
+		}
 
 		// MAME's legacy layer ordering
 		if (!layers.overlays.empty() || layers.backdrops.size() <= 1) {
 			// screens + overlays (multiply) + backdrop (add) + bezels + cpanels + marquees
 			for (UINT32 k = 0; k < layers.backdrops.size(); k++)
 				layers.backdrops[k].blend = BLEND_ADD;
-			v->items.insert(v->items.end(), layers.screens.begin(), layers.screens.end());
-			v->items.insert(v->items.end(), layers.overlays.begin(), layers.overlays.end());
-			v->items.insert(v->items.end(), layers.backdrops.begin(), layers.backdrops.end());
+			v->all.insert(v->all.end(), layers.screens.begin(), layers.screens.end());
+			v->all.insert(v->all.end(), layers.overlays.begin(), layers.overlays.end());
+			v->all.insert(v->all.end(), layers.backdrops.begin(), layers.backdrops.end());
 		} else {
 			// multiple backdrop pieces and no overlays (Golly! Ghost! mode):
 			// backdrop (alpha) + screens (add) + bezels + cpanels + marquees
 			for (UINT32 k = 0; k < layers.screens.size(); k++)
 				if (layers.screens[k].is_screen && layers.screens[k].blend == BLEND_DEFAULT) layers.screens[k].blend = BLEND_ADD;
-			v->items.insert(v->items.end(), layers.backdrops.begin(), layers.backdrops.end());
-			v->items.insert(v->items.end(), layers.screens.begin(), layers.screens.end());
+			v->all.insert(v->all.end(), layers.backdrops.begin(), layers.backdrops.end());
+			v->all.insert(v->all.end(), layers.screens.begin(), layers.screens.end());
 		}
-		v->items.insert(v->items.end(), layers.bezels.begin(), layers.bezels.end());
-		v->items.insert(v->items.end(), layers.cpanels.begin(), layers.cpanels.end());
-		v->items.insert(v->items.end(), layers.marquees.begin(), layers.marquees.end());
+		v->all.insert(v->all.end(), layers.bezels.begin(), layers.bezels.end());
+		v->all.insert(v->all.end(), layers.cpanels.begin(), layers.cpanels.end());
+		v->all.insert(v->all.end(), layers.marquees.begin(), layers.marquees.end());
 
 		v->has_bounds = (child(n, "bounds") != NULL);
-		if (v->has_bounds) {
-			v->bounds = parse_bounds(n);
-		} else if (v->items.size()) {
-			v->bounds = v->items[0].bounds;
-			for (UINT32 k = 1; k < v->items.size(); k++) v->bounds.unite(v->items[k].bounds);
-		}
+		if (v->has_bounds) v->ebounds = parse_bounds(n);
+		v->tog_on = v->tog_def;
 
 		views.push_back(v);
 	}
@@ -1316,6 +1364,7 @@ static void element_render(lelement *e, INT32 state, INT32 w, INT32 h, abitmap &
 // Compositor
 
 static INT32 art_active = 0;
+static INT32 art_probed = 0;			// layout parsed by BurnArtworkProbe(), not running
 static lview *view = NULL;
 static INT32 first_screen = -1;		// index of the first screen item in view->items
 static INT32 is_vector = 0;
@@ -1337,6 +1386,15 @@ static UINT8 *saved_draw = NULL;
 static INT32 saved_pitch = 0;
 static INT32 resized_in_frame = 0;
 static INT32 aspect_x = 4, aspect_y = 3;
+// layered output (see layers_update())
+static INT32 layered = 0;				// set by the frontend (BurnArtworkSetLayered)
+static std::vector<UINT32> lay_under, lay_add, lay_mul;	// driver orientation, 0xffRRGGBB
+static INT32 lay_w = 0, lay_h = 0;
+static INT32 lay_full = 1;				// everything needs (re)building
+static INT32 lay_serial = 1;			// bumped when the layers change
+static INT32 lay_sx0, lay_sy0, lay_sx1, lay_sy1;	// screen rectangle (driver orientation)
+static void layers_update();
+static INT32 told_w = 0, told_h = 0;		// size the frontend last asked for (= its buffer)
 static INT32 target_w = 0, target_h = 0;	// frontend output area (auto scale mode)
 static INT32 frame_depth = 0;			// drivers often call BurnDrvRedraw() from their Frame()
 
@@ -1695,6 +1753,12 @@ static void art_get_scale(INT32 mode, float *psx, float *psy)
 		float tw = target_w, th = target_h;
 		if (th > maxh) { tw = tw * maxh / th; th = maxh; }	// performance cap
 		sx = sy = (tw / vb.w() < th / vb.h()) ? (tw / vb.w()) : (th / vb.h());
+
+		// but never squeeze the game screen below 1x in either direction (dropping
+		// columns / lines makes text unreadable): like MAME, render at that minimum
+		// and let the frontend scale the whole picture down
+		float smin = game_w / sw > game_h / sh ? game_w / sw : game_h / sh;
+		if (sx < smin) sx = sy = smin;
 	} else if (mode != 0) {
 		// game screen at exactly N x its native resolution (1 = 1:1 with the game).
 		// x and y are scaled separately so the game image is never resampled; the
@@ -1772,8 +1836,8 @@ static void art_layout()
 	art_get_scale(nBurnArtworkScale, &sx, &sy);
 
 	if (nBurnArtworkScale < 0 && target_w > 0) {
-		disp_w = (INT32)(vb.w() * sx) & ~1;				// never bigger than the output area
-		disp_h = (INT32)(vb.h() * sy) & ~1;
+		disp_w = (INT32)(vb.w() * sx + 0.5f) & ~1;		// not bigger than the output area (unless the 1x minimum is)
+		disp_h = (INT32)(vb.h() * sy + 0.5f) & ~1;
 	} else {
 		disp_w = ((INT32)(vb.w() * sx + 0.5f) + 1) & ~1;	// even sizes; items keep their exact scale
 		disp_h = ((INT32)(vb.h() * sy + 0.5f) + 1) & ~1;
@@ -1800,6 +1864,7 @@ static void art_layout()
 	disp.assign((size_t)disp_w * disp_h, 0);
 	bg_dirty = 1;
 	full_dirty = 1;
+	lay_full = 1;
 
 	art_predraw();
 
@@ -1820,6 +1885,8 @@ static void art_free()
 
 	view = NULL;
 	first_screen = -1;
+	view_list.clear();
+	cur_view = 0;
 
 	std::vector<UINT32>().swap(bg);
 	std::vector<UINT32>().swap(disp);
@@ -1829,8 +1896,190 @@ static void art_free()
 	native_buf_size = 0;
 
 	art_active = 0;
+	art_probed = 0;
+	told_w = told_h = 0;
+	lay_under.clear(); lay_add.clear(); lay_mul.clear();
+	lay_w = lay_h = 0;
+	lay_full = 1;
 	frame_depth = 0;
 	saved_draw = NULL;
+}
+
+// ---------------------------------------------------------------------------
+// Views and visibility toggles (collections), with per-game settings
+
+// rebuild the visible item list and bounds from the view's toggles
+static void view_apply(lview *v)
+{
+	v->items.clear();
+	for (UINT32 i = 0; i < v->all.size(); i++) {
+		const litem &it = v->all[i];
+		if (it.is_screen || (it.vis & ~v->tog_on) == 0) v->items.push_back(it);	// screens always stay
+	}
+
+	if (v->has_bounds) {
+		v->bounds = v->ebounds;
+	} else if (v->items.size()) {
+		v->bounds = v->items[0].bounds;
+		for (UINT32 k = 1; k < v->items.size(); k++) v->bounds.unite(v->items[k].bounds);
+	}
+
+	if (v == view) {
+		first_screen = -1;
+		for (UINT32 i = 0; i < v->items.size(); i++) {
+			if (v->items[i].is_screen && v->items[i].screen_index == 0) { first_screen = i; break; }
+		}
+	}
+}
+
+// name compare for the default parts: not case sensitive, '_' and ' ' are the
+// same (* and ? wildcards work too)
+static INT32 tog_char(INT32 c)
+{
+	if (c == '_') c = ' ';
+	return tolower(c);
+}
+
+static INT32 wild_match(const char *p, const char *t)
+{
+	for (;;) {
+		if (*p == 0) return (*t == 0);
+		if (*p == '*') {
+			p++;
+			for (;;) {
+				if (wild_match(p, t)) return 1;
+				if (*t == 0) return 0;
+				t++;
+			}
+		}
+		if (*t == 0) return 0;
+		if (*p != '?' && tog_char((UINT8)*p) != tog_char((UINT8)*t)) return 0;
+		p++;
+		t++;
+	}
+}
+
+static void settings_path(TCHAR *path)
+{
+	_stprintf(path, _T("%s%s_art.ini"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+}
+
+static void str_trim(char *t)
+{
+	char *b = t;
+	while (*b == ' ' || *b == '\t') b++;
+	if (b != t) memmove(t, b, strlen(b) + 1);
+	char *e = t + strlen(t);
+	while (e > t && (e[-1] == ' ' || e[-1] == '\t' || e[-1] == '\r' || e[-1] == '\n')) *--e = 0;
+}
+
+// the common parts, for nBurnArtworkDefaults: a collection is one of these if
+// its name is one of the names (not case sensitive, '_' = ' '), so alternatives
+// like "Bezel_Alt" or "Marquee_Lit" keep the layout's own default
+static const char *def_part_names[5][4] = {
+	{ "Marquee",		"Marquees",			NULL,			NULL },	// ARTWORK_DEFAULT_MARQUEE
+	{ "Overlay",		"Overlays",			NULL,			NULL },	// ARTWORK_DEFAULT_OVERLAY
+	{ "Backdrop",		"Backdrops",		NULL,			NULL },	// ARTWORK_DEFAULT_BACKDROP
+	{ "Bezel",			"Bezels",			NULL,			NULL },	// ARTWORK_DEFAULT_BEZEL
+	{ "Control Panel",	"Control Panels",	"CPO",			NULL },	// ARTWORK_DEFAULT_CPANEL
+};
+
+static void apply_default_parts(lview *v)
+{
+	for (UINT32 i = 0; i < v->tog_name.size(); i++) {
+		for (INT32 c = 0; c < 5; c++) {
+			for (INT32 k = 0; k < 4 && def_part_names[c][k]; k++) {
+				if (wild_match(def_part_names[c][k], v->tog_name[i].c_str())) {
+					if (nBurnArtworkDefaults & (1 << c)) v->tog_on |= (1u << i); else v->tog_on &= ~(1u << i);
+				}
+			}
+		}
+	}
+}
+
+// layout defaults -> default parts (nBurnArtworkDefaults) -> config/games/<game>_art.ini
+static void settings_load()
+{
+	for (UINT32 k = 0; k < view_list.size(); k++) {
+		lview *v = views[view_list[k]];
+		v->tog_on = v->tog_def;
+		apply_default_parts(v);
+	}
+	cur_view = (nBurnArtworkView >= 0 && nBurnArtworkView < (INT32)view_list.size()) ? nBurnArtworkView : 0;
+
+#ifdef __LIBRETRO__
+	return;		// per-game settings are core options (BurnArtworkSetViewToggles())
+#endif
+
+	TCHAR path[MAX_PATH];
+	settings_path(path);
+	FILE *f = _tfopen(path, _T("rt"));
+	if (f == NULL) return;
+
+	char line[512];
+	lview *sec = NULL;
+	INT32 general = 0;
+
+	while (fgets(line, sizeof(line), f)) {
+		str_trim(line);
+		if (line[0] == 0 || line[0] == ';' || line[0] == '#' || (line[0] == '/' && line[1] == '/')) continue;
+
+		if (line[0] == '[') {
+			char *e = strrchr(line, ']');
+			if (e) *e = 0;
+			general = (strcmp(line + 1, "artwork") == 0);
+			sec = NULL;
+			if (strncmp(line + 1, "view:", 5) == 0) {
+				for (UINT32 k = 0; k < view_list.size(); k++)
+					if (views[view_list[k]]->name == line + 6) sec = views[view_list[k]];
+			}
+			continue;
+		}
+
+		char *eq = strrchr(line, '=');
+		if (eq == NULL) continue;
+		*eq = 0;
+		char *val = eq + 1;
+		str_trim(line);
+		str_trim(val);
+
+		if (general && strcmp(line, "view") == 0) {
+			for (UINT32 k = 0; k < view_list.size(); k++)
+				if (views[view_list[k]]->name == val) cur_view = k;
+		} else if (sec) {
+			for (UINT32 i = 0; i < sec->tog_name.size(); i++) {
+				if (sec->tog_name[i] == line) {
+					if (atoi(val)) sec->tog_on |= (1u << i); else sec->tog_on &= ~(1u << i);
+				}
+			}
+		}
+	}
+	fclose(f);
+}
+
+// written when something is changed from the frontend
+static void settings_save()
+{
+#ifdef __LIBRETRO__
+	return;
+#endif
+
+	TCHAR path[MAX_PATH];
+	settings_path(path);
+	FILE *f = _tfopen(path, _T("wt"));
+	if (f == NULL) return;
+
+	fprintf(f, "; FBNeo artwork settings for %s, delete this file to go back to the defaults\n", BurnDrvGetTextA(DRV_NAME));
+	fprintf(f, "[artwork]\nview=%s\n", views[view_list[cur_view]]->name.c_str());
+
+	for (UINT32 k = 0; k < view_list.size(); k++) {
+		lview *v = views[view_list[k]];
+		if (v->tog_name.empty()) continue;
+		fprintf(f, "\n[view:%s]\n", v->name.c_str());
+		for (UINT32 i = 0; i < v->tog_name.size(); i++)
+			fprintf(f, "%s=%d\n", v->tog_name[i].c_str(), (v->tog_on >> i) & 1);
+	}
+	fclose(f);
 }
 
 static INT32 art_try_load(const char *game)
@@ -1855,19 +2104,24 @@ static INT32 art_try_load(const char *game)
 
 	parse_layout(layout_root);
 
-	// pick a view with screen 0
-	INT32 n = 0;
+	// views that show screen 0
+	view_list.clear();
 	for (UINT32 v = 0; v < views.size(); v++) {
-		for (UINT32 i = 0; i < views[v]->items.size(); i++) {
-			if (views[v]->items[i].is_screen && views[v]->items[i].screen_index == 0) {
-				if (view == NULL || n == nBurnArtworkView) { view = views[v]; first_screen = i; }
-				n++;
+		for (UINT32 i = 0; i < views[v]->all.size(); i++) {
+			if (views[v]->all[i].is_screen && views[v]->all[i].screen_index == 0) {
+				view_list.push_back(v);
 				break;
 			}
 		}
 	}
 
-	if (view == NULL || view->bounds.w() <= 0 || view->bounds.h() <= 0) {
+	if (view_list.size()) {
+		settings_load();
+		view = views[view_list[cur_view]];
+		view_apply(view);
+	}
+
+	if (view == NULL || first_screen < 0 || view->bounds.w() <= 0 || view->bounds.h() <= 0) {
 		bprintf(PRINT_ERROR, _T("Artwork: no usable view in artwork for %S\n"), game);
 		art_free();
 		return 1;
@@ -1886,22 +2140,43 @@ INT32 BurnArtworkActive()
 	return art_active;
 }
 
-void BurnArtworkInit()
+static INT32 art_load_game()
 {
-	art_free();
-
-#ifdef __LIBRETRO__
-	return;
-#endif
-
-	if (!bBurnArtworkEnable) return;
-
 	if (art_try_load(BurnDrvGetTextA(DRV_NAME))) {
 		art_free();
 		if (art_try_load(BurnDrvGetTextA(DRV_PARENT))) {
 			art_free();
-			return;
+			return 1;
 		}
+	}
+	return 0;
+}
+
+void BurnArtworkInit()
+{
+	// keep what the frontend chose after BurnArtworkProbe()
+	std::vector<std::pair<std::string, UINT32> > probed;
+	std::string probed_view;
+	if (art_probed) {
+		for (UINT32 k = 0; k < view_list.size(); k++) probed.push_back(std::make_pair(views[view_list[k]]->name, views[view_list[k]]->tog_on));
+		probed_view = views[view_list[cur_view]]->name;
+	}
+
+	art_free();
+
+	if (!bBurnArtworkEnable) return;
+
+	if (art_load_game()) return;
+
+	if (probed.size()) {
+		for (UINT32 k = 0; k < view_list.size(); k++) {
+			lview *v = views[view_list[k]];
+			for (UINT32 i = 0; i < probed.size(); i++)
+				if (probed[i].first == v->name) v->tog_on = probed[i].second;
+			if (v->name == probed_view) cur_view = k;
+		}
+		view = views[view_list[cur_view]];
+		view_apply(view);
 	}
 
 	INT32 flags = BurnDrvGetFlags();
@@ -1947,9 +2222,9 @@ void BurnArtworkNativeSizeChanged()
 
 INT32 BurnArtworkGetDisplaySize(INT32 *pnWidth, INT32 *pnHeight)
 {
-	if (!art_active) return 0;
-	*pnWidth = disp_w;
-	*pnHeight = disp_h;
+	if (!art_active || layered) return 0;	// layered: the frontend's image is the game's own
+	*pnWidth = told_w = disp_w;
+	*pnHeight = told_h = disp_h;
 	return 1;
 }
 
@@ -1969,8 +2244,9 @@ INT32 BurnArtworkGetBaseSize(INT32 *pnWidth, INT32 *pnHeight)
 	float sx, sy;
 	art_get_scale(nBurnArtworkScale < 0 ? 1 : nBurnArtworkScale, &sx, &sy);
 	if (nBurnArtworkScale < 0) {
-		// auto mode renders with square pixels, so keep the layout's shape here too
-		float s = sy < sx ? sy : sx;
+		// auto mode renders with square pixels, so keep the layout's shape here too,
+		// with the game screen at least 1x in both directions (as MAME does)
+		float s = sy > sx ? sy : sx;
 		sx = sy = s;
 	}
 	*pnWidth  = ((INT32)(view->bounds.w() * sx + 0.5f) + 1) & ~1;
@@ -1994,6 +2270,209 @@ INT32 BurnArtworkSetTargetSize(INT32 nWidth, INT32 nHeight)
 	return (ow != disp_w || oh != disp_h);
 }
 
+// Layered output (see layers_update()): a frontend that composites the artwork
+// itself calls this before it asks for the image size (BurnDrvGetVisibleSize()
+// then gives the game's own size), and BurnArtworkLayered(0) when it goes away.
+// returns 1 if artwork is active
+INT32 BurnArtworkSetLayered(INT32 bLayered)
+{
+	if (!bBurnArtworkLayered) bLayered = 0;
+	if (layered != (bLayered ? 1 : 0)) {
+		layered = bLayered ? 1 : 0;
+		lay_full = 1;
+		bg_dirty = 1;
+		full_dirty = 1;
+	}
+	return art_active && layered;
+}
+
+INT32 BurnArtworkGetLayers(BurnArtworkLayers *pLayers)
+{
+	if (!art_active || !layered || pLayers == NULL) return 0;
+
+	if (lay_full || lay_under.empty()) layers_update();
+
+	pLayers->nWidth = lay_w;
+	pLayers->nHeight = lay_h;
+	pLayers->nPitch = lay_w;
+	pLayers->pUnder = &lay_under[0];
+	pLayers->pAdd = &lay_add[0];
+	pLayers->pMul = &lay_mul[0];
+	pLayers->nScreenX = lay_sx0;
+	pLayers->nScreenY = lay_sy0;
+	pLayers->nScreenW = lay_sx1 - lay_sx0;
+	pLayers->nScreenH = lay_sy1 - lay_sy0;
+	pLayers->nSerial = lay_serial;
+	return 1;
+}
+
+// views / toggles for the frontend's menus. the Set functions re-layout the
+// artwork (its size can change) and save config/games/<game>_art.ini,
+// the frontend should then re-init its video (window size, buffers)
+
+INT32 BurnArtworkGetViewCount()
+{
+	return (art_active || art_probed) ? (INT32)view_list.size() : 0;
+}
+
+const char *BurnArtworkGetViewName(INT32 n)
+{
+	if (!(art_active || art_probed) || n < 0 || n >= (INT32)view_list.size()) return NULL;
+	return views[view_list[n]]->name.c_str();
+}
+
+INT32 BurnArtworkGetView()
+{
+	return (art_active || art_probed) ? cur_view : -1;
+}
+
+// toggles of any view (not just the current one)
+static lview *view_at(INT32 nView)
+{
+	if (!(art_active || art_probed) || nView < 0 || nView >= (INT32)view_list.size()) return NULL;
+	return views[view_list[nView]];
+}
+
+INT32 BurnArtworkGetViewToggleCount(INT32 nView)
+{
+	lview *v = view_at(nView);
+	return v ? (INT32)v->tog_name.size() : 0;
+}
+
+const char *BurnArtworkGetViewToggleName(INT32 nView, INT32 n)
+{
+	lview *v = view_at(nView);
+	if (v == NULL || n < 0 || n >= (INT32)v->tog_name.size()) return NULL;
+	return v->tog_name[n].c_str();
+}
+
+INT32 BurnArtworkGetViewToggle(INT32 nView, INT32 n)
+{
+	lview *v = view_at(nView);
+	if (v == NULL || n < 0 || n >= (INT32)v->tog_name.size()) return 0;
+	return (v->tog_on >> n) & 1;
+}
+
+// for frontends that keep the per-game settings themselves (libretro core options):
+// view and all its toggles at once, so the artwork is only laid out once.
+// returns 1 if changed: re-init video
+INT32 BurnArtworkSetViewToggles(INT32 nView, UINT32 nToggles)
+{
+	lview *v = view_at(nView);
+	if (v == NULL) return 0;
+
+	if (v->tog_name.size() < 32) nToggles &= (1u << v->tog_name.size()) - 1;
+	if (nView == cur_view && nToggles == v->tog_on) return 0;
+
+	cur_view = nView;
+	v->tog_on = nToggles;
+	view = v;
+	view_apply(v);
+	if (!art_active) return 0;
+
+	art_layout();
+	settings_save();
+	return 1;
+}
+
+INT32 BurnArtworkSetView(INT32 n)
+{
+	if (!art_active || n < 0 || n >= (INT32)view_list.size() || n == cur_view) return 0;
+	cur_view = n;
+	view = views[view_list[n]];
+	view_apply(view);
+	art_layout();
+	settings_save();
+	return 1;
+}
+
+INT32 BurnArtworkGetToggleCount()
+{
+	return art_active ? (INT32)view->tog_name.size() : 0;
+}
+
+const char *BurnArtworkGetToggleName(INT32 n)
+{
+	if (!art_active || n < 0 || n >= (INT32)view->tog_name.size()) return NULL;
+	return view->tog_name[n].c_str();
+}
+
+INT32 BurnArtworkGetToggle(INT32 n)
+{
+	if (!art_active || n < 0 || n >= (INT32)view->tog_name.size()) return 0;
+	return (view->tog_on >> n) & 1;
+}
+
+INT32 BurnArtworkSetToggle(INT32 n, INT32 nOn)
+{
+	if (!art_active || n < 0 || n >= (INT32)view->tog_name.size()) return 0;
+	UINT32 on = nOn ? (view->tog_on | (1u << n)) : (view->tog_on & ~(1u << n));
+	if (on == view->tog_on) return 0;
+	view->tog_on = on;
+	view_apply(view);
+	art_layout();
+	settings_save();
+	return 1;
+}
+
+// a global setting changed (nBurnArtworkScale, nBurnArtworkMaxHeight, the
+// defaults): redo the running game's artwork. returns 1 if active: re-init video
+INT32 BurnArtworkRefresh()
+{
+	if (!art_active) return 0;
+	settings_load();		// a game with its own _art.ini keeps those settings
+	view = views[view_list[cur_view]];
+	view_apply(view);
+	art_layout();
+	return 1;
+}
+
+// parse the selected game's artwork before BurnDrvInit(), so a frontend can
+// list its views and toggles and set them (BurnArtworkSetViewToggles()) before
+// the game starts. the artwork itself is (re)loaded by BurnDrvInit().
+// returns 1 if the game has artwork, whether artwork is enabled or not
+INT32 BurnArtworkProbe()
+{
+	art_free();
+	if (art_load_game()) return 0;
+
+	art_probed = 1;
+	return 1;
+}
+
+// switch artwork on / off for the running game (and the next ones).
+// returns 1 if that changed anything: re-init video
+INT32 BurnArtworkSetEnable(INT32 bEnable)
+{
+	bBurnArtworkEnable = bEnable ? 1 : 0;
+
+	if (bBurnArtworkEnable && !art_active) {
+		BurnArtworkInit();
+		return art_active;
+	}
+	if (!bBurnArtworkEnable && art_active) {
+		art_free();
+		return 1;
+	}
+	return 0;
+}
+
+// forget the game's saved settings: back to the layout + global defaults
+INT32 BurnArtworkResetSettings()
+{
+	if (!art_active) return 0;
+#ifndef __LIBRETRO__
+	TCHAR path[MAX_PATH];
+	settings_path(path);
+	_tremove(path);
+#endif
+	settings_load();
+	view = views[view_list[cur_view]];
+	view_apply(view);
+	art_layout();
+	return 1;
+}
+
 void BurnArtworkFrameBegin()
 {
 	if (frame_depth++ > 0) return;	// nested (Redraw inside Frame): the outer call handles it
@@ -2006,6 +2485,8 @@ void BurnArtworkFrameBegin()
 	INT32 nw = 0, nh = 0;
 	BurnDrvGetNativeSize(&nw, &nh);
 	if (nw != native_w || nh != native_h) art_layout();
+
+	if (layered) return;	// the driver draws straight into the frontend's (game sized) buffer
 
 	native_buf_alloc();
 
@@ -2063,6 +2544,195 @@ static void bg_rebuild_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
 		litem &it = view->items[i];
 		if (it.is_screen || it.px1 <= x0 || it.px0 >= x1 || it.py1 <= y0 || it.py0 >= y1) continue;
 		apply_bitmap(bg, it, item_bitmap(it, item_state(it)));
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Layered output: the frontend draws the game itself (with its effects / shaders
+// applied to the game image only) and composites the artwork around it as
+//   out = A + B * (U + game)		(per channel, clamped)
+// U = everything under the game screen (black inside the screen when the
+// screen isn't added to it), A and B = everything on top, folded together:
+// every blend MAME layouts use is "dst = a + b * dst" (alpha, add, multiply),
+// and a stack of those is one "a + b * dst". On the GPU that's: clear, draw the
+// game, U additive, B multiplied (dst * B), A additive.
+
+
+static INT32 screen_blend(const litem &it)
+{
+	INT32 blend = it.blend;
+	if (blend == BLEND_DEFAULT) blend = is_vector ? BLEND_ADD : BLEND_NONE;
+	return (blend == BLEND_ADD) ? BLEND_ADD : BLEND_NONE;
+}
+
+// display (layout) pixel -> index into the driver-oriented layers
+static inline INT32 lay_index(INT32 dx, INT32 dy)
+{
+	INT32 x, y;
+	if (!orient_v) {
+		if (!orient_f) { x = dx; y = dy; }
+		else { x = lay_w - 1 - dx; y = lay_h - 1 - dy; }
+	} else {
+		if (!orient_f) { y = dx; x = lay_w - 1 - dy; }
+		else { y = lay_h - 1 - dx; x = dy; }
+	}
+	return y * lay_w + x;
+}
+
+// rebuild U, A and B in a display rectangle
+static void layers_build_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
+{
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 > disp_w) x1 = disp_w;
+	if (y1 > disp_h) y1 = disp_h;
+	if (x1 <= x0 || y1 <= y0) return;
+
+	const litem &scr = view->items[first_screen];
+	INT32 sblend = screen_blend(scr);
+	INT32 tint = !is_white(scr.color) && sblend == BLEND_NONE;	// folded into B (with "add" it can't be, ignored)
+	UINT32 tr = (UINT32)(scr.color.r * scr.color.a * 65536), tg = (UINT32)(scr.color.g * scr.color.a * 65536), tb = (UINT32)(scr.color.b * scr.color.a * 65536);
+
+	INT32 n = x1 - x0;
+	std::vector<UINT32> a(n * 3), b(n * 3);		// A: 8.8 fixed, B: 0 - 65536 = 0.0 - 1.0
+
+	for (INT32 y = y0; y < y1; y++) {
+		std::fill(a.begin(), a.end(), 0);
+		std::fill(b.begin(), b.end(), 65536);
+
+		INT32 in_scr_y = (y >= scr.py0 && y < scr.py1);
+
+		for (UINT32 i = first_screen + 1; i < view->items.size(); i++) {
+			litem &it = view->items[i];
+			if (it.is_screen || it.elem == NULL || y < it.py0 || y >= it.py1) continue;
+			INT32 ix0 = it.px0 > x0 ? it.px0 : x0;
+			INT32 ix1 = it.px1 < x1 ? it.px1 : x1;
+			if (ix1 <= ix0) continue;
+
+			abitmap *bm = item_bitmap(it, item_state(it));
+			if (bm == NULL || bm->p.empty()) continue;
+			const UINT32 *srow = &bm->p[(y - it.py0) * bm->w];
+
+			for (INT32 x = ix0; x < ix1; x++) {
+				UINT32 sp = srow[x - it.px0];
+				UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
+				UINT32 sc[3] = { (sp >> 16) & 0xff, (sp >> 8) & 0xff, sp & 0xff };
+				switch (it.blend) {
+					case BLEND_NONE:
+						for (INT32 c = 0; c < 3; c++) { pa[c] = sc[c] << 8; pb[c] = 0; }
+						break;
+					case BLEND_MULTIPLY:
+						if ((sp & 0xffffff) == 0xffffff) break;
+						for (INT32 c = 0; c < 3; c++) { pa[c] = pa[c] * sc[c] / 255; pb[c] = pb[c] * sc[c] / 255; }
+						break;
+					case BLEND_ADD:
+						for (INT32 c = 0; c < 3; c++) { pa[c] += sc[c] << 8; if (pa[c] > 0xffff) pa[c] = 0xffff; }
+						break;
+					default: {	// alpha, premultiplied
+						UINT32 sa = sp >> 24;
+						if (sa == 0) break;
+						UINT32 inv = 255 - sa;
+						for (INT32 c = 0; c < 3; c++) { pa[c] = (sc[c] << 8) + pa[c] * inv / 255; pb[c] = pb[c] * inv / 255; if (pa[c] > 0xffff) pa[c] = 0xffff; }
+					}
+					break;
+				}
+			}
+		}
+
+		for (INT32 x = x0; x < x1; x++) {
+			UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
+			INT32 in_scr = in_scr_y && x >= scr.px0 && x < scr.px1;
+			if (in_scr && tint) {
+				pb[0] = (UINT32)(((UINT64)pb[0] * tr) >> 16);
+				pb[1] = (UINT32)(((UINT64)pb[1] * tg) >> 16);
+				pb[2] = (UINT32)(((UINT64)pb[2] * tb) >> 16);
+			}
+			UINT32 av[3], bv[3];
+			for (INT32 c = 0; c < 3; c++) {
+				av[c] = (pa[c] + 128) >> 8; if (av[c] > 255) av[c] = 255;
+				bv[c] = (pb[c] * 255 + 32768) >> 16; if (bv[c] > 255) bv[c] = 255;
+			}
+			INT32 li = lay_index(x, y);
+			lay_add[li] = 0xff000000 | (av[0] << 16) | (av[1] << 8) | av[2];
+			lay_mul[li] = 0xff000000 | (bv[0] << 16) | (bv[1] << 8) | bv[2];
+			lay_under[li] = (in_scr && sblend == BLEND_NONE) ? 0xff000000 : (0xff000000 | bg[y * disp_w + x]);
+		}
+	}
+}
+
+// bring the layers up to date (called at the end of each frame, and when asked for)
+static void layers_update()
+{
+	INT32 ow = orient_v ? disp_h : disp_w;
+	INT32 oh = orient_v ? disp_w : disp_h;
+	if (ow != lay_w || oh != lay_h || lay_under.size() != (size_t)ow * oh) {
+		lay_w = ow;
+		lay_h = oh;
+		lay_under.assign((size_t)ow * oh, 0xff000000);
+		lay_add.assign((size_t)ow * oh, 0xff000000);
+		lay_mul.assign((size_t)ow * oh, 0xffffffff);
+		lay_full = 1;
+	}
+
+	// background: same rules as the normal path
+	std::vector<INT32> bg_changed;
+	for (INT32 i = 0; i < first_screen; i++) {
+		litem &it = view->items[i];
+		if (it.elem && item_state(it) != it.last_state) bg_changed.push_back(i);
+	}
+	if (bg_changed.size() > 8) bg_dirty = 1;
+
+	if (bg_dirty || lay_full) {
+		clip_x0 = 0; clip_y0 = 0; clip_x1 = disp_w; clip_y1 = disp_h;
+		std::fill(bg.begin(), bg.end(), 0);
+		for (INT32 i = 0; i < first_screen; i++) {
+			litem &it = view->items[i];
+			if (it.is_screen) continue;
+			it.last_state = item_state(it);
+			apply_bitmap(bg, it, item_bitmap(it, it.last_state));
+		}
+		bg_dirty = 0;
+		lay_full = 1;
+		bg_changed.clear();
+	}
+
+	std::vector<INT32> changed;
+	for (UINT32 i = first_screen + 1; i < view->items.size(); i++) {
+		litem &it = view->items[i];
+		if (it.elem && item_state(it) != it.last_state) changed.push_back(i);
+	}
+
+	if (lay_full) {
+		layers_build_area(0, 0, disp_w, disp_h);
+		for (UINT32 i = first_screen + 1; i < view->items.size(); i++)
+			if (view->items[i].elem) view->items[i].last_state = item_state(view->items[i]);
+		lay_full = 0;
+		full_dirty = 0;
+		lay_serial++;
+	} else if (bg_changed.size() || changed.size()) {
+		for (UINT32 k = 0; k < bg_changed.size(); k++) {
+			litem &c = view->items[bg_changed[k]];
+			bg_rebuild_area(c.px0, c.py0, c.px1, c.py1);
+			c.last_state = item_state(c);
+			layers_build_area(c.px0, c.py0, c.px1, c.py1);
+		}
+		for (UINT32 k = 0; k < changed.size(); k++) {
+			litem &it = view->items[changed[k]];
+			it.last_state = item_state(it);
+			layers_build_area(it.px0, it.py0, it.px1, it.py1);
+		}
+		lay_serial++;
+	}
+
+	// the screen rectangle, in driver orientation
+	const litem &scr = view->items[first_screen];
+	INT32 X0 = scr.px0, Y0 = scr.py0, X1 = scr.px1, Y1 = scr.py1;
+	if (!orient_v) {
+		if (!orient_f) { lay_sx0 = X0; lay_sx1 = X1; lay_sy0 = Y0; lay_sy1 = Y1; }
+		else { lay_sx0 = lay_w - X1; lay_sx1 = lay_w - X0; lay_sy0 = lay_h - Y1; lay_sy1 = lay_h - Y0; }
+	} else {
+		if (!orient_f) { lay_sy0 = X0; lay_sy1 = X1; lay_sx0 = lay_w - Y1; lay_sx1 = lay_w - Y0; }
+		else { lay_sy0 = lay_h - X1; lay_sy1 = lay_h - X0; lay_sx0 = Y0; lay_sx1 = Y1; }
 	}
 }
 
@@ -2142,6 +2812,10 @@ static void art_compose()
 		}
 	}
 
+	// the size changed (view / part switched on or off) and the frontend hasn't
+	// re-initialised its video yet: its buffer is still the old size
+	if (disp_w != told_w || disp_h != told_h) return;
+
 	// write out in the driver's (unrotated) orientation, the frontend rotates it
 	INT32 ow = orient_v ? disp_h : disp_w;
 	INT32 oh = orient_v ? disp_w : disp_h;
@@ -2208,6 +2882,11 @@ void BurnArtworkFrameEnd()
 {
 	if (frame_depth > 0 && --frame_depth > 0) return;	// nested
 
+	if (art_active && layered) {
+		layers_update();	// the frontend draws the game and the layers
+		return;
+	}
+
 	if (!art_active || saved_draw == NULL) return;
 
 	pBurnDraw = saved_draw;
@@ -2221,10 +2900,7 @@ void BurnArtworkFrameEnd()
 
 void BurnArtworkScan(INT32 nAction)
 {
-	if (nAction & ACB_DRIVER_DATA) {
-		for (UINT32 i = 0; i < outputs.size(); i++) {
-			ScanVar(&outputs[i].value, sizeof(INT32) * 2, outputs[i].name);	// value + set
-		}
-		if (nAction & ACB_WRITE) { bg_dirty = 1; full_dirty = 1; }
-	}
+	// outputs aren't saved: they only mirror driver state, so drivers with outputs
+	// rebuild them from their own state when loading (savestate size stays constant)
+	if (nAction & ACB_WRITE) { bg_dirty = 1; full_dirty = 1; }
 }
