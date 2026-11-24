@@ -1,5 +1,6 @@
 ほぼネオジオ追加分と修正のみ</BR>
 基本的に日本語の修正のためだけになんとかかんとか</BR>
+公式とは一切関係はありませんがライセンス等は公式に準じます</BR>
 
 # FinalBurn Neo
 Official Forum: https://neo-source.com
