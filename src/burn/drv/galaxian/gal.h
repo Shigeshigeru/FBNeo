@@ -310,6 +310,7 @@ UINT8 KonamiPPIReadIN3();
 INT32 GalInit();
 void MapMooncrst();
 void MapJumpbug();
+void __fastcall JumpbugZ80Write(UINT16 a, UINT8 d);
 void MapFrogger();
 void KonamiPPIInit();
 void MapTheend();
