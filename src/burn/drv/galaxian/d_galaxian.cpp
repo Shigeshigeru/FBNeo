@@ -15423,8 +15423,14 @@ static INT32 jb_se01_use = 0;
 static INT32 jb_se02_use = 0;
 static INT32 jb_se00_use = 0;
 
+static void (*pOrigJumpbugSoundReset)() = NULL;
+static void (*pOrigJumpbugSoundRender)(INT16*, INT32) = NULL;
+static void (*pOrigJumpbugSoundScan)(INT32, INT32*) = NULL;
+static void (*pOrigJumpbugSoundExit)() = NULL;
+
 static void JumpbugSampleReset()
 {
+	if (pOrigJumpbugSoundReset) pOrigJumpbugSoundReset();
 	BurnSampleReset();
 
 	jb_se04_common_vol = 0;
@@ -15442,11 +15448,14 @@ static void JumpbugSampleReset()
 
 static void JumpbugSampleRender(INT16 *pSoundBuf, INT32 nLength)
 {
+	if (pOrigJumpbugSoundRender) pOrigJumpbugSoundRender(pSoundBuf, nLength);
 	BurnSampleRender(pSoundBuf, nLength);
 }
 
 static void JumpbugSampleScan(INT32 nAction, INT32 *pnMin)
 {
+	if (pOrigJumpbugSoundScan) pOrigJumpbugSoundScan(nAction, pnMin);
+
 	if (nAction & ACB_DRIVER_DATA) {
 		BurnSampleScan(nAction, pnMin);
 		SCAN_VAR(jb_se04_common_vol);
@@ -15465,6 +15474,7 @@ static void JumpbugSampleScan(INT32 nAction, INT32 *pnMin)
 
 static void JumpbugSampleExit()
 {
+	if (pOrigJumpbugSoundExit) pOrigJumpbugSoundExit();
 	BurnSampleExit();
 }
 
@@ -15498,7 +15508,8 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 					BurnSampleSetPlaybackRate(4, jb_se04_common_freq);
 				}
 			}
-			BurnSampleSetRoute(5, 0, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
+			// case 0x6000: の末尾側
+			BurnSampleSetRoute(3, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
@@ -15519,7 +15530,8 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 				jb_se04_test++;
 				if (jb_se04_vol < 0.0) jb_se04_vol = 0.0;
 			}
-			BurnSampleSetRoute(4, 0, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
+			// case 0x6001: の末尾側
+			BurnSampleSetRoute(4, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
@@ -15590,6 +15602,11 @@ static INT32 JumpbugInit()
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
 	JumpbugSampleReset();
+
+	pOrigJumpbugSoundReset  = GalSoundBoardResetFunction;
+	pOrigJumpbugSoundRender = GalSoundBoardRenderFunction;
+	pOrigJumpbugSoundScan   = GalSoundBoardScanFunction;
+	pOrigJumpbugSoundExit   = GalSoundBoardExitFunction;
 
 	GalSoundBoardResetFunction  = JumpbugSampleReset;
 	GalSoundBoardRenderFunction = JumpbugSampleRender;
