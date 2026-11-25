@@ -15498,7 +15498,7 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 					BurnSampleSetPlaybackRate(4, jb_se04_common_freq);
 				}
 			}
-			BurnSampleSetRoute(3, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
+			BurnSampleSetRoute(5, 0, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
@@ -15519,7 +15519,7 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 				jb_se04_test++;
 				if (jb_se04_vol < 0.0) jb_se04_vol = 0.0;
 			}
-			BurnSampleSetRoute(4, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
+			BurnSampleSetRoute(4, 0, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
