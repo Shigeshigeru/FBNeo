@@ -15206,14 +15206,15 @@ struct BurnDriver BurnDrvRockclim = {
 	NULL, 392, 256, 224, 4, 3
 };
 
+
 // Extra roms and sound hardware replaced with AY8910
 static struct BurnSampleInfo JumpbugSampleDesc[] = {
-	{ "0x7800",  SAMPLE_NOLOOP },
-	{ "0x6803",  SAMPLE_NOLOOP },
-	{ "0x6805",  SAMPLE_NOLOOP },
-	{ "0x6000a", SAMPLE_NOLOOP },
-	{ "0x6001",  SAMPLE_NOLOOP },
-	{ "0x6000b", SAMPLE_NOLOOP },
+	{ "0x7800",  SAMPLE_NOLOOP }, // 0: engine
+	{ "0x6803",  SAMPLE_NOLOOP }, // 1: bomb
+	{ "0x6805",  SAMPLE_NOLOOP }, // 2: $
+	{ "0x6000a", SAMPLE_NOLOOP }, // 3: se03
+	{ "0x6001",  SAMPLE_NOLOOP }, // 4: se04
+	{ "0x6000b", SAMPLE_NOLOOP }, // 5: se03 (trigger)
 	{ "", 0 },
 };
 
