@@ -1,6 +1,7 @@
 #include "gal.h"
 #include "i8039.h"
 #include "sp0250.h"
+#include "samples.h"
 
 // FB Neo Galaxian driver module
 // Based on MAME driver by Aaron Giles, Couriersud,Stephane Humbert
@@ -15270,6 +15271,19 @@ static struct BurnRomInfo OlibugRomDesc[] = {
 	{ "m866l_im5610.6l",	0x00020, 0xb549ad5a, BRF_GRA | GAL_ROM_PROM },
 };
 
+static struct BurnSampleInfo JumpbugSampleDesc[] = {
+	{ "0x7800",  SAMPLE_NOLOOP }, // 0: engine
+	{ "0x6803",  SAMPLE_NOLOOP }, // 1: bomb
+	{ "0x6805",  SAMPLE_NOLOOP }, // 2: $
+	{ "0x6000a", SAMPLE_NOLOOP }, // 3: se03
+	{ "0x6001",  SAMPLE_NOLOOP }, // 4: se04
+	{ "0x6000b", SAMPLE_NOLOOP }, // 5: se03 (trigger)
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(Jumpbug)
+STD_SAMPLE_FN(Jumpbug)
+
 STD_ROM_PICK(Olibug)
 STD_ROM_FN(Olibug)
 
@@ -15396,11 +15410,168 @@ void __fastcall BongoZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
+// Jumpbug sample SE state (ported from MAME 0.281)
+static UINT8 jb_se04_common_vol = 0;
+static INT32 jb_se04_common_freq = 0;
+static INT32 jb_se03_test = 0;
+static UINT8 jb_se03_use = 0;
+static double jb_se03_vol = 1.0;
+static INT32 jb_se04_use = 0;
+static INT32 jb_se04_test = 0;
+static double jb_se04_vol = 1.0;
+static INT32 jb_se01_use = 0;
+static INT32 jb_se02_use = 0;
+static INT32 jb_se00_use = 0;
+
+static void JumpbugSampleReset()
+{
+	BurnSampleReset();
+
+	jb_se04_common_vol = 0;
+	jb_se04_common_freq = 0;
+	jb_se03_test = 0;
+	jb_se03_use = 0;
+	jb_se03_vol = 1.0;
+	jb_se04_use = 0;
+	jb_se04_test = 0;
+	jb_se04_vol = 1.0;
+	jb_se01_use = 0;
+	jb_se02_use = 0;
+	jb_se00_use = 0;
+}
+
+static void JumpbugSampleRender(INT16 *pSoundBuf, INT32 nLength)
+{
+	BurnSampleRender(pSoundBuf, nLength);
+}
+
+static void JumpbugSampleScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		BurnSampleScan(nAction, pnMin);
+		SCAN_VAR(jb_se04_common_vol);
+		SCAN_VAR(jb_se04_common_freq);
+		SCAN_VAR(jb_se03_test);
+		SCAN_VAR(jb_se03_use);
+		SCAN_VAR(jb_se03_vol);
+		SCAN_VAR(jb_se04_use);
+		SCAN_VAR(jb_se04_test);
+		SCAN_VAR(jb_se04_vol);
+		SCAN_VAR(jb_se01_use);
+		SCAN_VAR(jb_se02_use);
+		SCAN_VAR(jb_se00_use);
+	}
+}
+
+static void JumpbugSampleExit()
+{
+	BurnSampleExit();
+}
+
+void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
+{
+	switch (a) {
+		case 0x6000: {
+			if (d && jb_se03_use == 0) {
+				jb_se03_use = 1;
+				jb_se04_common_vol = 0;
+				jb_se03_vol = 1.0;
+				BurnSampleChannelPlay(3, 5, false);
+			} else if (d && jb_se03_use == 1) {
+				jb_se03_test = 0;
+			} else if (d == 0) {
+				jb_se03_test++;
+				jb_se03_use = 0;
+				if (jb_se03_test > 1) {
+					if (jb_se03_vol > 1.0) jb_se03_vol = 1.0;
+					else jb_se03_vol -= 0.2;
+					if (jb_se03_vol < 0.0) jb_se03_vol = 0.0;
+				}
+				if (jb_se03_vol == 1.0) jb_se04_common_vol = 1;
+				if (jb_se03_vol > 0.59 && jb_se03_vol < 0.61) {
+					jb_se04_common_freq = 0x9000;
+					BurnSampleSetPlaybackRate(4, jb_se04_common_freq);
+				} else if (jb_se03_vol > 0.19 && jb_se03_vol < 0.21) {
+					jb_se04_common_freq = 0xa000;
+					BurnSampleSetPlaybackRate(4, jb_se04_common_freq);
+				}
+			}
+			BurnSampleChannelVolume(3, jb_se03_vol);
+			return;
+		}
+
+		case 0x6001: {
+			if (d && jb_se04_use == 0) {
+				jb_se04_use = 1;
+				BurnSampleChannelPlay(4, 4, false);
+				jb_se04_vol = 1.0;
+				if (jb_se04_common_vol) {
+					jb_se04_vol = 0.8;
+					jb_se04_common_vol = 0;
+				}
+			} else if (d && jb_se04_use == 1) {
+				jb_se04_test = 0;
+				jb_se04_vol -= 0.1;
+			} else if (d == 0) {
+				jb_se04_use = 0;
+				jb_se04_test++;
+				if (jb_se04_vol < 0.0) jb_se04_vol = 0.0;
+			}
+			BurnSampleChannelVolume(4, jb_se04_vol);
+			return;
+		}
+
+		case 0x6803: { // bomb
+			if (d && jb_se01_use == 0) {
+				jb_se01_use = 1;
+				BurnSampleChannelPlay(1, 1, false);
+			} else if (d == 0) {
+				jb_se01_use = 0;
+			}
+			return;
+		}
+
+		case 0x6805: { // $
+			if (d && jb_se02_use == 0) {
+				jb_se02_use = 1;
+				BurnSampleChannelPlay(2, 2, false);
+			} else if (d == 0) {
+				jb_se02_use = 0;
+			}
+			return;
+		}
+
+		case 0x7800: { // engine
+			if (d) {
+				if (d != 0xff && jb_se00_use == 0) {
+					jb_se00_use = 1;
+					BurnSampleChannelPlay(0, 0, false);
+					BurnSampleSetPlaybackRate(0, 0x8000 + (d * 0x0180));
+				} else if (d == 0xff) {
+					jb_se00_use = 0;
+				}
+			}
+			return;
+		}
+	}
+
+	JumpbugZ80Write(a, d);
+}
+
+static void JumpbugPostLoad()
+{
+	MapJumpbug();
+
+	ZetOpen(0);
+	ZetSetWriteHandler(JumpbugSampleZ80Write);
+	ZetClose();
+}
+
 static INT32 JumpbugInit()
 {
 	INT32 nRet;
 	
-	GalPostLoadCallbackFunction = MapJumpbug;
+	GalPostLoadCallbackFunction = JumpbugPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
 	GalSoundSubType = 1; // diff. AY8910 clock
 
@@ -15413,6 +15584,15 @@ static INT32 JumpbugInit()
 	GalExtendSpriteInfoFunction = JumpbugExtendSpriteInfo;
 	
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+
+	BurnSampleInit(0);
+	BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
+	JumpbugSampleReset();
+
+	GalSoundBoardResetFunction  = JumpbugSampleReset;
+	GalSoundBoardRenderFunction = JumpbugSampleRender;
+	GalSoundBoardScanFunction   = JumpbugSampleScan;
+	GalSoundBoardExitFunction   = JumpbugSampleExit;
 	
 	return nRet;
 }
@@ -15496,21 +15676,21 @@ static INT32 BongoInit()
 }
 
 struct BurnDriver BurnDrvJumpbug = {
-	"jumpbug", NULL, NULL, NULL, "1981",
+	"jumpbug", NULL, NULL, "jumpbug", "1981",
 	"Jump Bug\0", NULL, "Hoei (Rock-Ola license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
-	NULL, JumpbugRomInfo, JumpbugRomName, NULL, NULL, NULL, NULL, JumpbugInputInfo, JumpbugDIPInfo,
+	NULL, JumpbugRomInfo, JumpbugRomName, NULL, NULL, JumpbugSampleInfo, JumpbugSampleName, JumpbugInputInfo, JumpbugDIPInfo,
 	JumpbugInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvJumpbugb = {
-	"jumpbugb", "jumpbug", NULL, NULL, "1981",
+	"jumpbugb", "jumpbug", NULL, "jumpbug", "1981",
 	"Jump Bug (bootleg, set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
-	NULL, JumpbugbRomInfo, JumpbugbRomName, NULL, NULL, NULL, NULL, JumpbugInputInfo, JumpbugDIPInfo,
+	NULL, JumpbugbRomInfo, JumpbugbRomName, NULL, NULL, JumpbugSampleInfo, JumpbugSampleName, JumpbugInputInfo, JumpbugDIPInfo,
 	JumpbugInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
