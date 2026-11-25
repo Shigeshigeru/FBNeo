@@ -15509,7 +15509,7 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 				}
 			}
 			// case 0x6000: の末尾側
-			BurnSampleSetRoute(3, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
+			BurnSampleSetRoute(3, 0, 0.30 * jb_se03_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
@@ -15531,7 +15531,7 @@ void __fastcall JumpbugSampleZ80Write(UINT16 a, UINT8 d)
 				if (jb_se04_vol < 0.0) jb_se04_vol = 0.0;
 			}
 			// case 0x6001: の末尾側
-			BurnSampleSetRoute(4, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
+			BurnSampleSetRoute(4, 0, 0.30 * jb_se04_vol, BURN_SND_ROUTE_BOTH);
 			return;
 		}
 
