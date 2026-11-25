@@ -60,6 +60,16 @@ INT32 GalLfoBit[4];
 static double GalGain;
 static INT32 GalOutputDir;
 
+static INT32 JumpbugSE03Use;
+static INT32 JumpbugSE03Test;
+static INT32 JumpbugSE03VolumeStep;
+static INT32 JumpbugSE04Use;
+static INT32 JumpbugSE04VolumeTenths;
+static INT32 JumpbugSE00Use;
+static INT32 JumpbugSE01Use;
+static INT32 JumpbugSE02Use;
+static INT32 JumpbugSE04CommonVolume;
+
 static INT16 GalToneWave[4][TOOTHSAW_LENGTH];
 
 static BIQ biquad_explode;
@@ -96,6 +106,114 @@ UINT8 harem_digitalker_intr_read()
 	return digitalker_intr_read();
 }
 
+static void JumpbugSampleSetChannelVolume(INT32 channel, double volume)
+{
+	INT32 sample = BurnSampleGetChannelSample(channel);
+	BurnSampleSetAllRoutesFade(sample, 0.30 * volume, BURN_SND_ROUTE_BOTH);
+}
+
+static void JumpbugSampleSetFrequency(INT32 sample, UINT32 frequency)
+{
+	UINT32 sourceRate = BurnSampleGetSourceRate(sample);
+	if (sourceRate == 0) return;
+
+	INT32 playbackRate = (INT32)(((UINT64)frequency * 100) / sourceRate);
+	if (playbackRate > 4000) playbackRate = 4000;
+	BurnSampleSetPlaybackRate(sample, playbackRate);
+}
+
+static void JumpbugSampleResetState()
+{
+	JumpbugSE03Use = 0;
+	JumpbugSE03Test = 0;
+	JumpbugSE03VolumeStep = 0;
+	JumpbugSE04Use = 0;
+	JumpbugSE04VolumeTenths = 10;
+	JumpbugSE00Use = 0;
+	JumpbugSE01Use = 0;
+	JumpbugSE02Use = 0;
+	JumpbugSE04CommonVolume = 0;
+}
+
+void JumpbugSampleSE1Write(INT32 offset, UINT8 data)
+{
+	switch (offset) {
+		case 0: {
+			if (data && !JumpbugSE03Use) {
+				JumpbugSE03Use = 1;
+				JumpbugSE04CommonVolume = 0;
+				JumpbugSE03VolumeStep = 0;
+				BurnSampleChannelPlay(3, 5, 0);
+			} else if (data && JumpbugSE03Use) {
+				JumpbugSE03Test = 0;
+			} else if (data == 0) {
+				JumpbugSE03Test++;
+				JumpbugSE03Use = 0;
+				if (JumpbugSE03Test > 1 && JumpbugSE03VolumeStep < 5) {
+					JumpbugSE03VolumeStep++;
+				}
+				if (JumpbugSE03VolumeStep == 0) JumpbugSE04CommonVolume = 1;
+				if (JumpbugSE03VolumeStep == 2) JumpbugSampleSetFrequency(4, 0x9000);
+				else if (JumpbugSE03VolumeStep == 4) JumpbugSampleSetFrequency(4, 0xa000);
+			}
+
+			JumpbugSampleSetChannelVolume(3, 1.0 - (JumpbugSE03VolumeStep * 0.2));
+			break;
+		}
+
+		case 1: {
+			if (data && !JumpbugSE04Use) {
+				JumpbugSE04Use = 1;
+				BurnSampleChannelPlay(4, 4, 0);
+				JumpbugSE04VolumeTenths = JumpbugSE04CommonVolume ? 8 : 10;
+				JumpbugSE04CommonVolume = 0;
+			} else if (data && JumpbugSE04Use) {
+				JumpbugSE04VolumeTenths--;
+			} else if (data == 0) {
+				JumpbugSE04Use = 0;
+				if (JumpbugSE04VolumeTenths < 0) JumpbugSE04VolumeTenths = 0;
+			}
+
+			JumpbugSampleSetChannelVolume(4, JumpbugSE04VolumeTenths / 10.0);
+			break;
+		}
+	}
+}
+
+void JumpbugSampleSE2Write(INT32 offset, UINT8 data)
+{
+	switch (offset) {
+		case 0:
+			if (data && !JumpbugSE01Use) {
+				JumpbugSE01Use = 1;
+				BurnSampleChannelPlay(1, 1, 0);
+			} else if (data == 0) {
+				JumpbugSE01Use = 0;
+			}
+			break;
+
+		case 2:
+			if (data && !JumpbugSE02Use) {
+				JumpbugSE02Use = 1;
+				BurnSampleChannelPlay(2, 2, 0);
+			} else if (data == 0) {
+				JumpbugSE02Use = 0;
+			}
+			break;
+	}
+}
+
+void JumpbugSampleEngineWrite(UINT8 data)
+{
+	if (data && data != 0xff && !JumpbugSE00Use) {
+		JumpbugSE00Use = 1;
+		BurnSampleChannelPlay(0, 0, 0);
+		JumpbugSampleSetFrequency(0, 0x8000 + (data * 0x0180));
+	} else if (data == 0xff) {
+		JumpbugSE00Use = 0;
+	}
+}
+
 void GalSoundReset()
 {
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910) {
@@ -118,6 +236,11 @@ void GalSoundReset()
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
 		DACReset();
+	}
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
+		BurnSampleReset();
+		JumpbugSampleResetState();
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_GALAXIAN || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
@@ -431,10 +554,20 @@ void GalSoundInit()
 		biquad_explode.init(FILT_LOWSHELF, nBurnSoundRate, 150.00, 1.00, 10.0);
 		biquad_explode2.init(FILT_LOWPASS, nBurnSoundRate, 550.00, 1.00, 10.0);
 	}
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
+		BurnSampleInit(1);
+		BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
+	}
 }
 
 void GalSoundExit()
 {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
+		BurnSampleExit();
+		JumpbugSampleResetState();
+	}
+
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
 		AY8910Exit(0);
 	}
@@ -527,6 +660,19 @@ void GalSoundScan(INT32 nAction, INT32 *pnMin)
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
 		cclimber_sample_scan();
+	}
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
+		BurnSampleScan(nAction, pnMin);
+		SCAN_VAR(JumpbugSE03Use);
+		SCAN_VAR(JumpbugSE03Test);
+		SCAN_VAR(JumpbugSE03VolumeStep);
+		SCAN_VAR(JumpbugSE04Use);
+		SCAN_VAR(JumpbugSE04VolumeTenths);
+		SCAN_VAR(JumpbugSE00Use);
+		SCAN_VAR(JumpbugSE01Use);
+		SCAN_VAR(JumpbugSE02Use);
+		SCAN_VAR(JumpbugSE04CommonVolume);
 	}
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {

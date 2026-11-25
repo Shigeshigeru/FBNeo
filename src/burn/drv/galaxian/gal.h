@@ -12,6 +12,7 @@
 #include "sn76496.h"
 #include "flt_rc.h"
 #include "ay8910.h"
+#include "samples.h"
 #include "digitalk.h"
 
 // ROM types
@@ -310,7 +311,6 @@ UINT8 KonamiPPIReadIN3();
 INT32 GalInit();
 void MapMooncrst();
 void MapJumpbug();
-void __fastcall JumpbugZ80Write(UINT16 a, UINT8 d);
 void MapFrogger();
 void KonamiPPIInit();
 void MapTheend();
@@ -347,6 +347,9 @@ void GalSoundReset();
 void GalSoundInit();
 void GalSoundExit();
 void GalSoundScan(INT32 nAction, INT32 *pnMin);
+void JumpbugSampleSE1Write(INT32 offset, UINT8 data);
+void JumpbugSampleSE2Write(INT32 offset, UINT8 data);
+void JumpbugSampleEngineWrite(UINT8 data);
 UINT8 CheckmajPortARead(UINT32);
 UINT8 BongoDipSwitchRead(UINT32);
 UINT8 KonamiSoundLatchRead(UINT32);

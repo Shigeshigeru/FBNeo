@@ -925,31 +925,26 @@ UINT8 __fastcall JumpbugZ80Read(UINT16 a)
 		}
 	}
 	
-	switch (a) {
-		case 0x6000: {
-			return GalInput[0] | GalDip[0];
-		}
-		
-		case 0x6800: {
-			return GalInput[1] | GalDip[1];
-		}
-		
-		case 0x7000: {
-			return GalInput[2] | GalDip[2];
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
-		}
+	if (a >= 0x6000 && a <= 0x67ff) {
+		return GalInput[0] | GalDip[0];
 	}
 
+	if (a >= 0x6800 && a <= 0x6fff) {
+		return GalInput[1] | GalDip[1];
+	}
+
+	if (a >= 0x7000 && a <= 0x77ff) {
+		return GalInput[2] | GalDip[2];
+	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
 	return 0xff;
 }
 
 void __fastcall JumpbugZ80Write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x5000 && a <= 0x50ff) {
-		INT32 Offset = a - 0x5000;
+	if (a >= 0x5000 && a <= 0x57ff) {
+		INT32 Offset = (a - 0x5000) & 0x00ff;
 		
 		GalSpriteRam[Offset] = d;
 		
@@ -962,71 +957,80 @@ void __fastcall JumpbugZ80Write(UINT16 a, UINT8 d)
 		return;
 	}
 	
-	switch (a) {
-		case 0x5800: {
-			AY8910Write(0, 1, d);
-			return;
-		}
-		
-		case 0x5900: {
-			AY8910Write(0, 0, d);
-			return;
-		}
+	if (a >= 0x5800 && a <= 0x58ff) {
+		AY8910Write(0, 1, d);
+		return;
+	}
 
-		case 0x2600:
-		case 0x6000:
-		case 0x6001:
-		case 0x6803:
-		case 0x6805:
-		case 0xb000:
-		case 0xb004:
-			// ??? unknown writes
-			return;
+	if (a >= 0x5900 && a <= 0x59ff) {
+		AY8910Write(0, 0, d);
+		return;
+	}
 
-		case 0x6002:
-		case 0x6003:
-		case 0x6004:
-		case 0x6005:
-		case 0x6006: {
-			GalGfxBank[a - 0x6002] = d;
-			return;
-		}
-		
-		case 0x7001: {
-			GalIrqFire = d & 1;
-			return;
-		}
-		
-		case 0x7002: {
-			// coin_count_0_w
-			return;
-		}
-		
-		case 0x7004: {
-			GalStarsEnable = d & 0x01;
-			if (!GalStarsEnable) GalStarsScrollPos = -1;
-			return;
-		}
-		
-		case 0x7006: {
-			GalFlipScreenX = d & 1;
-			return;
-		}
-		
-		case 0x7007: {
-			GalFlipScreenY = d & 1;
-			return;
-		}
-		
-		case 0x7800: {
-			// watchdog write
-			return;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
+	if (a >= 0x6000 && a <= 0x67ff) {
+		switch (a & 0x0007) {
+			case 0x00:
+				if (a == 0x6000) JumpbugSampleSE1Write(0, d);
+				return;
+
+			case 0x01:
+				if (a == 0x6001) JumpbugSampleSE1Write(1, d);
+				return;
+
+			case 0x02:
+			case 0x03:
+			case 0x04:
+			case 0x05:
+			case 0x06:
+				GalGfxBank[(a & 0x0007) - 0x02] = d;
+				return;
 		}
 	}
+
+	if (a >= 0x6800 && a <= 0x6fff) {
+		if ((a & 0x0007) >= 0x03 && (a & 0x0007) <= 0x05) {
+			if (a >= 0x6803 && a <= 0x6805) {
+				JumpbugSampleSE2Write(a - 0x6803, d);
+			}
+			return;
+		}
+	}
+
+	if (a >= 0x7000 && a <= 0x77ff) {
+		switch (a & 0x0007) {
+			case 0x01:
+				GalIrqFire = d & 1;
+				return;
+
+			case 0x02:
+				// coin_count_0_w
+				return;
+
+			case 0x04:
+				GalStarsEnable = d & 0x01;
+				if (!GalStarsEnable) GalStarsScrollPos = -1;
+				return;
+
+			case 0x06:
+				GalFlipScreenX = d & 1;
+				return;
+
+			case 0x07:
+				GalFlipScreenY = d & 1;
+				return;
+		}
+	}
+
+	if (a == 0x7800) {
+		JumpbugSampleEngineWrite(d);
+		return;
+	}
+
+	if (a == 0x2600 || a == 0xb000 || a == 0xb004) {
+		return;
+	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
 }
 
 UINT8 __fastcall JumpbugZ80PortRead(UINT16 a)
@@ -1076,6 +1080,10 @@ void MapJumpbug()
 	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
 	ZetMapArea(0x5000, 0x50ff, 0, GalSpriteRam);
 	ZetMapArea(0x5000, 0x50ff, 2, GalSpriteRam);
+	for (INT32 address = 0x5100; address <= 0x5700; address += 0x0100) {
+		ZetMapArea(address, address + 0x00ff, 0, GalSpriteRam);
+		ZetMapArea(address, address + 0x00ff, 2, GalSpriteRam);
+	}
 	ZetMapArea(0x8000, GalZ80Rom1Size + 0x4000 - 1, 0, GalZ80Rom1 + 0x4000);
 	ZetMapArea(0x8000, GalZ80Rom1Size + 0x4000 - 1, 2, GalZ80Rom1 + 0x4000);
 	ZetClose();
@@ -2054,6 +2062,10 @@ INT32 GalFrame()
 	}
 	
 	if (GalSoundBoardRenderFunction && pBurnSoundOut) GalSoundBoardRenderFunction(pBurnSoundOut, nBurnSoundLen);
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 && pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) GalDraw();
 
